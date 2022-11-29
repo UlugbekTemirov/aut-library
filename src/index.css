@@ -1,0 +1,12 @@
+@font-face {
+    font-family: PlayFair;
+    src: url(./fonts/PlayfairDisplay-VariableFont_wght.ttf);
+}
+
+* {
+    font-family: PlayFair !important; 
+}
+
+body {
+    background: linear-gradient(to right, #360033, #0b8793);
+}
