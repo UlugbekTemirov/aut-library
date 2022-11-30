@@ -11,9 +11,15 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-const pages = ["Home", "Books", "Other"];
+// globals
+import { APPBARLGLIGHT, pages, LOGINLGLIGHT } from "../../global";
 
-const Navbar = () => {
+// react router dom
+import { Link } from "react-router-dom";
+
+const Navbar = (props) => {
+  const { jwt } = props;
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
   const handleOpenNavMenu = (event) => {
@@ -24,9 +30,13 @@ const Navbar = () => {
     setAnchorElNav(null);
   };
 
+  console.log(jwt);
+
   return (
     <AppBar
-      sx={{ background: "linear-gradient(to right, #c31432, #240b36)" }}
+      sx={{
+        background: APPBARLGLIGHT,
+      }}
       position="fixed"
     >
       <Container maxWidth="xl">
@@ -80,9 +90,20 @@ const Navbar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
+                <Link key={page} to={page.toLowerCase()}>
+                  <MenuItem
+                    sx={{
+                      "&:hover": {
+                        background:
+                          "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
+                        color: "#fff",
+                      },
+                    }}
+                    onClick={handleCloseNavMenu}
+                  >
+                    <Typography textAlign="center">{page}</Typography>
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </Box>
@@ -107,23 +128,35 @@ const Navbar = () => {
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
+              <Link key={page} to={page.toLowerCase()}>
+                <Button
+                  onClick={handleCloseNavMenu}
+                  sx={{
+                    my: 2,
+                    color: "white",
+                    display: "block",
+                    "&:hover": {
+                      backgroundColor: "#000",
+                    },
+                  }}
+                >
+                  {page}
+                </Button>
+              </Link>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            <Button
-              sx={{ background: "linear-gradient(to right, #ff416c, #ff4b2b)" }}
-              variant="contained"
-            >
-              Login
-            </Button>
+            <Link to="login">
+              <Button
+                sx={{
+                  background: LOGINLGLIGHT,
+                }}
+                variant="contained"
+              >
+                Login
+              </Button>
+            </Link>
           </Box>
         </Toolbar>
       </Container>

@@ -1,12 +1,21 @@
-@font-face {
-    font-family: PlayFair;
-    src: url(./fonts/PlayfairDisplay-VariableFont_wght.ttf);
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
-    font-family: PlayFair !important; 
+    font-family: ChakraMedium !important; 
+}
+
+@font-face {
+    font-family: ChakraMedium;
+    src: url(./fonts/Chakra_Petch/ChakraPetch-Medium.ttf);
 }
 
 body {
-    background: linear-gradient(to right, #360033, #0b8793);
+    background: url(./images/library.png);
+    height: 100vh;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    margin-top: 70px;
 }
