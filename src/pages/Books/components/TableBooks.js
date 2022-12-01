@@ -7,36 +7,35 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-// dummy data
-import { books } from "../../../global";
-
 // components
-import NotExist from "./NotExist";
 import RowBooks from "./RowBooks";
+import Loader from "../../../components/Loader/Loader";
 
 const TableBooks = (props) => {
-  const { search } = props;
+  const { search, books, loading } = props;
 
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead>
+        <TableHead sx={{ fontWeight: "bold" }}>
           <TableRow>
-            <TableCell>Books</TableCell>
-            <TableCell align="center">Author</TableCell>
-            <TableCell align="center">Year</TableCell>
-            <TableCell align="center">Amount</TableCell>
+            <TableCell align="left">Order</TableCell>
+            <TableCell align="left">Books</TableCell>
+            <TableCell align="left">Author</TableCell>
+            <TableCell align="left">Year</TableCell>
+            <TableCell align="left">Amount</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {books.map((book) => {
-            if (search === "") return <RowBooks key={book.name} book={book} />;
+          {books.map((book, index) => {
+            if (search === "")
+              return <RowBooks key={book._id} index={index} book={book} />;
             if (search !== "") {
               if (
                 book.name.toLowerCase().includes(search.toLowerCase()) ||
                 book.author.toLowerCase().includes(search.toLowerCase())
               ) {
-                return <RowBooks key={book.name} book={book} />;
+                return <RowBooks key={book.name} index={index} book={book} />;
               }
             }
           })}

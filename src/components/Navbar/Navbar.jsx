@@ -30,8 +30,6 @@ const Navbar = (props) => {
     setAnchorElNav(null);
   };
 
-  console.log(jwt);
-
   return (
     <AppBar
       sx={{
@@ -146,18 +144,20 @@ const Navbar = (props) => {
             ))}
           </Box>
 
-          <Box sx={{ flexGrow: 0 }}>
-            <Link to="login">
-              <Button
-                sx={{
-                  background: LOGINLGLIGHT,
-                }}
-                variant="contained"
-              >
-                Login
-              </Button>
-            </Link>
-          </Box>
+          {!Boolean(jwt) && (
+            <Box sx={{ flexGrow: 0 }}>
+              <Link to="login">
+                <Button
+                  sx={{
+                    background: LOGINLGLIGHT,
+                  }}
+                  variant="contained"
+                >
+                  Login
+                </Button>
+              </Link>
+            </Box>
+          )}
         </Toolbar>
       </Container>
     </AppBar>

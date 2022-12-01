@@ -4,6 +4,10 @@ import React, { useState } from "react";
 import TableBooks from "./components/TableBooks";
 import Pagination from "./components/Pagination";
 import TopBar from "./components/TopBar";
+import Loader from "../../components/Loader/Loader";
+
+// api
+import GetAllBooksApi from "../../api/GetAllBooksApi";
 
 const Books = () => {
   const [search, setSearch] = useState("");
@@ -16,6 +20,19 @@ const Books = () => {
     setCategory(e.target.value);
   };
 
+  const [loading, setLoading] = useState(true);
+  const [response, setResponse] = useState({});
+  const [page, setPage] = useState(1);
+  const [limit, setLimit] = useState(10);
+
+  console.log(page);
+  // api
+  GetAllBooksApi(setLoading, setResponse, page, limit);
+
+  if (loading) return <Loader />;
+  if (response.status !== "success") return <h1>{response.message}</h1>;
+  if (response === undefined) return <h1>No data</h1>;
+
   return (
     <div className="mt-20">
       <TopBar
@@ -23,8 +40,12 @@ const Books = () => {
         search={search}
         searchHandler={searchHandler}
       />
-      <TableBooks search={search} />
-      <Pagination />
+      <TableBooks
+        loading={loading}
+        books={response?.data.doc}
+        search={search}
+      />
+      <Pagination page={page} setPage={setPage} />
     </div>
   );
 };

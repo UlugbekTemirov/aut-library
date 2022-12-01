@@ -2,7 +2,7 @@ import * as React from "react";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
-const BasicPagination = (props) => {
+const LeasePagination = (props) => {
   const { setPage, page } = props;
 
   const PaginationHandler = (e, page) => {
@@ -33,4 +33,4 @@ const BasicPagination = (props) => {
   );
 };
 
-export default BasicPagination;
+export default LeasePagination;

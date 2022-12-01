@@ -7,6 +7,7 @@ import Container from "@mui/material/Container";
 
 // cookie
 import Cookies from "universal-cookie";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   // cookie

@@ -12,10 +12,19 @@
 }
 
 body {
-    background: url(./images/library.png);
+    /* background: url(./images/library.png); */
     height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
     margin-top: 70px;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+    -moz-appearance: textfield;
+  }
