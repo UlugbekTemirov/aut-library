@@ -35,7 +35,7 @@ const Navbar = (props) => {
       sx={{
         background: APPBARLGLIGHT,
       }}
-      position="fixed"
+      position="static"
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>

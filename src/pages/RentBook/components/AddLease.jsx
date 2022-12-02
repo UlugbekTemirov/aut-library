@@ -5,6 +5,7 @@ import Modal from "@mui/material/Modal";
 
 // component;
 import LeaseForm from "./LeaseForm";
+import GetAllBooksApi from "../../../api/GetAllBooksApi";
 
 const style = {
   position: "absolute",
@@ -25,10 +26,15 @@ const AddLease = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState({});
+
+  GetAllBooksApi(setLoading, setResponse, null, null);
+
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>
-        Add Lease
+      <Button sx={{ mt: 2 }} variant="contained" onClick={handleOpen}>
+        Ijaraga Berish
       </Button>
       <Modal
         open={open}
@@ -37,8 +43,10 @@ const AddLease = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <h1 className="text-black">Add new Book</h1>
-          <LeaseForm />
+          <h2 className="text-gray-700 text-3xl text-center mb-3">
+            Ijaraga Berish
+          </h2>
+          <LeaseForm loading={loading} books={response?.data?.doc} />
         </Box>
       </Modal>
     </div>

@@ -14,11 +14,11 @@ const LeasePagination = (props) => {
       <div className="w-full flex justify-center">
         <Pagination
           onChange={(e, page) => PaginationHandler(e, page)}
-          count={10}
+          count={15}
           color="secondary"
           page={page}
           sx={{
-            background: "linear-gradient(to right, #005aa7, #fffde4)",
+            background: "#1D3A54",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",

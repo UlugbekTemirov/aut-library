@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { URL, JWT } from "../global";
 
 const AddNewBookApi = (setLoading, setResponse, book) => {
+  setLoading(true);
   fetch(`${URL}/api/v1/books`, {
     method: "POST",
     headers: {

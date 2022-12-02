@@ -4,10 +4,12 @@ import React, { useEffect } from "react";
 import { URL } from "../global";
 
 const GetAllBooksApi = (setLoading, setResponse, page, limit) => {
-  console.log(page);
   useEffect(() => {
     setLoading(true);
-    fetch(`${URL}/api/v1/books?page=${page}&limit=${limit}`, {
+    const CUSTOM_URL = `${URL}/api/v1/books?page=${page}&limit=${limit}`;
+    const MAIN_URL = `${URL}/api/v1/books?fields=name,codes`;
+    const SELECT_URL = page === null || limit === null ? MAIN_URL : CUSTOM_URL;
+    fetch(SELECT_URL, {
       method: "GET",
       headers: {
         "Content-type": "application/json",

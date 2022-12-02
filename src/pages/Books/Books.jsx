@@ -25,7 +25,6 @@ const Books = () => {
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
 
-  console.log(page);
   // api
   GetAllBooksApi(setLoading, setResponse, page, limit);
 
@@ -34,7 +33,7 @@ const Books = () => {
   if (response === undefined) return <h1>No data</h1>;
 
   return (
-    <div className="mt-20">
+    <div>
       <TopBar
         categoryHandler={categoryHandler}
         search={search}

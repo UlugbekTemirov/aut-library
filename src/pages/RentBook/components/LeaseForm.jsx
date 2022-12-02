@@ -1,45 +1,86 @@
 import React, { useState } from "react";
 
 // api
+import AddLeaseApi from "../../../api/AddLeaseApi";
 
 const LeaseForm = (props) => {
+  const { books, loading: loader } = props;
+
   const [studentName, setStudentName] = useState("");
   const [orderedBook, setOrderedBook] = useState("");
   const [classOfStudent, setClassOfStudent] = useState("");
   const [major, setMajor] = useState("");
   const [studentPhoneNumber, setStudentPhoneNumber] = useState("");
+  const [orderedBookId, SetOrderedBookId] = useState("");
+  const [serialNumber, setSerialNumber] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({});
+  const [error, setError] = useState("");
+  if (!loading && response.status !== "success") console.log(response.message);
 
   const setInitialHandler = () => {
-    setName("");
-    setAuthor("");
-    setYear("");
-    setPages("");
-    setCode("");
-    setAmount("");
+    setStudentName("");
+    setOrderedBook("");
+    setClassOfStudent("");
+    setMajor("");
+    setStudentPhoneNumber("");
+    SetOrderedBookId("");
+    setTargetBook("");
+    setTargetSerial("");
+    setSerialNumber("");
+  };
+
+  const [targetBook, setTargetBook] = useState([]);
+  const orderedBookHandler = (e) => {
+    if (e.target.value !== "") {
+      setTargetBook(
+        books.filter((book) =>
+          book.name.toLowerCase().includes(e.target.value.toLowerCase())
+        )
+      );
+    } else {
+      setTargetBook("");
+    }
+    setOrderedBook(e.target.value);
+  };
+
+  const [targetSerial, setTargetSerial] = useState([]);
+  const serialNumberHandler = (e) => {
+    setSerialNumber(e.target.value);
+    const book = books.filter((item) => item.id.includes(orderedBookId));
+    setTargetSerial(book[0].codes);
+  };
+
+  const getBookHandler = (target) => {
+    setOrderedBook(target.name);
+    SetOrderedBookId(target._id);
+    setTargetBook("");
+  };
+
+  const getSeriaHandler = (seria) => {
+    setSerialNumber(seria);
+    setTargetSerial("");
   };
 
   const submitHandler = () => {
     const student = {
       studentName,
-      orderedBook,
+      orderedBook: orderedBookId,
       classOfStudent,
       major,
       studentPhoneNumber,
     };
     setInitialHandler();
+    console.log(student);
     AddLeaseApi(setLoading, setResponse, student);
   };
-  console.log(response);
-  console.log(loading);
 
   return (
     <form>
       <div className="books-input">
         <label htmlFor="name" className="block">
-          Student Name
+          Talabaning ismi
         </label>
         <input
           className="p-2 outline-none rounded-lg border w-full"
@@ -52,30 +93,77 @@ const LeaseForm = (props) => {
           }}
         />
       </div>
-      <div className="books-input mt-2">
+      <div className="books-input mt-2 relative">
         <label htmlFor="bookName" className="block">
-          Ordered Book
+          Kitob nomi
         </label>
         <input
-          className="p-2 outline-none rounded-lg border w-full"
+          className={`p-2 outline-none rounded-lg border w-full ${
+            Boolean(orderedBookId) &&
+            "bg-gray-300 opacity-50 cursor-not-allowed"
+          }`}
           id="bookName"
           type="text"
-          placeholder="Book name"
+          placeholder="Harry Potter"
           value={orderedBook}
-          onChange={(e) => {
-            setOrderedBook(e.target.value);
-          }}
+          disabled={Boolean(orderedBookId)}
+          onChange={(e) => orderedBookHandler(e)}
         />
+        {targetBook.length !== 0 ? (
+          <div className="bg-white absolute top-18 left-0 w-full shadow-lg shadow-indigo-500/40 p-2">
+            {targetBook.map((target) => (
+              <h2
+                className="hover:bg-gray-200 cursor-pointer px-2 py-1 rounded"
+                onClick={() => getBookHandler(target)}
+                key={target._id}
+              >
+                {target.name}
+              </h2>
+            ))}
+          </div>
+        ) : (
+          ""
+        )}
+      </div>
+      <div className="books-input mt-2">
+        <label htmlFor="code" className="block">
+          Seriya raqami
+        </label>
+        <input
+          className={`p-2 outline-none rounded-lg border w-full ${
+            !Boolean(targetSerial) &&
+            "bg-gray-300 opacity-50 cursor-not-allowed"
+          }`}
+          disabled={!Boolean(targetSerial)}
+          id="code"
+          type="text"
+          placeholder="B-00013"
+          value={serialNumber}
+          onChange={(e) => serialNumberHandler(e)}
+        />
+        {targetSerial.length > 0 && (
+          <div className="bg-white absolute top-18 left-0 w-full shadow-lg shadow-indigo-500/40 p-2">
+            {targetSerial.map((seria) => (
+              <h2
+                className="hover:bg-gray-200 cursor-pointer px-2 py-1 rounded"
+                onClick={() => getSeriaHandler(seria)}
+                key={seria}
+              >
+                {seria}
+              </h2>
+            ))}
+          </div>
+        )}
       </div>
       <div className="books-input mt-2">
         <label htmlFor="classStudent" className="block">
-          Faculty
+          Guruh
         </label>
         <input
           className="p-2 outline-none rounded-lg border w-full"
           id="classStudent"
           type="text"
-          placeholder="2017"
+          placeholder="E201"
           value={classOfStudent}
           onChange={(e) => {
             setClassOfStudent(e.target.value);
@@ -84,13 +172,13 @@ const LeaseForm = (props) => {
       </div>
       <div className="books-input mt-2">
         <label htmlFor="pages" className="block">
-          Major
+          Fukultet
         </label>
         <input
           className="p-2 outline-none rounded-lg border w-full"
           id="pages"
-          type="number"
-          placeholder="416"
+          type="text"
+          placeholder="ECE"
           value={major}
           onChange={(e) => {
             setMajor(e.target.value);
@@ -99,13 +187,13 @@ const LeaseForm = (props) => {
       </div>
       <div className="books-input mt-2">
         <label htmlFor="code" className="block">
-          Phone Number
+          Telefon raqam
         </label>
         <input
           className="p-2 outline-none rounded-lg border w-full"
           id="code"
           type="text"
-          placeholder="B-00013"
+          placeholder="+998991234567"
           value={studentPhoneNumber}
           onChange={(e) => {
             setStudentPhoneNumber(e.target.value);
@@ -116,7 +204,7 @@ const LeaseForm = (props) => {
       <button
         type="button"
         onClick={submitHandler}
-        className="p-2 bg-gray-400 rounded-lg mt-3"
+        className="py-2 px-4 bg-blue-800 text-white rounded-lg mt-3"
       >
         Qo'shish
       </button>

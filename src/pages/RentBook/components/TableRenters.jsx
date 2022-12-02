@@ -6,61 +6,50 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import RowRenters from "./RowRenters";
 
-// leasers
-const leasers = [
-  {
-    studentName: "Jamshid Toshov",
-    orderedBook: "6387b6c2a8014138812f7685",
-    classOfStudent: 201,
-    major: "Civil",
-    studentPhoneNumber: "+998945414635",
-  },
-  {
-    studentName: "Temirov Ulugbek",
-    orderedBook: "6387b6c2a8014138812f7685",
-    classOfStudent: 202,
-    major: "ECE",
-    studentPhoneNumber: "+998945414635",
-  },
-  {
-    studentName: "Narimon Jo'rayev",
-    orderedBook: "6387b6c2a8014138812f7685",
-    classOfStudent: 202,
-    major: "Architecture",
-    studentPhoneNumber: "+998945414635",
-  },
-  {
-    studentName: "Abror Axmedov",
-    orderedBook: "6387b6c2a8014138812f7685",
-    classOfStudent: 203,
-    major: "ECE",
-    studentPhoneNumber: "+998945414635",
-  },
-];
+// components
+import RowRenters from "./RowRenters";
+import SpringModal from "./SpringModal";
 
 const TableRenters = (props) => {
   const { leasers } = props;
-  console.log(leasers);
+
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+
+  const [leaser, setLeaser] = useState({});
+  const changeLeaserHandler = (leaser) => {
+    setLeaser(leaser);
+    handleOpen();
+  };
+
   return (
-    <TableContainer sx={{ my: 4 }} component={Paper}>
+    <TableContainer sx={{ my: 2 }} component={Paper}>
+      <SpringModal leaser={leaser} open={open} setOpen={setOpen} />
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
-          <TableRow>
+          <TableRow sx={{ backgroundColor: "#FAFAFA" }}>
             <TableCell align="left" sx={{ width: 30, fontWeight: "bold" }}>
-              Order
+              Raqam
             </TableCell>
-            <TableCell align="left">Student Name</TableCell>
-            <TableCell align="left">Ordered Book</TableCell>
-            <TableCell align="left">Faculty</TableCell>
-            <TableCell align="left">Major</TableCell>
-            <TableCell align="left">Phone Number</TableCell>
+            <TableCell align="left">Talaba</TableCell>
+            <TableCell align="left">Kitob</TableCell>
+            <TableCell align="left">Seriya raqami</TableCell>
+            <TableCell align="left">Guruh</TableCell>
+            <TableCell align="left">Fakultet</TableCell>
+            <TableCell align="left">Telefon raqam</TableCell>
+            <TableCell align="left">Olingan</TableCell>
+            <TableCell align="left">Berilishi kerak</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {leasers.map((leaser, index) => (
-            <RowRenters key={leaser._id} leaser={leaser} index={index} />
+            <RowRenters
+              changeLeaserHandler={changeLeaserHandler}
+              key={leaser._id}
+              leaser={leaser}
+              index={index}
+            />
           ))}
         </TableBody>
       </Table>

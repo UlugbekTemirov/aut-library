@@ -18,7 +18,7 @@ const BasicPagination = (props) => {
           color="secondary"
           page={page}
           sx={{
-            background: "linear-gradient(to right, #005aa7, #fffde4)",
+            background: "#1D3A54",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
