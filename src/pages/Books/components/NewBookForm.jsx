@@ -14,6 +14,9 @@ const NewBookForm = () => {
   const [code, setCode] = useState("");
   const [codes, setCodes] = useState([]);
 
+  // error handler
+  const [error, setError] = useState("");
+
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({});
 
@@ -27,13 +30,33 @@ const NewBookForm = () => {
   };
 
   const codesHandler = (e) => {
-    setCode(e.target.value);
+    setCode(e.target.value.toUpperCase());
   };
 
-  const addCodesHandler = () => {
-    setCodes((prev) => [...prev, code]);
+  const addCodesHandler = (e) => {
+    let a = false;
+    codes.forEach((xcode) => xcode === code && (a = true));
+    const validate = code.trim() !== "" && !a;
+    if (validate) {
+      setCodes((prev) => [...prev, code]);
+      setError("");
+    } else {
+      setError("Seria raqamini to'g'ri kiriting!");
+    }
     setCode("");
   };
+
+  const removeCodeHandler = (xcode) => {
+    const newCodes = codes.filter((code) => code !== xcode);
+    setCodes(newCodes);
+  };
+
+  let validate =
+    Boolean(name.trim()) &&
+    Boolean(author.trim()) &&
+    Boolean(year.trim()) &&
+    Boolean(pages.trim()) &&
+    codes.length > 0;
 
   const submitHandler = () => {
     const book = {
@@ -44,19 +67,20 @@ const NewBookForm = () => {
       codes,
     };
     setInitialHandler();
-    AddNewBookApi(setLoading, setResponse, book);
+    if (validate) AddNewBookApi(setLoading, setResponse, book);
   };
-  console.log(response);
-  console.log(loading);
 
   return (
     <form>
+      <h2 className="text-red-700 text-center">{response.message}</h2>
+
       <div className="books-input">
         <label htmlFor="name" className="block">
           Name
         </label>
         <input
-          className="p-2 outline-none rounded-lg border w-full"
+          required
+          className={`p-2 outline-none rounded-lg border w-full`}
           id="name"
           type="text"
           placeholder="Harry Potter"
@@ -124,25 +148,44 @@ const NewBookForm = () => {
             value={code}
             onChange={(e) => codesHandler(e)}
           />
-          <button type="button" onClick={addCodesHandler} className="p-2">
-            Add
+          <button
+            type="button"
+            onClick={(e) => addCodesHandler(e)}
+            className="py-1 px-2 border border-blue-800 rounded-md ml-3 hover:bg-blue-700 hover:text-white transition-all"
+          >
+            ADD
           </button>
         </div>
+
         {codes.length > 0 && (
           <div className="grid grid-cols-4 items-center mt-1 max-h-20 overflow-auto">
             {codes.map((code) => (
-              <div className="bg-gray-300 rounded-md mr-1 flex items-center py-1 px-2 cursor-pointer opacity-60 hover:opacity-100 transition-all mt-1">
-                <h2 className="text-xs overflow-hidden">{code}</h2>{" "}
-                <img className="w-4 h-4 ml-1" src={remove} alt="code" />
+              <div
+                onClick={() => removeCodeHandler(code)}
+                key={code}
+                className="bg-gray-300 rounded-md  mr-1 flex items-center py-1 px-2 cursor-pointer opacity-70 hover:opacity-100 transition-all mt-1 relative overflow-hidden"
+              >
+                <h2 className="text-xs hover:animate-marquee">{code}</h2>{" "}
+                <img
+                  className="w-4 h-4 ml-1 absolute right-1 top-1/2 -translate-y-1/2 shadow-myshadow rounded-full"
+                  src={remove}
+                  alt="code"
+                />
               </div>
             ))}
           </div>
         )}
       </div>
+      <h2 className="text-red-700 text-xs">{error}</h2>
       <button
         type="button"
         onClick={submitHandler}
-        className="p-2 bg-gray-400 rounded-lg mt-3"
+        disabled={!validate}
+        className={`py-2 px-4  rounded-lg mt-3 text-white  transition-all ${
+          validate
+            ? "bg-blue-700 hover:bg-blue-800"
+            : "bg-gray-400 cursor-not-allowed"
+        }`}
       >
         Qo'shish
       </button>

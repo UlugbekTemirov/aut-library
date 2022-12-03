@@ -28,6 +28,8 @@ const RowRenters = (props) => {
   const dday = deadline.getDate();
   const dmonth = deadline.getMonth();
 
+  console.log(leaser.shouldBeReturned);
+
   return (
     <React.Fragment>
       <TableRow
@@ -70,6 +72,7 @@ const RowRenters = (props) => {
         <TableCell align="left">
           {dday}-{months[dmonth]}
         </TableCell>
+        <TableCell align="left">{leaser.shouldBeReturned}</TableCell>
       </TableRow>
     </React.Fragment>
   );

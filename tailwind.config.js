@@ -14,7 +14,10 @@ module.exports = {
         },
       },
       animation: {
-        marquee: "marquee 10s linear infinite",
+        marquee: "marquee 3s linear infinite",
+      },
+      boxShadow: {
+        myshadow: "5px 0px 10px 10px #DFE2E6",
       },
     },
   },
