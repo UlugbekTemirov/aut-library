@@ -12,7 +12,7 @@ import RowRenters from "./RowRenters";
 import SpringModal from "./SpringModal";
 
 const TableRenters = (props) => {
-  const { leasers } = props;
+  const { leasers, setUpdate } = props;
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -25,7 +25,12 @@ const TableRenters = (props) => {
 
   return (
     <TableContainer sx={{ my: 2 }} component={Paper}>
-      <SpringModal leaser={leaser} open={open} setOpen={setOpen} />
+      <SpringModal
+        setUpdate={setUpdate}
+        leaser={leaser}
+        open={open}
+        setOpen={setOpen}
+      />
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ backgroundColor: "#FAFAFA" }}>

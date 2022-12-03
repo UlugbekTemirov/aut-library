@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { update } from "react-spring";
 
 // api
 import GetLeasersApi from "../../api/GetLeasersApi";
@@ -14,16 +15,18 @@ const RentBook = () => {
   const [response, setResponse] = useState({});
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
 
-  GetLeasersApi(setLoading, setResponse, page, limit);
+  const [update, setUpdate] = useState(false);
+
+  GetLeasersApi(setLoading, setResponse, page, limit, update);
 
   if (loading) return <Loader />;
   if (response.status !== "success") return <h1>{response.message}</h1>;
   return (
     <React.Fragment>
       <AddLease />
-      <TableRenters leasers={response.data.doc} />
+      <TableRenters setUpdate={setUpdate} leasers={response.data.doc} />
       <LeasePagination page={page} setPage={setPage} />
     </React.Fragment>
   );

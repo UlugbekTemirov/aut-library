@@ -2,6 +2,7 @@ import React from "react";
 import { JWT, URL } from "../global";
 
 const ReturnBookApi = (setLoading, setResponse, bookId) => {
+  setLoading(true);
   fetch(`${URL}/api/v1/leases/${bookId}`, {
     method: "DELETE",
     headers: {

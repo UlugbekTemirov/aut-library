@@ -10,6 +10,7 @@ import { useSpring, animated } from "react-spring";
 
 // api
 import ReturnBookApi from "../../../api/ReturnBookApi";
+import LoaderMini from "./LoaderMini";
 
 const Fade = React.forwardRef(function Fade(props, ref) {
   const { in: open, children, onEnter, onExited, ...other } = props;
@@ -47,7 +48,7 @@ const style = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: 500,
+  minWidth: 400,
   boxShadow: 24,
   backgroundColor: "#fff",
   borderRadius: 4,
@@ -55,14 +56,18 @@ const style = {
 };
 
 const SpringModal = (props) => {
-  const { open, setOpen, leaser } = props;
+  const { open, setOpen, leaser, setUpdate } = props;
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState();
   const [response, setResponse] = useState([]);
 
   const returnBookHandler = () => {
     ReturnBookApi(setLoading, setResponse, leaser.id);
   };
+
+  if (!loading && typeof loading === "boolean") {
+    setUpdate((prev) => !prev);
+  }
 
   const handleClose = () => setOpen(false);
   if (response.status === "success") {
@@ -85,6 +90,12 @@ const SpringModal = (props) => {
       >
         <Fade in={open}>
           <Box sx={style}>
+            {loading && typeof loading === "boolean" && (
+              <div className="w-full h-full absolute bg-black opacity-60 -m-8 rounded-2xl cursor-progress z-10 flex items-center justify-center">
+                <LoaderMini />
+              </div>
+            )}
+
             <Typography
               sx={{ textAlign: "center", fontSize: "25px" }}
               id="spring-modal-title"
@@ -107,7 +118,7 @@ const SpringModal = (props) => {
               variant="h6"
               component="h2"
             >
-              Code: {leaser.orderedBook?.codes[0]}
+              Code: {leaser.orderedBookSeria}
             </Typography>
             <Typography
               id="spring-modal-description"

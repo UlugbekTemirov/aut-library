@@ -63,16 +63,20 @@ const LeaseForm = (props) => {
     setTargetSerial("");
   };
 
+  const getMajorHandler = (e) => {
+    setMajor(e.target.id);
+  };
+
   const submitHandler = () => {
     const student = {
       studentName,
       orderedBook: orderedBookId,
       classOfStudent,
+      orderedBookSeria: serialNumber,
       major,
       studentPhoneNumber,
     };
     setInitialHandler();
-    console.log(student);
     AddLeaseApi(setLoading, setResponse, student);
   };
 
@@ -174,7 +178,61 @@ const LeaseForm = (props) => {
         <label htmlFor="pages" className="block">
           Fukultet
         </label>
+        <label
+          className={`mr-2 rounded-md py-1 px-4 cursor-pointer ${
+            Boolean(major === "Architecture")
+              ? "bg-blue-700 text-white"
+              : "bg-gray-300 text-gray-700"
+          }`}
+          htmlFor="Architecture"
+        >
+          Architecture
+        </label>
         <input
+          className="hidden"
+          onChange={getMajorHandler}
+          name="faculty"
+          type="radio"
+          id="Architecture"
+          checked={Boolean(major === "Architecture")}
+        />
+        <label
+          className={`mr-2 rounded-md py-1 px-4 cursor-pointer ${
+            Boolean(major === "ECE")
+              ? "bg-blue-700 text-white"
+              : "bg-gray-300 text-gray-700"
+          }`}
+          htmlFor="ECE"
+        >
+          ECE
+        </label>
+        <input
+          className="hidden"
+          onChange={getMajorHandler}
+          name="faculty"
+          type="radio"
+          id="ECE"
+          checked={Boolean(major === "ECE")}
+        />
+        <label
+          className={`rounded-md py-1 px-4 cursor-pointer ${
+            Boolean(major === "Civil")
+              ? "bg-blue-700 text-white"
+              : "bg-gray-300 text-gray-700"
+          }`}
+          htmlFor="Civil"
+        >
+          Civil
+        </label>
+        <input
+          className="hidden"
+          onChange={getMajorHandler}
+          name="faculty"
+          type="radio"
+          id="Civil"
+          checked={Boolean(major === "Civil")}
+        />
+        {/* <input
           className="p-2 outline-none rounded-lg border w-full"
           id="pages"
           type="text"
@@ -183,7 +241,7 @@ const LeaseForm = (props) => {
           onChange={(e) => {
             setMajor(e.target.value);
           }}
-        />
+        /> */}
       </div>
       <div className="books-input mt-2">
         <label htmlFor="code" className="block">

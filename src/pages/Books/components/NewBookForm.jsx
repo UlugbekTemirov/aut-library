@@ -3,13 +3,16 @@ import React, { useState } from "react";
 // api
 import AddNewBookApi from "../../../api/AddNewBookApi";
 
+// remove icon
+import remove from "../../../images/remove.png";
+
 const NewBookForm = () => {
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
   const [pages, setPages] = useState("");
   const [code, setCode] = useState("");
-  const [amount, setAmount] = useState("");
+  const [codes, setCodes] = useState([]);
 
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({});
@@ -20,7 +23,16 @@ const NewBookForm = () => {
     setYear("");
     setPages("");
     setCode("");
-    setAmount("");
+    setCodes([]);
+  };
+
+  const codesHandler = (e) => {
+    setCode(e.target.value);
+  };
+
+  const addCodesHandler = () => {
+    setCodes((prev) => [...prev, code]);
+    setCode("");
   };
 
   const submitHandler = () => {
@@ -29,8 +41,7 @@ const NewBookForm = () => {
       author,
       year,
       pages,
-      code,
-      amount,
+      codes,
     };
     setInitialHandler();
     AddNewBookApi(setLoading, setResponse, book);
@@ -104,31 +115,29 @@ const NewBookForm = () => {
         <label htmlFor="code" className="block">
           Code
         </label>
-        <input
-          className="p-2 outline-none rounded-lg border w-full"
-          id="code"
-          type="text"
-          placeholder="B-00013"
-          value={code}
-          onChange={(e) => {
-            setCode(e.target.value);
-          }}
-        />
-      </div>
-      <div className="books-input mt-2">
-        <label htmlFor="amount" className="block">
-          Amount
-        </label>
-        <input
-          className="p-2 outline-none rounded-lg border w-full"
-          id="amount"
-          type="number"
-          placeholder="13"
-          value={amount}
-          onChange={(e) => {
-            setAmount(e.target.value);
-          }}
-        />
+        <div className="flex">
+          <input
+            className="p-2 outline-none rounded-lg border w-full"
+            id="code"
+            type="text"
+            placeholder="B-00013"
+            value={code}
+            onChange={(e) => codesHandler(e)}
+          />
+          <button type="button" onClick={addCodesHandler} className="p-2">
+            Add
+          </button>
+        </div>
+        {codes.length > 0 && (
+          <div className="grid grid-cols-4 items-center mt-1 max-h-20 overflow-auto">
+            {codes.map((code) => (
+              <div className="bg-gray-300 rounded-md mr-1 flex items-center py-1 px-2 cursor-pointer opacity-60 hover:opacity-100 transition-all mt-1">
+                <h2 className="text-xs overflow-hidden">{code}</h2>{" "}
+                <img className="w-4 h-4 ml-1" src={remove} alt="code" />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
       <button
         type="button"

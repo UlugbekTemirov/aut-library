@@ -6,7 +6,6 @@ import TableCell from "@mui/material/TableCell";
 
 const RowRenters = (props) => {
   const { leaser, index, changeLeaserHandler } = props;
-  console.log(leaser);
   const data = new Date(leaser.orderedTime);
   const day = data.getDate();
   const month = data.getMonth();
@@ -61,7 +60,7 @@ const RowRenters = (props) => {
             </div>
           </div>
         </TableCell>
-        <TableCell align="left">{leaser.orderedBook?.codes[0]}</TableCell>
+        <TableCell align="left">{leaser.orderedBookSeria}</TableCell>
         <TableCell align="left">{leaser.classOfStudent}</TableCell>
         <TableCell align="left">{leaser.major}</TableCell>
         <TableCell align="left">{leaser.studentPhoneNumber}</TableCell>

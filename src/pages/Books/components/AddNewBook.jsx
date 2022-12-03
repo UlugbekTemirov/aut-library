@@ -35,7 +35,7 @@ const AddNewBook = () => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <h1 className="text-black">Add new Book</h1>
+          <h2 className="text-black text-3xl text-center mb-3">Add new Book</h2>
           <NewBookForm />
         </Box>
       </Modal>

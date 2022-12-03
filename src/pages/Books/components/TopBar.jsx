@@ -2,8 +2,8 @@ import React from "react";
 
 // components
 import Search from "./Search";
-import Category from "./Category";
-import AddNewBook from "./AddNewBook";
+import Category from "./Category.jsx";
+import AddNewBook from "./AddNewBook.jsx";
 
 // cookie
 import Cookies from "universal-cookie";
@@ -13,6 +13,7 @@ const TopBar = (props) => {
   const jwt = cookie.get("jwt");
 
   const { search, searchHandler, categoryHandler } = props;
+
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center">

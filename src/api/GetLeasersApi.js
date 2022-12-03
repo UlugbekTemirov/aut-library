@@ -4,7 +4,7 @@ import { URL } from "../global";
 // cookie
 import Cookies from "universal-cookie";
 
-const GetLeasersApi = (setLoading, setResponse, page, limit) => {
+const GetLeasersApi = (setLoading, setResponse, page, limit, update) => {
   // cookies
   const cookie = new Cookies();
   const jwt = cookie.get("jwt");
@@ -23,7 +23,7 @@ const GetLeasersApi = (setLoading, setResponse, page, limit) => {
         setResponse(response);
         setLoading(false);
       });
-  }, [page, limit]);
+  }, [page, limit, update]);
 };
 
 export default GetLeasersApi;
