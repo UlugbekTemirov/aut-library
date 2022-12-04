@@ -13,8 +13,9 @@ const LoginApi = (user, setLoading, setResponse, setError) => {
   const getResponseHandler = (response) => {
     setLoading(false);
     setResponse(response);
+    const expire = new Date(response.cookieOptions.expires);
     if (response.status === "success") {
-      cookie.set("jwt", response.token);
+      cookie.set("jwt", response.token, { expires: expire });
     }
     if (response.status !== "success") {
       setError(response.message);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // api
 import AddNewBookApi from "../../../api/AddNewBookApi";
@@ -33,6 +33,8 @@ const NewBookForm = () => {
     setCode(e.target.value.toUpperCase());
   };
 
+  const [shake, setShaking] = useState(false);
+
   const addCodesHandler = (e) => {
     let a = false;
     codes.forEach((xcode) => xcode === code && (a = true));
@@ -40,15 +42,21 @@ const NewBookForm = () => {
     if (validate) {
       setCodes((prev) => [...prev, code]);
       setError("");
+      setCode("");
     } else {
+      setShaking((prev) => !prev);
       setError("Seria raqamini to'g'ri kiriting!");
     }
-    setCode("");
   };
 
   const removeCodeHandler = (xcode) => {
     const newCodes = codes.filter((code) => code !== xcode);
     setCodes(newCodes);
+  };
+
+  const EnterHandler = (e) => {
+    // console.log(e.keyCode === 13);
+    if (e.keyCode === 13) addCodesHandler();
   };
 
   let validate =
@@ -80,7 +88,7 @@ const NewBookForm = () => {
         </label>
         <input
           required
-          className={`p-2 outline-none rounded-lg border w-full`}
+          className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
           id="name"
           type="text"
           placeholder="Harry Potter"
@@ -95,7 +103,7 @@ const NewBookForm = () => {
           Author
         </label>
         <input
-          className="p-2 outline-none rounded-lg border w-full"
+          className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
           id="author"
           type="text"
           placeholder="J. K. Rowlings"
@@ -110,7 +118,7 @@ const NewBookForm = () => {
           Year
         </label>
         <input
-          className="p-2 outline-none rounded-lg border w-full"
+          className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
           id="year"
           type="text"
           placeholder="2017"
@@ -125,7 +133,7 @@ const NewBookForm = () => {
           Pages
         </label>
         <input
-          className="p-2 outline-none rounded-lg border w-full"
+          className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
           id="pages"
           type="number"
           placeholder="416"
@@ -141,17 +149,18 @@ const NewBookForm = () => {
         </label>
         <div className="flex">
           <input
-            className="p-2 outline-none rounded-lg border w-full"
+            className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
             id="code"
             type="text"
             placeholder="B-00013"
             value={code}
             onChange={(e) => codesHandler(e)}
+            onKeyDown={(e) => EnterHandler(e)}
           />
           <button
             type="button"
             onClick={(e) => addCodesHandler(e)}
-            className="py-1 px-2 border border-blue-800 rounded-md ml-3 hover:bg-blue-700 hover:text-white transition-all"
+            className="py-1 px-2 border border-gray-500 text-gray-500 rounded-md ml-3 hover:border-black hover:text-black transition-all"
           >
             ADD
           </button>
@@ -176,12 +185,16 @@ const NewBookForm = () => {
           </div>
         )}
       </div>
-      <h2 className="text-red-700 text-xs">{error}</h2>
+      <h2
+        className={`text-red-700 text-xs ${shake && "animate-tilt-shaking"} `}
+      >
+        {error}
+      </h2>
       <button
         type="button"
         onClick={submitHandler}
         disabled={!validate}
-        className={`py-2 px-4  rounded-lg mt-3 text-white  transition-all ${
+        className={`py-2 px-4  rounded-lg mt-3 text-white transition-all ${
           validate
             ? "bg-blue-700 hover:bg-blue-800"
             : "bg-gray-400 cursor-not-allowed"

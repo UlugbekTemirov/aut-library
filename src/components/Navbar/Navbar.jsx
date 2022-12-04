@@ -22,10 +22,9 @@ import { Link } from "react-router-dom";
 // cookies
 import Cookies from "universal-cookie";
 
-const Navbar = (props) => {
+const Navbar = () => {
   const cookie = new Cookies();
   const jwt = cookie.get("jwt", { path: "/" });
-  console.log(jwt);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -36,7 +35,6 @@ const Navbar = (props) => {
   const [currentPage, setCurrentPage] = useState("");
   const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
-    setCurrentPage(page.toLowerCase());
   };
 
   const location = useLocation();
@@ -107,9 +105,13 @@ const Navbar = (props) => {
             >
               {Boolean(jwt) &&
                 pages.map((page) => (
-                  <Link key={page} to={page.toLowerCase()}>
+                  <Link
+                    onClick={() => setCurrentPage(page.toLowerCase())}
+                    key={page}
+                    to={page.toLowerCase()}
+                  >
                     <Button
-                      onClick={() => handleCloseNavMenu(page)}
+                      onClick={handleCloseNavMenu}
                       sx={{
                         my: 2,
                         mx: 0.5,
@@ -132,9 +134,13 @@ const Navbar = (props) => {
                 ))}
               {!Boolean(jwt) &&
                 userPages.map((page) => (
-                  <Link key={page} to={page.toLowerCase()}>
+                  <Link
+                    onClick={() => setCurrentPage(page.toLowerCase())}
+                    key={page}
+                    to={page.toLowerCase()}
+                  >
                     <Button
-                      onClick={() => handleCloseNavMenu(page)}
+                      onClick={handleCloseNavMenu}
                       sx={{
                         my: 2,
                         mx: 0.5,
@@ -179,9 +185,13 @@ const Navbar = (props) => {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {Boolean(jwt) &&
               pages.map((page) => (
-                <Link key={page} to={page.toLowerCase()}>
+                <Link
+                  onClick={() => setCurrentPage(page.toLowerCase())}
+                  key={page}
+                  to={page.toLowerCase()}
+                >
                   <Button
-                    onClick={() => handleCloseNavMenu(page)}
+                    onClick={handleCloseNavMenu}
                     sx={{
                       my: 2,
                       mx: 0.5,
@@ -204,9 +214,13 @@ const Navbar = (props) => {
               ))}
             {!Boolean(jwt) &&
               userPages.map((page) => (
-                <Link key={page} to={page.toLowerCase()}>
+                <Link
+                  onClick={() => setCurrentPage(page.toLowerCase())}
+                  key={page}
+                  to={page.toLowerCase()}
+                >
                   <Button
-                    onClick={() => handleCloseNavMenu(page)}
+                    onClick={handleCloseNavMenu}
                     sx={{
                       my: 2,
                       mx: 0.5,
@@ -235,6 +249,10 @@ const Navbar = (props) => {
                 <Button
                   sx={{
                     background: LOGINLGLIGHT,
+                    "&:hover": {
+                      backgroundColor: "white",
+                      color: "#000",
+                    },
                   }}
                   variant="contained"
                 >

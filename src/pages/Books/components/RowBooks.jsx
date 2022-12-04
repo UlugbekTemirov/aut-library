@@ -3,7 +3,6 @@ import React from "react";
 // mui
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
-import NotExist from "./NotExist";
 
 const RowBooks = (props) => {
   const { book, index } = props;
@@ -15,10 +14,11 @@ const RowBooks = (props) => {
         position: "relative",
         cursor: "pointer",
         "&:last-child td, &:last-child th": { border: 0 },
-        backgroundColor: `${a && "rgb(139,0,0,0.5)"}`,
-        cursor: `${a ? "not-allowed" : "pointer"}`,
+        // backgroundColor: `${a && "#2E7D32"}`,
+        // opacity: `${a && "80%"}`,
+        // cursor: `${a ? "not-allowed" : "pointer"}`,
         "&:hover": {
-          backgroundColor: `${!a && "#ccc"}`,
+          backgroundColor: "#ccc",
         },
       }}
     >

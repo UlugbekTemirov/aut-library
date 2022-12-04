@@ -78,7 +78,7 @@ const HistoryRow = (props) => {
         </TableCell>
         <TableCell align="center">
           {!history.active && (
-            <div className=" bg-green-800 rounded-full text-white p-1">
+            <div className="bg-green-800 rounded-full text-white p-1">
               qaytarildi
             </div>
           )}

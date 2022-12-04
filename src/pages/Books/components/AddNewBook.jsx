@@ -25,7 +25,11 @@ const AddNewBook = () => {
 
   return (
     <div>
-      <Button variant="contained" onClick={handleOpen}>
+      <Button
+        sx={{ borderRadius: "12px" }}
+        variant="contained"
+        onClick={handleOpen}
+      >
         Add Book
       </Button>
       <Modal

@@ -28,7 +28,7 @@ const Books = () => {
   // api
   GetAllBooksApi(setLoading, setResponse, page, limit);
 
-  if (loading) return <Loader />;
+  // if (loading) return <Loader />;
   if (response.status !== "success") return <h1>{response.message}</h1>;
   if (response === undefined) return <h1>No data</h1>;
 
@@ -41,7 +41,7 @@ const Books = () => {
       />
       <TableBooks
         loading={loading}
-        books={response?.data.doc}
+        books={response?.data?.doc}
         search={search}
       />
       <Pagination page={page} setPage={setPage} />

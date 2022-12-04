@@ -2,10 +2,10 @@ import Cookies from "universal-cookie";
 const cookie = new Cookies();
 const JWT = cookie.get("jwt", { path: "/" });
 
-const APPBARLGLIGHT = "linear-gradient(to right, #000000, #434343)";
-const LOGINLGLIGHT = "linear-gradient(to right, #ff4b1f, #1fddff)";
-const pages = ["Home", "Books", "Lease", "History"];
-const userPages = ["Home", "Books"];
+const APPBARLGLIGHT = "#555C66";
+const LOGINLGLIGHT = "#404040";
+const pages = ["Home", "Kitoblar", "Ijara", "Tarix"];
+const userPages = ["Home", "Kitoblar"];
 const URL = "http://127.0.0.1:3000";
 const books = [
   {

@@ -15,7 +15,7 @@ const TableBooks = (props) => {
   const { search, books, loading } = props;
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer sx={{ borderRadius: "14px" }} component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead sx={{ fontWeight: "bold" }}>
           <TableRow>

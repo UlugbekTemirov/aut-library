@@ -14,18 +14,17 @@ const BasicPagination = (props) => {
       <div className="w-full flex justify-center">
         <Pagination
           onChange={(e, page) => PaginationHandler(e, page)}
-          count={10}
-          color="secondary"
+          count={2}
+          color="success"
           page={page}
           sx={{
-            background: "#1D3A54",
+            background: "#fff",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "5px 0",
+            padding: "5px 10px",
             borderRadius: "15px",
             color: "#fff",
-            width: "400px",
           }}
         />
       </div>

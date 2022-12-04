@@ -9,7 +9,7 @@ const Search = (props) => {
         Search
       </label>
       <input
-        className="outline-none px-2 py-2 rounded ml-4"
+        className="outline-none px-2 py-2 rounded-lg ml-4"
         type="text"
         placeholder="Harry Potter"
         id="searchBook"
