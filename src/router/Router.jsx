@@ -7,7 +7,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import Login from "../components/Login";
 
 // pages
-import { Books, Home, RentBook } from "../pages";
+import { Books, Home, RentBook, History } from "../pages";
 
 const Router = () => {
   return (
@@ -16,6 +16,7 @@ const Router = () => {
       <Route path="books" element={<Books />} />
       <Route path="login" element={<Login />} />
       <Route path="/lease" element={<RentBook />} />
+      <Route path="/history" element={<History />} />
       {/* <Route
         path="/libraries"
         element={<a href="https://unilibrary.uz/"></a>}

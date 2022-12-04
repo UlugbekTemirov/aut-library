@@ -4,7 +4,8 @@ const JWT = cookie.get("jwt", { path: "/" });
 
 const APPBARLGLIGHT = "linear-gradient(to right, #000000, #434343)";
 const LOGINLGLIGHT = "linear-gradient(to right, #ff4b1f, #1fddff)";
-const pages = ["Home", "Books", "Lease"];
+const pages = ["Home", "Books", "Lease", "History"];
+const userPages = ["Home", "Books"];
 const URL = "http://127.0.0.1:3000";
 const books = [
   {
@@ -86,4 +87,4 @@ const books = [
   },
 ];
 
-export { APPBARLGLIGHT, pages, LOGINLGLIGHT, books, URL, JWT };
+export { APPBARLGLIGHT, pages, LOGINLGLIGHT, books, URL, JWT, userPages };

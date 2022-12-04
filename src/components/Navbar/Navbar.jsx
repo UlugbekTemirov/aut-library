@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -11,14 +11,21 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
+import { useLocation } from "react-router-dom";
+
 // globals
-import { APPBARLGLIGHT, pages, LOGINLGLIGHT } from "../../global";
+import { APPBARLGLIGHT, pages, LOGINLGLIGHT, userPages } from "../../global";
 
 // react router dom
 import { Link } from "react-router-dom";
 
+// cookies
+import Cookies from "universal-cookie";
+
 const Navbar = (props) => {
-  const { jwt } = props;
+  const cookie = new Cookies();
+  const jwt = cookie.get("jwt", { path: "/" });
+  console.log(jwt);
 
   const [anchorElNav, setAnchorElNav] = React.useState(null);
 
@@ -26,9 +33,20 @@ const Navbar = (props) => {
     setAnchorElNav(event.currentTarget);
   };
 
-  const handleCloseNavMenu = () => {
+  const [currentPage, setCurrentPage] = useState("");
+  const handleCloseNavMenu = (page) => {
     setAnchorElNav(null);
+    setCurrentPage(page.toLowerCase());
   };
+
+  const location = useLocation();
+  const indSlash = location.pathname.indexOf("/");
+  const a = location.pathname.slice(indSlash + 1, location.pathname.length);
+
+  useEffect(() => {
+    if (!a) setCurrentPage("home");
+    else setCurrentPage(a);
+  }, []);
 
   return (
     <AppBar
@@ -87,22 +105,56 @@ const Navbar = (props) => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <Link key={page} to={page.toLowerCase()}>
-                  <MenuItem
-                    sx={{
-                      "&:hover": {
-                        background:
-                          "linear-gradient(to right, #0f2027, #203a43, #2c5364)",
-                        color: "#fff",
-                      },
-                    }}
-                    onClick={handleCloseNavMenu}
-                  >
-                    <Typography textAlign="center">{page}</Typography>
-                  </MenuItem>
-                </Link>
-              ))}
+              {Boolean(jwt) &&
+                pages.map((page) => (
+                  <Link key={page} to={page.toLowerCase()}>
+                    <Button
+                      onClick={() => handleCloseNavMenu(page)}
+                      sx={{
+                        my: 2,
+                        mx: 0.5,
+                        display: "block",
+                        backgroundColor: `${
+                          currentPage === page.toLowerCase() && "lightgray"
+                        }`,
+                        color: `${
+                          currentPage === page.toLowerCase() ? "black" : "white"
+                        }`,
+                        "&:hover": {
+                          backgroundColor: "silver",
+                          color: "black",
+                        },
+                      }}
+                    >
+                      {page}
+                    </Button>
+                  </Link>
+                ))}
+              {!Boolean(jwt) &&
+                userPages.map((page) => (
+                  <Link key={page} to={page.toLowerCase()}>
+                    <Button
+                      onClick={() => handleCloseNavMenu(page)}
+                      sx={{
+                        my: 2,
+                        mx: 0.5,
+                        display: "block",
+                        backgroundColor: `${
+                          currentPage === page.toLowerCase() && "lightgray"
+                        }`,
+                        color: `${
+                          currentPage === page.toLowerCase() ? "black" : "white"
+                        }`,
+                        "&:hover": {
+                          backgroundColor: "silver",
+                          color: "black",
+                        },
+                      }}
+                    >
+                      {page}
+                    </Button>
+                  </Link>
+                ))}
             </Menu>
           </Box>
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
@@ -125,23 +177,56 @@ const Navbar = (props) => {
             LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Link key={page} to={page.toLowerCase()}>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{
-                    my: 2,
-                    color: "white",
-                    display: "block",
-                    "&:hover": {
-                      backgroundColor: "#000",
-                    },
-                  }}
-                >
-                  {page}
-                </Button>
-              </Link>
-            ))}
+            {Boolean(jwt) &&
+              pages.map((page) => (
+                <Link key={page} to={page.toLowerCase()}>
+                  <Button
+                    onClick={() => handleCloseNavMenu(page)}
+                    sx={{
+                      my: 2,
+                      mx: 0.5,
+                      display: "block",
+                      backgroundColor: `${
+                        currentPage === page.toLowerCase() && "lightgray"
+                      }`,
+                      color: `${
+                        currentPage === page.toLowerCase() ? "black" : "white"
+                      }`,
+                      "&:hover": {
+                        backgroundColor: "silver",
+                        color: "black",
+                      },
+                    }}
+                  >
+                    {page}
+                  </Button>
+                </Link>
+              ))}
+            {!Boolean(jwt) &&
+              userPages.map((page) => (
+                <Link key={page} to={page.toLowerCase()}>
+                  <Button
+                    onClick={() => handleCloseNavMenu(page)}
+                    sx={{
+                      my: 2,
+                      mx: 0.5,
+                      display: "block",
+                      backgroundColor: `${
+                        currentPage === page.toLowerCase() && "lightgray"
+                      }`,
+                      color: `${
+                        currentPage === page.toLowerCase() ? "black" : "white"
+                      }`,
+                      "&:hover": {
+                        backgroundColor: "silver",
+                        color: "black",
+                      },
+                    }}
+                  >
+                    {page}
+                  </Button>
+                </Link>
+              ))}
           </Box>
 
           {!Boolean(jwt) && (

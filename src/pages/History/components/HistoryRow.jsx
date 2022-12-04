@@ -4,9 +4,9 @@ import React from "react";
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 
-const RowRenters = (props) => {
-  const { leaser, index, changeLeaserHandler } = props;
-  const data = new Date(leaser.orderedTime);
+const HistoryRow = (props) => {
+  const { history, index } = props;
+  const data = new Date(history.orderedTime);
   const day = data.getDate();
   const month = data.getMonth();
   const months = [
@@ -24,14 +24,17 @@ const RowRenters = (props) => {
     "Dekabr",
   ];
 
-  const deadline = new Date(leaser.deadline);
+  const deadline = new Date(history.deadline);
   const dday = deadline.getDate();
   const dmonth = deadline.getMonth();
+
+  const deletedTime = new Date(history.deletedAt);
+  const xday = deletedTime.getDate();
+  const xmonth = deletedTime.getMonth();
 
   return (
     <React.Fragment>
       <TableRow
-        onClick={() => changeLeaserHandler(leaser)}
         sx={{
           position: "relative",
           cursor: "pointer",
@@ -45,39 +48,38 @@ const RowRenters = (props) => {
           {index + 1}
         </TableCell>
         <TableCell align="left">
-          <h2 className="text-lg">{leaser.studentName}</h2>
+          <h2 className="text-lg">{history.studentName}</h2>
         </TableCell>
         <TableCell align="left">
           <div>
-            <div className="font-bold text-md">{leaser.orderedBook?.name}</div>
+            <div className="font-bold text-md">{history.orderedBook?.name}</div>
             <div>
               <h6 className="text-xs">
                 Muallif:
                 <span className="text-blue-800 mr-4">
-                  {leaser.orderedBook?.author}
+                  {history.orderedBook?.author}
                 </span>
               </h6>
             </div>
           </div>
         </TableCell>
-        <TableCell align="left">{leaser.orderedBookSeria}</TableCell>
-        <TableCell align="left">{leaser.classOfStudent}</TableCell>
-        <TableCell align="left">{leaser.major}</TableCell>
-        <TableCell align="left">{leaser.studentPhoneNumber}</TableCell>
+        <TableCell align="left">{history.orderedBookSeria}</TableCell>
+        <TableCell align="left">{history.classOfStudent}</TableCell>
+        <TableCell align="left">{history.major}</TableCell>
+        <TableCell align="left">{history.studentPhoneNumber}</TableCell>
         <TableCell align="left">
           {day}-{months[month]}
         </TableCell>
         <TableCell align="left">
           {dday}-{months[dmonth]}
         </TableCell>
+        <TableCell align="left">
+          {xday}-{months[xmonth]}
+        </TableCell>
         <TableCell align="center">
-          {!leaser.shouldBeReturned ? (
-            <div className=" bg-green-800 rounded-full text-white py-1 px-2">
-              reading
-            </div>
-          ) : (
-            <div className=" bg-red-800 rounded-full text-white py-1 px-2">
-              late
+          {!history.active && (
+            <div className=" bg-green-800 rounded-full text-white p-1">
+              qaytarildi
             </div>
           )}
         </TableCell>
@@ -86,4 +88,4 @@ const RowRenters = (props) => {
   );
 };
 
-export default RowRenters;
+export default HistoryRow;

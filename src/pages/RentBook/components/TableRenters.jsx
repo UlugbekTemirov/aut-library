@@ -11,6 +11,9 @@ import Paper from "@mui/material/Paper";
 import RowRenters from "./RowRenters";
 import SpringModal from "./SpringModal";
 
+// images
+import sort from "../../../images/sort.png";
+
 const TableRenters = (props) => {
   const { leasers, setUpdate } = props;
 
@@ -21,6 +24,15 @@ const TableRenters = (props) => {
   const changeLeaserHandler = (leaser) => {
     setLeaser(leaser);
     handleOpen();
+  };
+
+  const [sortState, setSortState] = useState(true);
+  const [sorted, setSorted] = useState([]);
+  const sortHandler = () => {
+    setSortState((prev) => !prev);
+    const sortedOne = leasers.filter((leaser) => leaser.shouldBeReturned);
+    const sortedTwo = leasers.filter((leaser) => !leaser.shouldBeReturned);
+    sortState ? setSorted([...sortedOne, ...sortedTwo]) : setSorted([]);
   };
 
   return (
@@ -45,17 +57,44 @@ const TableRenters = (props) => {
             <TableCell align="left">Telefon raqam</TableCell>
             <TableCell align="left">Olingan</TableCell>
             <TableCell align="left">Berilishi kerak</TableCell>
+            <TableCell
+              onClick={sortHandler}
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-around",
+                cursor: "pointer",
+                "&:hover": {
+                  backgroundColor: "lightgray",
+                },
+                "&:active": {
+                  backgroundColor: "silver",
+                },
+              }}
+              align="left"
+            >
+              Holati <img className="w-3 h-3" src={sort} alt="sort" />
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {leasers.map((leaser, index) => (
-            <RowRenters
-              changeLeaserHandler={changeLeaserHandler}
-              key={leaser._id}
-              leaser={leaser}
-              index={index}
-            />
-          ))}
+          {sorted.length === 0
+            ? leasers.map((leaser, index) => (
+                <RowRenters
+                  changeLeaserHandler={changeLeaserHandler}
+                  key={leaser._id}
+                  leaser={leaser}
+                  index={index}
+                />
+              ))
+            : sorted.map((leaser, index) => (
+                <RowRenters
+                  changeLeaserHandler={changeLeaserHandler}
+                  key={leaser._id}
+                  leaser={leaser}
+                  index={index}
+                />
+              ))}
         </TableBody>
       </Table>
     </TableContainer>
