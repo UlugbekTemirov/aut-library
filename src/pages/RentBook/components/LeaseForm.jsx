@@ -16,7 +16,7 @@ const LeaseForm = (props) => {
 
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({});
-  const [error, setError] = useState("");
+  
   if (!loading && response.status !== "success") console.log(response.message);
 
   const setInitialHandler = () => {

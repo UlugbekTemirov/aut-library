@@ -3,7 +3,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 const BasicPagination = (props) => {
-  const { setPage, page } = props;
+  const { setPage, page, pageLimit } = props;
 
   const PaginationHandler = (e, page) => {
     setPage(page);
@@ -14,7 +14,7 @@ const BasicPagination = (props) => {
       <div className="w-full flex justify-center">
         <Pagination
           onChange={(e, page) => PaginationHandler(e, page)}
-          count={2}
+          count={pageLimit}
           color="success"
           page={page}
           sx={{

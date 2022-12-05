@@ -24,17 +24,20 @@ const Books = () => {
   const [response, setResponse] = useState({});
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
+  const [update, setUpdate] = useState(false);
 
   // api
-  GetAllBooksApi(setLoading, setResponse, page, limit);
+  GetAllBooksApi(setLoading, setResponse, page, limit, update);
+  console.log(response)
 
-  // if (loading) return <Loader />;
+  if (loading) return <Loader />;
   if (response.status !== "success") return <h1>{response.message}</h1>;
   if (response === undefined) return <h1>No data</h1>;
 
   return (
     <div>
       <TopBar
+      setUpdate={setUpdate}
         categoryHandler={categoryHandler}
         search={search}
         searchHandler={searchHandler}
@@ -44,7 +47,7 @@ const Books = () => {
         books={response?.data?.doc}
         search={search}
       />
-      <Pagination page={page} setPage={setPage} />
+      <Pagination pageLimit={response?.maxPage} page={page} setPage={setPage} />
     </div>
   );
 };

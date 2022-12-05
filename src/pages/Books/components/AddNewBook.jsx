@@ -18,7 +18,10 @@ const style = {
   borderRadius: 3,
 };
 
-const AddNewBook = () => {
+const AddNewBook = (props) => {
+
+  const {setUpdate} = props
+
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -40,7 +43,7 @@ const AddNewBook = () => {
       >
         <Box sx={style}>
           <h2 className="text-black text-3xl text-center mb-3">Add new Book</h2>
-          <NewBookForm />
+          <NewBookForm setUpdate={setUpdate} />
         </Box>
       </Modal>
     </div>

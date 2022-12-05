@@ -6,7 +6,10 @@ import AddNewBookApi from "../../../api/AddNewBookApi";
 // remove icon
 import remove from "../../../images/remove.png";
 
-const NewBookForm = () => {
+const NewBookForm = (props) => {
+
+  const {setUpdate} = props
+
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
@@ -77,6 +80,10 @@ const NewBookForm = () => {
     setInitialHandler();
     if (validate) AddNewBookApi(setLoading, setResponse, book);
   };
+
+  useEffect(() => {
+    if(response.status === "success") setUpdate(prev => !prev)
+  }, [response])
 
   return (
     <form>
