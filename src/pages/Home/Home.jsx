@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const Home = () => {
+import Cookies from "universal-cookie";
+
+const Home = (props) => {
+  const { setJwt } = props;
+  const cookie = new Cookies();
+  const jwt = cookie.get("jwt", { path: "/" });
+
+  useEffect(() => {
+    setJwt(jwt);
+  }, []);
   return <h1>Home</h1>;
 };
 

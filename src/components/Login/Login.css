@@ -275,13 +275,26 @@ input[type=password]:not(:placeholder-shown) {
   
 
 @media screen and (max-width: 500px) {
+  .login-container {
+    padding: 0;
+    width: 100%;
+  }
    .login-page {
+    width: 100%;
+   }
+   .login-form {
     width: 100%;
    }
    .login-text {
     width: 100px;
     background-color: initial;
     text-align: center;
+   }
+   .input-handler {
+    width: 100%;
+   }
+   .input-handler .my-input {
+    width: 100% !important;
    }
    .width {
     display: flex;

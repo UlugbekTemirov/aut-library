@@ -36,7 +36,7 @@ const TableRenters = (props) => {
   };
 
   return (
-    <TableContainer sx={{ my: 2 }} component={Paper}>
+    <TableContainer sx={{ my: 2, borderRadius: "14px" }} component={Paper}>
       <SpringModal
         setUpdate={setUpdate}
         leaser={leaser}
@@ -63,6 +63,7 @@ const TableRenters = (props) => {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "space-around",
+                height: "100%",
                 cursor: "pointer",
                 "&:hover": {
                   backgroundColor: "lightgray",

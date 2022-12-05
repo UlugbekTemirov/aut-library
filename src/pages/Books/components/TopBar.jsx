@@ -15,8 +15,8 @@ const TopBar = (props) => {
   const { search, searchHandler, categoryHandler } = props;
 
   return (
-    <div className="flex items-center justify-between">
-      <div className="flex items-center">
+    <div className="md:flex md:items-center md:justify-between ">
+      <div className="md:flex md:items-center">
         <Search search={search} searchHandler={searchHandler} />
         <Category categoryHandler={categoryHandler} />
       </div>

@@ -12,12 +12,13 @@ const App = () => {
   // cookie
   const cookie = new Cookies();
   const jwt = cookie.get("jwt");
+  console.log(jwt);
 
   return (
     <BrowserRouter>
       <Navbar jwt={jwt} />
       <Container maxWidth="xl">
-        <Router />
+        <Router jwt={jwt} />
       </Container>
     </BrowserRouter>
   );

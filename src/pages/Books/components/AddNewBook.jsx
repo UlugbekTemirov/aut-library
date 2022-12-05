@@ -24,9 +24,9 @@ const AddNewBook = () => {
   const handleClose = () => setOpen(false);
 
   return (
-    <div>
+    <div className="my-3 md:m-0">
       <Button
-        sx={{ borderRadius: "12px" }}
+        sx={{ borderRadius: "12px", width: "100%" }}
         variant="contained"
         onClick={handleOpen}
       >

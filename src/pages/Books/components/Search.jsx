@@ -5,11 +5,14 @@ const Search = (props) => {
 
   return (
     <form className="search-form my-4">
-      <label className="text-white text-xl" htmlFor="searchBook">
+      {/* <label
+        className="text-white text-xl md:visible hidden"
+        htmlFor="searchBook"
+      >
         Search
-      </label>
+      </label> */}
       <input
-        className="outline-none px-2 py-2 rounded-lg ml-4"
+        className="outline-none px-2 py-2 rounded-lg md:w-auto w-full"
         type="text"
         placeholder="Harry Potter"
         id="searchBook"

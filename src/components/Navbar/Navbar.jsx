@@ -11,7 +11,7 @@ import Button from "@mui/material/Button";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 // globals
 import { APPBARLGLIGHT, pages, LOGINLGLIGHT, userPages } from "../../global";
@@ -33,7 +33,7 @@ const Navbar = () => {
   };
 
   const [currentPage, setCurrentPage] = useState("");
-  const handleCloseNavMenu = (page) => {
+  const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
@@ -42,9 +42,17 @@ const Navbar = () => {
   const a = location.pathname.slice(indSlash + 1, location.pathname.length);
 
   useEffect(() => {
+    setCurrentPage("home");
     if (!a) setCurrentPage("home");
     else setCurrentPage(a);
-  }, []);
+  }, [a]);
+
+  const navigate = useNavigate();
+
+  const LogoutHandler = () => {
+    cookie.remove("jwt", { path: "/" });
+    navigate("/home");
+  };
 
   return (
     <AppBar
@@ -113,19 +121,10 @@ const Navbar = () => {
                     <Button
                       onClick={handleCloseNavMenu}
                       sx={{
-                        my: 2,
-                        mx: 0.5,
                         display: "block",
-                        backgroundColor: `${
-                          currentPage === page.toLowerCase() && "lightgray"
-                        }`,
-                        color: `${
-                          currentPage === page.toLowerCase() ? "black" : "white"
-                        }`,
-                        "&:hover": {
-                          backgroundColor: "silver",
-                          color: "black",
-                        },
+                        color: "black",
+                        width: "100%",
+                        padding: "10px",
                       }}
                     >
                       {page}
@@ -135,6 +134,7 @@ const Navbar = () => {
               {!Boolean(jwt) &&
                 userPages.map((page) => (
                   <Link
+                    className="text-black"
                     onClick={() => setCurrentPage(page.toLowerCase())}
                     key={page}
                     to={page.toLowerCase()}
@@ -142,19 +142,10 @@ const Navbar = () => {
                     <Button
                       onClick={handleCloseNavMenu}
                       sx={{
-                        my: 2,
-                        mx: 0.5,
                         display: "block",
-                        backgroundColor: `${
-                          currentPage === page.toLowerCase() && "lightgray"
-                        }`,
-                        color: `${
-                          currentPage === page.toLowerCase() ? "black" : "white"
-                        }`,
-                        "&:hover": {
-                          backgroundColor: "silver",
-                          color: "black",
-                        },
+                        color: "black",
+                        width: "100%",
+                        padding: "10px",
                       }}
                     >
                       {page}
@@ -243,7 +234,7 @@ const Navbar = () => {
               ))}
           </Box>
 
-          {!Boolean(jwt) && (
+          {!Boolean(jwt) ? (
             <Box sx={{ flexGrow: 0 }}>
               <Link to="login">
                 <Button
@@ -260,6 +251,20 @@ const Navbar = () => {
                 </Button>
               </Link>
             </Box>
+          ) : (
+            <Button
+              onClick={LogoutHandler}
+              sx={{
+                background: LOGINLGLIGHT,
+                "&:hover": {
+                  backgroundColor: "silver",
+                  color: "#000",
+                },
+              }}
+              variant="contained"
+            >
+              Logout
+            </Button>
           )}
         </Toolbar>
       </Container>

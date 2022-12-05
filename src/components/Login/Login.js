@@ -11,7 +11,6 @@ import Loader from "../Loader/Loader";
 
 // react-router-dom
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -40,11 +39,8 @@ const Login = () => {
 
   if (loading) return <Loader />;
 
-  if (response.status == "success") {
-    console.log(response.status);
-    toast.success("You are logged in!", { theme: "dark" });
-    navigate("/");
-    return;
+  if (response.status === "success") {
+    navigate("/home");
   }
 
   return (
@@ -52,7 +48,7 @@ const Login = () => {
       <div className="login-page"></div>
       <form className="login-form">
         <div className="width">
-          <h1 className="login-text">Login</h1>
+          <h2 className="login-text">Login</h2>
         </div>
         <div className="input-handler">
           <label className="input-label" htmlFor="email">

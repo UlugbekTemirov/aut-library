@@ -18,7 +18,7 @@ const style = {
   boxShadow: 24,
   p: 4,
   border: "none",
-  borderRadius: 3,
+  borderRadius: 4,
 };
 
 const AddLease = () => {
@@ -33,7 +33,11 @@ const AddLease = () => {
 
   return (
     <div>
-      <Button sx={{ mt: 2 }} variant="contained" onClick={handleOpen}>
+      <Button
+        sx={{ mt: 2, borderRadius: "14px" }}
+        variant="contained"
+        onClick={handleOpen}
+      >
         Ijaraga Berish
       </Button>
       <Modal
