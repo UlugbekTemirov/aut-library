@@ -2,8 +2,8 @@ import Cookies from "universal-cookie";
 const cookie = new Cookies();
 const JWT = cookie.get("jwt", { path: "/" });
 
-const APPBARLGLIGHT = "#555C66";
-const LOGINLGLIGHT = "#404040";
+const APPBARLGLIGHT = "#8458B3";
+const LOGINLGLIGHT = "lightgray";
 const pages = ["Home", "Kitoblar", "Ijara", "Tarix"];
 const userPages = ["Home", "Kitoblar"];
 const URL = "http://127.0.0.1:3000";

@@ -3,7 +3,7 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 const LeasePagination = (props) => {
-  const { setPage, page } = props;
+  const { setPage, page, pageLimit } = props;
 
   const PaginationHandler = (e, page) => {
     setPage(page);
@@ -14,18 +14,17 @@ const LeasePagination = (props) => {
       <div className="w-full flex justify-center">
         <Pagination
           onChange={(e, page) => PaginationHandler(e, page)}
-          count={15}
-          color="secondary"
+          count={pageLimit}
+          color="primary"
           page={page}
           sx={{
-            background: "#1D3A54",
+            background: "#fff",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            padding: "5px 0",
+            padding: "5px 10px",
             borderRadius: "15px",
             color: "#fff",
-            width: "400px",
           }}
         />
       </div>

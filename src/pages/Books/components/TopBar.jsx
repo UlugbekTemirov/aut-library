@@ -7,12 +7,18 @@ import AddNewBook from "./AddNewBook.jsx";
 
 // cookie
 import Cookies from "universal-cookie";
+import AddWithQrCode from "../../RentBook/components/AddWithQrCode";
 
 const TopBar = (props) => {
   const cookie = new Cookies();
   const jwt = cookie.get("jwt");
 
-  const { search, searchHandler, categoryHandler, setUpdate={setUpdate} } = props;
+  const {
+    search,
+    searchHandler,
+    categoryHandler,
+    setUpdate = { setUpdate },
+  } = props;
 
   return (
     <div className="md:flex md:items-center md:justify-between ">

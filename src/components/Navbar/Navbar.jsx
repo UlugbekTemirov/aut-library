@@ -8,8 +8,6 @@ import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
 
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -63,7 +61,6 @@ const Navbar = () => {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -154,7 +151,6 @@ const Navbar = () => {
                 ))}
             </Menu>
           </Box>
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
@@ -256,9 +252,9 @@ const Navbar = () => {
               onClick={LogoutHandler}
               sx={{
                 background: LOGINLGLIGHT,
+                color: "#8B0000",
                 "&:hover": {
-                  backgroundColor: "silver",
-                  color: "#000",
+                  backgroundColor: "lightgray",
                 },
               }}
               variant="contained"

@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import AddLeaseApi from "../../../api/AddLeaseApi";
 
 const LeaseForm = (props) => {
-  const { books, loading: loader } = props;
+  const { books, loading: loader, targetBook, setTargetBook } = props;
 
   const [studentName, setStudentName] = useState("");
   const [orderedBook, setOrderedBook] = useState("");
@@ -16,7 +16,9 @@ const LeaseForm = (props) => {
 
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({});
-  
+
+  const [error, setError] = useState("");
+
   if (!loading && response.status !== "success") console.log(response.message);
 
   const setInitialHandler = () => {
@@ -26,12 +28,12 @@ const LeaseForm = (props) => {
     setMajor("");
     setStudentPhoneNumber("");
     SetOrderedBookId("");
-    setTargetBook("");
+    setTargetBook([]);
     setTargetSerial("");
     setSerialNumber("");
   };
 
-  const [targetBook, setTargetBook] = useState([]);
+  // const [targetBook, setTargetBook] = useState([]);
   const orderedBookHandler = (e) => {
     if (e.target.value !== "") {
       setTargetBook(
@@ -40,22 +42,40 @@ const LeaseForm = (props) => {
         )
       );
     } else {
-      setTargetBook("");
+      setTargetBook([]);
     }
     setOrderedBook(e.target.value);
   };
 
   const [targetSerial, setTargetSerial] = useState([]);
   const serialNumberHandler = (e) => {
-    setSerialNumber(e.target.value);
-    const book = books.filter((item) => item.id.includes(orderedBookId));
-    setTargetSerial(book[0].codes);
+    if (orderedBookId.trim() !== "") {
+      setSerialNumber(e.target.value.toUpperCase());
+      const book = books.filter((item) => item.id.includes(orderedBookId));
+      const sortedB = book[0].codes.filter((code) =>
+        code
+          .toLowerCase()
+          .includes(
+            e.target.value.trim() !== "" && e.target.value.toLowerCase()
+          )
+      );
+      console.log(sortedB);
+      if (sortedB.length === 0) {
+        setError("Bunday seriali kitob mavjud emas");
+      } else {
+        setTargetSerial(sortedB);
+        setError("");
+      }
+    } else {
+      setError("Avval kitobni tanlang");
+    }
   };
 
   const getBookHandler = (target) => {
     setOrderedBook(target.name);
     SetOrderedBookId(target._id);
     setTargetBook("");
+    setError("");
   };
 
   const getSeriaHandler = (seria) => {
@@ -114,7 +134,10 @@ const LeaseForm = (props) => {
           onChange={(e) => orderedBookHandler(e)}
         />
         {targetBook.length !== 0 ? (
-          <div className="bg-white absolute top-18 left-0 w-full shadow-lg shadow-indigo-500/40 p-2">
+          <div
+            id="suggestedbooks"
+            className="bg-white absolute top-18 left-0 w-full shadow-lg shadow-indigo-500/40 p-2 max-h-24 overflow-auto"
+          >
             {targetBook.map((target) => (
               <h2
                 className="hover:bg-gray-200 cursor-pointer px-2 py-1 rounded"
@@ -145,8 +168,9 @@ const LeaseForm = (props) => {
           value={serialNumber}
           onChange={(e) => serialNumberHandler(e)}
         />
+        <h2 className="text-xs text-red-800">{error}</h2>
         {targetSerial.length > 0 && (
-          <div className="bg-white absolute top-18 left-0 w-full shadow-lg shadow-indigo-500/40 p-2">
+          <div className="bg-white absolute top-18 left-1/2 w-10/12 -translate-x-1/2 shadow-lg shadow-indigo-500/40 p-2 max-h-28 overflow-auto">
             {targetSerial.map((seria) => (
               <h2
                 className="hover:bg-gray-200 cursor-pointer px-2 py-1 rounded"

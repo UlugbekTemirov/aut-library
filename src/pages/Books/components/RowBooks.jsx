@@ -14,9 +14,6 @@ const RowBooks = (props) => {
         position: "relative",
         cursor: "pointer",
         "&:last-child td, &:last-child th": { border: 0 },
-        // backgroundColor: `${a && "#2E7D32"}`,
-        // opacity: `${a && "80%"}`,
-        // cursor: `${a ? "not-allowed" : "pointer"}`,
         "&:hover": {
           backgroundColor: "#ccc",
         },

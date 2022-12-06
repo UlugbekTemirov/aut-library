@@ -5,10 +5,10 @@ import AddNewBookApi from "../../../api/AddNewBookApi";
 
 // remove icon
 import remove from "../../../images/remove.png";
+import GetAllBooksApi from "../../../api/GetAllBooksApi";
 
 const NewBookForm = (props) => {
-
-  const {setUpdate} = props
+  const { setUpdate } = props;
 
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
@@ -16,6 +16,17 @@ const NewBookForm = (props) => {
   const [pages, setPages] = useState("");
   const [code, setCode] = useState("");
   const [codes, setCodes] = useState([]);
+
+  const [booksResponse, setBooksResponse] = useState("");
+  const [booksLoading, setBooksLoading] = useState(true);
+  GetAllBooksApi(setBooksLoading, setBooksResponse, null, null, true);
+  const allBooks = booksResponse?.data?.doc;
+
+  const bookNameHandler = (e) => {
+    setName(e.target.value);
+    // if (!books)
+  };
+  console.log(allBooks);
 
   // error handler
   const [error, setError] = useState("");
@@ -82,8 +93,8 @@ const NewBookForm = (props) => {
   };
 
   useEffect(() => {
-    if(response.status === "success") setUpdate(prev => !prev)
-  }, [response])
+    if (response.status === "success") setUpdate((prev) => !prev);
+  }, [response]);
 
   return (
     <form>
@@ -100,9 +111,7 @@ const NewBookForm = (props) => {
           type="text"
           placeholder="Harry Potter"
           value={name}
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
+          onChange={(e) => bookNameHandler(e)}
         />
       </div>
       <div className="books-input mt-2">

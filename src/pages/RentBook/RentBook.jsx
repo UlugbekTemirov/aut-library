@@ -27,7 +27,11 @@ const RentBook = () => {
     <React.Fragment>
       <AddLease />
       <TableRenters setUpdate={setUpdate} leasers={response.data.doc} />
-      <LeasePagination page={page} setPage={setPage} />
+      <LeasePagination
+        page={page}
+        setPage={setPage}
+        pageLimit={response?.maxPage}
+      />
     </React.Fragment>
   );
 };
