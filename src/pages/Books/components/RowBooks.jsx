@@ -3,13 +3,17 @@ import React, { useState } from "react";
 // mui
 import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 
 // images
 import qrCodeIcon from "../../../images/qr-code.png";
+import accept from "../../../images/accept.png";
+import minus from "../../../images/minus.png";
 import downloadIcon from "../../../images/download.png";
+
+// globals
 import { URL } from "../../../global";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
 
 const style = {
   position: "absolute",
@@ -32,9 +36,11 @@ const RowBooks = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
+  const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState({});
   const getBookQrHandler = (id) => {
     handleOpen();
+    setLoading(true);
     fetch(`${URL}/api/v1/books/${id}`, {
       method: "GET",
       headers: {
@@ -42,21 +48,26 @@ const RowBooks = (props) => {
       },
     })
       .then((promise) => promise.json())
-      .then((response) => setResponse(response));
+      .then((response) => {
+        setLoading(false);
+        setResponse(response);
+      });
   };
 
   // book amount
   const a = book.amount === 0;
+
+  // eversion
+  const eversion = false;
 
   return (
     <TableRow
       key={book.name}
       sx={{
         position: "relative",
-        cursor: "pointer",
         "&:last-child td, &:last-child th": { border: 0 },
         "&:hover": {
-          backgroundColor: "#ccc",
+          backgroundColor: "rgb(220,220,220, 0.5)",
         },
       }}
     >
@@ -74,17 +85,39 @@ const RowBooks = (props) => {
       <TableCell sx={{ fontSize: 20 }} align="left">
         {book.author}
       </TableCell>
+      <TableCell sx={{ fontSize: 20 }} align="left">
+        Badiiy
+      </TableCell>
       <TableCell sx={{ fontSize: 20 }} align="center">
         {book.year} yil
       </TableCell>
       <TableCell sx={{ fontSize: 20 }} align="center">
         {book.amount} ta
       </TableCell>
+      <TableCell
+        sx={{
+          position: "relative",
+        }}
+      >
+        {eversion ? (
+          <img
+            className="w-7 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            src={accept}
+            alt="bor"
+          />
+        ) : (
+          <img
+            className="w-7 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            src={minus}
+            alt="yo'q"
+          />
+        )}
+      </TableCell>
       <TableCell sx={{ width: "70px" }}>
         <div className="flex justify-center">
           <img
             onClick={() => getBookQrHandler(book.id)}
-            className="w-8 h-8 hover:bg-gray-400 p-1 rounded"
+            className="w-8 h-8 hover:bg-gray-300 p-1 rounded cursor-pointer"
             src={qrCodeIcon}
             alt="qrcode"
           />
@@ -96,7 +129,7 @@ const RowBooks = (props) => {
           download={"mungli ko'zlar"}
         >
           <img
-            className="w-10 hover:bg-gray-400 rounded-full p-1 mx-auto transition-all"
+            className="w-10 hover:bg-gray-300 rounded-full p-1 mx-auto transition-all"
             src={downloadIcon}
             alt="download"
           />
@@ -110,10 +143,27 @@ const RowBooks = (props) => {
       >
         <Box sx={style}>
           <div>
-            <img src={response?.data?.qrCode} alt={book.name} />
-            <a href={response?.data?.qrCode} download={book?.name}>
-              yuklash
-            </a>
+            {loading ? (
+              <h2>Loading...</h2>
+            ) : (
+              <div>
+                <h2 className="text-lg font-bold">{book?.name}</h2>
+                <img
+                  className="w-full"
+                  src={response?.data?.qrCode}
+                  alt={book.name}
+                />
+                <div className="flex justify-center">
+                  <a
+                    className="bg-blue-700 py-1 px-4 rounded-xl text-white text-xl hover:bg-blue-800 transition-all"
+                    href={response?.data?.qrCode}
+                    download={book?.name}
+                  >
+                    yuklash
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </Box>
       </Modal>

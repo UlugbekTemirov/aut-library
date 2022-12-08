@@ -4,7 +4,7 @@ const Search = (props) => {
   const { search, searchHandler } = props;
 
   return (
-    <form className="search-form my-4">
+    <form className="search-form">
       {/* <label
         className="text-white text-xl md:visible hidden"
         htmlFor="searchBook"

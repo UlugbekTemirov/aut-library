@@ -49,14 +49,14 @@ const AddLease = (props) => {
   return (
     <div onClick={(e) => closeDropdown(e)}>
       <Button
-        sx={{ mt: 2, borderRadius: "14px" }}
+        sx={{ borderRadius: "14px" }}
         variant="contained"
         onClick={handleOpen}
       >
         Ijaraga Berish
       </Button>
       <Button
-        sx={{ mt: 2, borderRadius: "14px", ml: 2 }}
+        sx={{ borderRadius: "14px", ml: 2 }}
         variant="contained"
         onClick={handleQrOpen}
       >
@@ -88,7 +88,7 @@ const AddLease = (props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={{ ...style, width: "700px" }}>
           <h2 className="text-gray-700 text-3xl text-center mb-3">QR Ijara</h2>
           <AddWithQrCode />
         </Box>

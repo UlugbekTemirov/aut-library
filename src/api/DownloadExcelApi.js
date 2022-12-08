@@ -5,10 +5,10 @@ import { URL as newURL } from "../global";
 // cookie
 import Cookies from "universal-cookie";
 
-const BooksExcelApi = async () => {
+const DownloadExcelApi = async (name) => {
   const cookie = new Cookies();
   const jwt = cookie.get("jwt", { path: "/" });
-  const NEWURL = `${newURL}/api/v1/books/download/`;
+  const NEWURL = `${newURL}/api/v1/${name}/download/`;
 
   const headers = { "Content-Type": "blob", authorization: `Bearer ${jwt}` };
   const config = {
@@ -21,7 +21,7 @@ const BooksExcelApi = async () => {
   try {
     const response = await axios(config);
 
-    const outputFilename = `kitoblar-${Date.now()}.xls`;
+    const outputFilename = `${name}-${Date.now()}.xls`;
 
     const url = URL.createObjectURL(new Blob([response.data]));
     const link = document.createElement("a");
@@ -34,4 +34,4 @@ const BooksExcelApi = async () => {
   }
 };
 
-export default BooksExcelApi;
+export default DownloadExcelApi;

@@ -42,7 +42,7 @@ const AddNewBook = (props) => {
         variant="contained"
         onClick={handleOpen}
       >
-        Add Book
+        Kitob qo'shish
       </Button>
       <Modal
         open={open}

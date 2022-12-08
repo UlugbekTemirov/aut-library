@@ -4,12 +4,16 @@ import React from "react";
 import Search from "./Search";
 import Category from "./Category.jsx";
 import AddNewBook from "./AddNewBook.jsx";
+// import AddWithQrCode from "../../RentBook/components/AddWithQrCode";
 
 // cookie
 import Cookies from "universal-cookie";
-import AddWithQrCode from "../../RentBook/components/AddWithQrCode";
+
+// mui
 import { Button } from "@mui/material";
-import BooksExcelApi from "../../../api/BooksExcelApi";
+
+// api
+import DownloadExcelApi from "../../../api/DownloadExcelApi";
 
 // images
 import excelIcon from "../../../images/excel.png";
@@ -26,11 +30,11 @@ const TopBar = (props) => {
   } = props;
 
   const downloadExcelHandler = () => {
-    BooksExcelApi();
+    DownloadExcelApi("books");
   };
 
   return (
-    <div className="md:flex md:items-center md:justify-between ">
+    <div className="md:flex md:items-center md:justify-between mb-3">
       <div className="md:flex md:items-center">
         <Search search={search} searchHandler={searchHandler} />
         <Category categoryHandler={categoryHandler} />
