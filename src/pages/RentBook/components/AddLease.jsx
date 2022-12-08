@@ -22,7 +22,9 @@ const style = {
   borderRadius: 4,
 };
 
-const AddLease = () => {
+const AddLease = (props) => {
+  const { setUpdate } = props;
+
   const [open, setOpen] = React.useState(false);
   const [qrOpen, setQrOpen] = React.useState(false);
 
@@ -71,6 +73,8 @@ const AddLease = () => {
             Ijaraga Berish
           </h2>
           <LeaseForm
+            handleClose={handleClose}
+            setUpdate={setUpdate}
             targetBook={targetBook}
             setTargetBook={setTargetBook}
             loading={loading}

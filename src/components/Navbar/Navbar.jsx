@@ -57,7 +57,7 @@ const Navbar = () => {
       sx={{
         background: APPBARLGLIGHT,
       }}
-      position="static"
+      position="fixed"
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
@@ -65,7 +65,7 @@ const Navbar = () => {
             variant="h6"
             noWrap
             component="a"
-            href="/"
+            // href="/"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -236,9 +236,10 @@ const Navbar = () => {
                 <Button
                   sx={{
                     background: LOGINLGLIGHT,
+                    color: "#8458B3",
                     "&:hover": {
                       backgroundColor: "white",
-                      color: "#000",
+                      color: "#8458B3",
                     },
                   }}
                   variant="contained"

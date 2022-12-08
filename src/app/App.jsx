@@ -13,6 +13,7 @@ import Cookies from "universal-cookie";
 
 // components
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer/Footer";
 
 const theme = createTheme({
   palette: {
@@ -34,6 +35,7 @@ const App = () => {
         <Container maxWidth="xl">
           <Router jwt={jwt} />
         </Container>
+        <Footer />
       </BrowserRouter>
     </ThemeProvider>
   );

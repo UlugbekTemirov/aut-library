@@ -2,9 +2,17 @@ import React, { useState } from "react";
 
 // api
 import AddLeaseApi from "../../../api/AddLeaseApi";
+import LoaderMini from "./LoaderMini";
 
 const LeaseForm = (props) => {
-  const { books, loading: loader, targetBook, setTargetBook } = props;
+  const {
+    books,
+    loading: loader,
+    targetBook,
+    setTargetBook,
+    setUpdate,
+    handleClose,
+  } = props;
 
   const [studentName, setStudentName] = useState("");
   const [orderedBook, setOrderedBook] = useState("");
@@ -14,7 +22,7 @@ const LeaseForm = (props) => {
   const [orderedBookId, SetOrderedBookId] = useState("");
   const [serialNumber, setSerialNumber] = useState("");
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState({});
 
   const [error, setError] = useState("");
@@ -59,7 +67,6 @@ const LeaseForm = (props) => {
             e.target.value.trim() !== "" && e.target.value.toLowerCase()
           )
       );
-      console.log(sortedB);
       if (sortedB.length === 0) {
         setError("Bunday seriali kitob mavjud emas");
       } else {
@@ -81,6 +88,7 @@ const LeaseForm = (props) => {
   const getSeriaHandler = (seria) => {
     setSerialNumber(seria);
     setTargetSerial("");
+    setError("");
   };
 
   const getMajorHandler = (e) => {
@@ -100,8 +108,19 @@ const LeaseForm = (props) => {
     AddLeaseApi(setLoading, setResponse, student);
   };
 
+  if (response?.status === "success") {
+    handleClose();
+    setUpdate((prev) => !prev);
+  }
+  console.log(loading);
+
   return (
     <form>
+      {loading && (
+        <div className="absolute w-full h-full bg-black opacity-30 z-10 -mt-20 -ml-8 rounded-2xl flex items-center justify-center cursor-progress">
+          <LoaderMini />
+        </div>
+      )}
       <div className="books-input">
         <label htmlFor="name" className="block">
           Talabaning ismi
@@ -194,7 +213,7 @@ const LeaseForm = (props) => {
           placeholder="E201"
           value={classOfStudent}
           onChange={(e) => {
-            setClassOfStudent(e.target.value);
+            setClassOfStudent(e.target.value.toUpperCase());
           }}
         />
       </div>

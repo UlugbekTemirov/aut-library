@@ -5,6 +5,7 @@ import React, { useEffect } from "react";
 import { URL, JWT } from "../global";
 
 const AddLeaseApi = (setLoading, setResponse, student) => {
+  setLoading(true);
   fetch(`${URL}/api/v1/leases`, {
     method: "POST",
     headers: {

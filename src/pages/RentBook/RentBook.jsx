@@ -20,12 +20,13 @@ const RentBook = () => {
   const [update, setUpdate] = useState(false);
 
   GetLeasersApi(setLoading, setResponse, page, limit, update);
+  console.log(response);
 
   if (loading) return <Loader />;
   if (response.status !== "success") return <h1>{response.message}</h1>;
   return (
     <React.Fragment>
-      <AddLease />
+      <AddLease setUpdate={setUpdate} />
       <TableRenters setUpdate={setUpdate} leasers={response.data.doc} />
       <LeasePagination
         page={page}

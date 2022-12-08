@@ -12,12 +12,10 @@
 }
 
 body {
-    /* background: url(./images/library.png); */
-    height: 100vh;
     background-repeat: no-repeat;
     background-size: cover;
     background-color: silver;
-
+    margin: 80px 0;
 }
 
 input::-webkit-outer-spin-button,

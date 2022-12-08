@@ -3,9 +3,10 @@ import React, { useState, useEffect } from "react";
 // react
 import { QrReader } from "react-qr-reader";
 
-const AddWithQrCode = (props) => {
+const AddWithQrCode = () => {
   const [data, setData] = useState("");
   const [xerror, setxError] = useState("");
+  const [idNumber, setIdNumber] = useState("");
 
   const time = 1000;
   const [count, setCount] = useState(15);
@@ -41,23 +42,29 @@ const AddWithQrCode = (props) => {
     }
   }, [data]);
 
+  const [xcode, setxCode] = useState("Seria raqamini tanlang");
+  const getCodeHandler = (code) => {
+    setxCode(code);
+  };
+
   const refreshHandler = () => {
     setCount(15);
     setData("");
     setxError("");
+    setxCode("Seria raqamini tanlang");
+    setIdNumber("");
   };
 
   useEffect(() => {
     if (count === 0) setxError("QR kod topilmadi!");
   }, [count]);
 
-  const [code, setCode] = useState("Seria raqamini tanlang");
-  const getCodeHandler = (code) => {
-    setCode(code);
-  };
-
   const addLeaserHandler = () => {
     console.log("submited!");
+  };
+
+  const getIdNumberHandler = (e) => {
+    setIdNumber(e.target.value);
   };
 
   return (
@@ -90,10 +97,15 @@ const AddWithQrCode = (props) => {
           <div>
             {/* <h2 className="text-xl">Book id: {data}</h2> */}
             <input
-              type="text"
+              type="number"
+              required
               name="fullname"
               placeholder="202190400"
-              className="border hover:border-blue-400 outline-none rounded-lg text-lg py-2 px-3 w-full transition-all focus:border-blue-800"
+              onChange={getIdNumberHandler}
+              value={idNumber}
+              className={`border hover:border-blue-400 outline-none rounded-lg text-lg py-2 px-3 w-full transition-all focus:border-blue-800 ${
+                Boolean(idNumber) && "border-blue-800"
+              }`}
             />
             <h2 className="text-lg my-1">
               <span className="text-blue-900">Kitob:</span>{" "}
@@ -112,14 +124,18 @@ const AddWithQrCode = (props) => {
               {response?.data?.doc.pages} bet
             </h2>
             <h2 className="text-lg my-1">
-              <span className="text-blue-900">Seria:</span> {code}
+              <span className="text-blue-900">Seria:</span> {xcode}
             </h2>
-            <div className="max-h-24 grid grid-cols-4 overflow-auto">
+            <div className="max-h-24 grid grid-cols-3 overflow-auto">
               {response?.data?.doc.codes.map((code, index) => (
                 <h2
                   key={index}
                   onClick={() => getCodeHandler(code)}
-                  className="text-sm text-center bg-gray-300 mr-1 rounded-xl py-1 px-2 hover:bg-gray-400 focus:bg-blue-800 cursor-pointer active:bg-gray-300 mt-1"
+                  className={`text-sm text-center bg-gray-300 mr-1 rounded-xl py-1 px-2 focus:bg-blue-800 cursor-pointer active:bg-gray-300 mt-1 ${
+                    code === xcode
+                      ? "bg-blue-700 text-white"
+                      : "bg-gray-300 hover:bg-gray-400"
+                  }`}
                 >
                   {code}
                 </h2>

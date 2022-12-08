@@ -8,7 +8,7 @@ import remove from "../../../images/remove.png";
 import GetAllBooksApi from "../../../api/GetAllBooksApi";
 
 const NewBookForm = (props) => {
-  const { setUpdate } = props;
+  const { setLoading, setResponse, response } = props;
 
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
@@ -16,6 +16,8 @@ const NewBookForm = (props) => {
   const [pages, setPages] = useState("");
   const [code, setCode] = useState("");
   const [codes, setCodes] = useState([]);
+  const [ebook, setEbook] = useState("");
+  const [ebookName, setEbookName] = useState("");
 
   const [booksResponse, setBooksResponse] = useState("");
   const [booksLoading, setBooksLoading] = useState(true);
@@ -26,13 +28,9 @@ const NewBookForm = (props) => {
     setName(e.target.value);
     // if (!books)
   };
-  console.log(allBooks);
 
   // error handler
   const [error, setError] = useState("");
-
-  const [loading, setLoading] = useState(true);
-  const [response, setResponse] = useState({});
 
   const setInitialHandler = () => {
     setName("");
@@ -41,6 +39,8 @@ const NewBookForm = (props) => {
     setPages("");
     setCode("");
     setCodes([]);
+    setEbook({});
+    setEbookName("");
   };
 
   const codesHandler = (e) => {
@@ -92,9 +92,11 @@ const NewBookForm = (props) => {
     if (validate) AddNewBookApi(setLoading, setResponse, book);
   };
 
-  useEffect(() => {
-    if (response.status === "success") setUpdate((prev) => !prev);
-  }, [response]);
+  const eBookHandler = (e) => {
+    console.log(e.target.files[0]);
+    setEbook(e.target.files[0]);
+    setEbookName(e.target.files[0].name);
+  };
 
   return (
     <form>
@@ -102,7 +104,7 @@ const NewBookForm = (props) => {
 
       <div className="books-input">
         <label htmlFor="name" className="block">
-          Name
+          Kitob nomi
         </label>
         <input
           required
@@ -115,8 +117,23 @@ const NewBookForm = (props) => {
         />
       </div>
       <div className="books-input mt-2">
+        <label className="block mb-3">Elekton shakli</label>
+        <input
+          className="hidden"
+          id="pdfversion"
+          type="file"
+          onChange={(e) => eBookHandler(e)}
+        />
+        <label
+          className="p-2 outline-none rounded-lg border w-full transition-all opacity-50 cursor-pointer"
+          htmlFor="pdfversion"
+        >
+          {Boolean(ebook) ? ebookName : "Elekton kitobni tanlang"}
+        </label>
+      </div>
+      <div className="books-input mt-3">
         <label htmlFor="author" className="block">
-          Author
+          Muallif
         </label>
         <input
           className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
@@ -131,7 +148,7 @@ const NewBookForm = (props) => {
       </div>
       <div className="books-input mt-2">
         <label htmlFor="year" className="block">
-          Year
+          Yili
         </label>
         <input
           className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
@@ -146,7 +163,7 @@ const NewBookForm = (props) => {
       </div>
       <div className="books-input mt-2">
         <label htmlFor="pages" className="block">
-          Pages
+          Sahifasi
         </label>
         <input
           className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
@@ -161,7 +178,7 @@ const NewBookForm = (props) => {
       </div>
       <div className="books-input mt-2">
         <label htmlFor="code" className="block">
-          Code
+          Seriya raqami
         </label>
         <div className="flex">
           <input
@@ -178,7 +195,7 @@ const NewBookForm = (props) => {
             onClick={(e) => addCodesHandler(e)}
             className="py-1 px-2 border border-gray-500 text-gray-500 rounded-md ml-3 hover:border-black hover:text-black transition-all"
           >
-            ADD
+            Qo'sh
           </button>
         </div>
 

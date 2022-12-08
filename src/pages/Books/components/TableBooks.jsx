@@ -12,30 +12,81 @@ import RowBooks from "./RowBooks";
 import Loader from "../../../components/Loader/Loader";
 
 const TableBooks = (props) => {
-  const { search, books, loading } = props;
+  const { search, books, loading, qrcode } = props;
 
   return (
     <TableContainer sx={{ borderRadius: "14px" }} component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
-        <TableHead sx={{ fontWeight: "bold" }}>
+        <TableHead sx={{ backgroundColor: "rgb(220,220,220, 0.3)" }}>
           <TableRow>
-            <TableCell align="left">Order</TableCell>
-            <TableCell align="left">Books</TableCell>
-            <TableCell align="left">Author</TableCell>
-            <TableCell align="left">Year</TableCell>
-            <TableCell align="left">Amount</TableCell>
+            <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              align="left"
+            >
+              Tartib
+            </TableCell>
+            <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              align="left"
+            >
+              Kitoblar
+            </TableCell>
+            <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              align="left"
+            >
+              Muallif
+            </TableCell>
+            <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              align="center"
+            >
+              Yil
+            </TableCell>
+            <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              align="center"
+            >
+              Miqdor
+            </TableCell>
+            <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              align="center"
+            >
+              QR
+            </TableCell>
+            <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              align="center"
+            >
+              Yuklash
+            </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {books.map((book, index) => {
             if (search === "")
-              return <RowBooks key={book._id} index={index} book={book} />;
+              return (
+                <RowBooks
+                  qrcode={qrcode}
+                  key={book._id}
+                  index={index}
+                  book={book}
+                />
+              );
             if (search !== "") {
               if (
                 book.name.toLowerCase().includes(search.toLowerCase()) ||
                 book.author.toLowerCase().includes(search.toLowerCase())
               ) {
-                return <RowBooks key={book.name} index={index} book={book} />;
+                return (
+                  <RowBooks
+                    qrcode={qrcode}
+                    key={book.name}
+                    index={index}
+                    book={book}
+                  />
+                );
               }
             }
           })}

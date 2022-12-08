@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import NewBookForm from "./NewBookForm";
+import QrCode from "./QrCode";
 
 const style = {
   position: "absolute",
@@ -19,12 +20,20 @@ const style = {
 };
 
 const AddNewBook = (props) => {
-
-  const {setUpdate} = props
+  const { setUpdate } = props;
 
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const [loading, setLoading] = useState(true);
+  const [response, setResponse] = useState({});
+
+  useEffect(() => {
+    if (response.status === "success") setUpdate((prev) => !prev);
+  }, [response]);
+
+  const status = response?.status === "success";
 
   return (
     <div className="my-3 md:m-0">
@@ -42,8 +51,20 @@ const AddNewBook = (props) => {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          <h2 className="text-black text-3xl text-center mb-3">Add new Book</h2>
-          <NewBookForm setUpdate={setUpdate} />
+          {status ? (
+            <QrCode response={response} />
+          ) : (
+            <div>
+              <h2 className="text-black text-3xl text-center mb-3">
+                Yangi Kitob Qo'shish
+              </h2>
+              <NewBookForm
+                setLoading={setLoading}
+                setResponse={setResponse}
+                response={response}
+              />
+            </div>
+          )}
         </Box>
       </Modal>
     </div>

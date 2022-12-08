@@ -13,7 +13,7 @@ const History = () => {
   const [response, setResponse] = useState([]);
 
   const [page, setPage] = useState(1);
-  const [limit, setLimit] = useState(5);
+  const [limit, setLimit] = useState(10);
 
   GetHistoryApi(setLoading, setResponse, page, limit);
 

@@ -28,7 +28,6 @@ const Books = () => {
 
   // api
   GetAllBooksApi(setLoading, setResponse, page, limit, update);
-  console.log(response)
 
   if (loading) return <Loader />;
   if (response.status !== "success") return <h1>{response.message}</h1>;
@@ -37,7 +36,7 @@ const Books = () => {
   return (
     <div>
       <TopBar
-      setUpdate={setUpdate}
+        setUpdate={setUpdate}
         categoryHandler={categoryHandler}
         search={search}
         searchHandler={searchHandler}
@@ -45,6 +44,7 @@ const Books = () => {
       <TableBooks
         loading={loading}
         books={response?.data?.doc}
+        qrcode={response?.qrcode}
         search={search}
       />
       <Pagination pageLimit={response?.maxPage} page={page} setPage={setPage} />

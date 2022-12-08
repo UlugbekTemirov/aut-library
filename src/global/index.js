@@ -2,7 +2,7 @@ import Cookies from "universal-cookie";
 const cookie = new Cookies();
 const JWT = cookie.get("jwt", { path: "/" });
 
-const APPBARLGLIGHT = "#8458B3";
+const APPBARLGLIGHT = "rgb(132, 88, 179, 0.9)";
 const LOGINLGLIGHT = "lightgray";
 const pages = ["Home", "Kitoblar", "Ijara", "Tarix"];
 const userPages = ["Home", "Kitoblar"];
