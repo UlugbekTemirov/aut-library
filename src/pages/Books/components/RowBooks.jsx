@@ -38,6 +38,7 @@ const RowBooks = (props) => {
 
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState({});
+
   const getBookQrHandler = (id) => {
     handleOpen();
     setLoading(true);
@@ -58,7 +59,7 @@ const RowBooks = (props) => {
   const a = book.amount === 0;
 
   // eversion
-  const eversion = false;
+  const eversion = true;
 
   return (
     <TableRow

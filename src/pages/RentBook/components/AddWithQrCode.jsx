@@ -84,10 +84,10 @@ const AddWithQrCode = () => {
     let major = "";
     if (user?.faculty == "Electrical and Computer Engineering") {
       major = "ECE";
-    } else if (user?.faculty == "Architecture") {
-      major = "Architecture";
-    } else {
+    } else if (user?.faculty == "Civil Systems Engineering") {
       major = "Civil";
+    } else {
+      major = "Architecture";
     }
 
     const student = {
@@ -101,6 +101,7 @@ const AddWithQrCode = () => {
     AddLeaseApi(setyLoading, setyResponse, student);
   };
   console.log(yresponse);
+  console.log(user);
 
   return (
     <React.Fragment>
@@ -201,7 +202,7 @@ const AddWithQrCode = () => {
                       <h2 className="text-lg my-1">
                         <img
                           className="w-48 rounded-xl"
-                          src={user?.image}
+                          src={user?.immage}
                           alt="rasmi"
                         />
                       </h2>

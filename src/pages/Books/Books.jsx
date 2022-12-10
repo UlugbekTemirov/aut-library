@@ -20,7 +20,7 @@ const Books = () => {
     setCategory(e.target.value);
   };
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState({});
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);

@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 
 // api
 import AddNewBookApi from "../../../api/AddNewBookApi";
-
-// remove icon
-import remove from "../../../images/remove.png";
 import GetAllBooksApi from "../../../api/GetAllBooksApi";
+
+// icons
+import remove from "../../../images/remove.png";
 
 const NewBookForm = (props) => {
   const { setLoading, setResponse, response } = props;
@@ -116,8 +116,8 @@ const NewBookForm = (props) => {
           onChange={(e) => bookNameHandler(e)}
         />
       </div>
-      <div className="books-input mt-2">
-        <label className="block mb-3">Elekton shakli</label>
+      <div className="books-input mt-2 w-full">
+        <label className="block">Elekton shakli</label>
         <input
           className="hidden"
           id="pdfversion"
@@ -125,7 +125,11 @@ const NewBookForm = (props) => {
           onChange={(e) => eBookHandler(e)}
         />
         <label
-          className="p-2 outline-none rounded-lg border w-full transition-all opacity-50 cursor-pointer"
+          className={`p-2 outline-none rounded-lg border w-full block transition-all ${
+            Boolean(ebook)
+              ? "opacity-100 border-blue-800 text-blue-800"
+              : "opacity-50"
+          }  cursor-pointer`}
           htmlFor="pdfversion"
         >
           {Boolean(ebook) ? ebookName : "Elekton kitobni tanlang"}
