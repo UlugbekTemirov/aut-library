@@ -101,7 +101,7 @@ const NewBookForm = (props) => {
     data.append("file", ebook);
     data.append("year", year);
     data.append("pages", pages);
-    data.append("codes", codes);
+    data.append("codes", JSON.stringify(codes));
 
     console.log(data);
     // const book = {
