@@ -37,12 +37,6 @@ const TableRenters = (props) => {
 
   return (
     <TableContainer sx={{ my: 2, borderRadius: "14px" }} component={Paper}>
-      <SpringModal
-        setUpdate={setUpdate}
-        leaser={leaser}
-        open={open}
-        setOpen={setOpen}
-      />
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow sx={{ backgroundColor: "#FAFAFA" }}>
@@ -98,6 +92,12 @@ const TableRenters = (props) => {
               ))}
         </TableBody>
       </Table>
+      <SpringModal
+        setUpdate={setUpdate}
+        leaser={leaser}
+        open={open}
+        setOpen={setOpen}
+      />
     </TableContainer>
   );
 };

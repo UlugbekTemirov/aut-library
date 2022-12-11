@@ -27,7 +27,6 @@ const RentBook = () => {
   const [update, setUpdate] = useState(false);
 
   GetLeasersApi(setLoading, setResponse, page, limit, update);
-  console.log(response);
 
   // download leases as Excel
   const downloadExcelHandler = () => {
@@ -44,20 +43,16 @@ const RentBook = () => {
           sx={{
             borderRadius: "12px",
             ml: 3,
-            backgroundColor: "seagreen",
+            backgroundColor: "green",
             "&:hover": {
-              backgroundColor: "green",
+              backgroundColor: "seagreen",
             },
           }}
           onClick={downloadExcelHandler}
           variant="contained"
         >
           Excelda Yuklash
-          <img
-            className="w-5 ml-2 shadow-xl shadow-green-500"
-            src={excelIcon}
-            alt="excel"
-          />
+          <img className="w-5 ml-2" src={excelIcon} alt="excel" />
         </Button>
       </div>
       <TableRenters setUpdate={setUpdate} leasers={response.data.doc} />

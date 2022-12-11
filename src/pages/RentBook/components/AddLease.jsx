@@ -8,6 +8,10 @@ import LeaseForm from "./LeaseForm";
 import GetAllBooksApi from "../../../api/GetAllBooksApi";
 import AddWithQrCode from "./AddWithQrCode";
 
+// icons
+import qrLease from "../../../images/qr-lease.png";
+import books from "../../../images/books.png";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -49,18 +53,27 @@ const AddLease = (props) => {
   return (
     <div onClick={(e) => closeDropdown(e)}>
       <Button
-        sx={{ borderRadius: "14px" }}
+        sx={{
+          borderRadius: "14px",
+          bgcolor: "rgb(0,0,128)",
+          "&:hover": { bgcolor: "rgb(0,0,128, 0.8)" },
+        }}
         variant="contained"
         onClick={handleOpen}
       >
-        Ijaraga Berish
+        Ijaraga Berish <img className="w-5 ml-3" src={books} alt="qrlease" />
       </Button>
       <Button
-        sx={{ borderRadius: "14px", ml: 2 }}
+        sx={{
+          borderRadius: "14px",
+          ml: 2,
+          bgcolor: "rgb(0,0,128)",
+          "&:hover": { bgcolor: "rgb(0,0,128, 0.8)" },
+        }}
         variant="contained"
         onClick={handleQrOpen}
       >
-        QR Ijara
+        QR Ijara <img className="w-5 ml-3" src={qrLease} alt="qrlease" />
       </Button>
       <Modal
         open={open}
@@ -90,7 +103,7 @@ const AddLease = (props) => {
       >
         <Box sx={{ ...style, width: "700px" }}>
           <h2 className="text-gray-700 text-3xl text-center mb-3">QR Ijara</h2>
-          <AddWithQrCode />
+          <AddWithQrCode handleClose={handleClose} />
         </Box>
       </Modal>
     </div>

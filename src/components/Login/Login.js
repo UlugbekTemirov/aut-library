@@ -37,6 +37,12 @@ const Login = () => {
     setPassword("");
   };
 
+  const enterHandler = (e) => {
+    if (e.keyCode === 13) {
+      SubmitHandler();
+    }
+  };
+
   if (loading) return <Loader />;
 
   if (response.status === "success") {
@@ -46,7 +52,7 @@ const Login = () => {
   return (
     <div className="login-container">
       <div className="login-page"></div>
-      <form className="login-form">
+      <form className="login-form" onKeyDown={enterHandler}>
         <div className="width">
           <h2 className="login-text">Login</h2>
         </div>

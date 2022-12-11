@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // components
 import TableBooks from "./components/TableBooks";
@@ -27,7 +27,7 @@ const Books = () => {
   const [update, setUpdate] = useState(false);
 
   // api
-  GetAllBooksApi(setLoading, setResponse, page, limit, update);
+  GetAllBooksApi(setLoading, setResponse, page, limit, update, false);
 
   if (loading) return <Loader />;
   if (response.status !== "success") return <h1>{response.message}</h1>;
@@ -47,7 +47,12 @@ const Books = () => {
         qrcode={response?.qrcode}
         search={search}
       />
-      <Pagination pageLimit={response?.maxPage} page={page} setPage={setPage} />
+      <Pagination
+        pageLimit={response?.maxPage}
+        page={page}
+        setPage={setPage}
+        setSearch={setSearch}
+      />
     </div>
   );
 };

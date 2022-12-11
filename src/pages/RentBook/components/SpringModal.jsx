@@ -70,10 +70,9 @@ const SpringModal = (props) => {
   }
 
   const handleClose = () => setOpen(false);
-  if (response.status === "success") {
-    handleClose();
-    return;
-  }
+  // if (response.status === "success") {
+  //   handleClose();
+  // }
 
   return (
     <div>

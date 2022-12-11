@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+
+// mui
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -9,13 +11,14 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 
-import { useLocation, useNavigate } from "react-router-dom";
+// logo
+import libraryLogo from "../../images/aut-library-new.png";
 
 // globals
 import { APPBARLGLIGHT, pages, LOGINLGLIGHT, userPages } from "../../global";
 
 // react router dom
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
 // cookies
 import Cookies from "universal-cookie";
@@ -61,23 +64,9 @@ const Navbar = () => {
     >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            // href="/"
-            sx={{
-              mr: 2,
-              display: { xs: "none", md: "flex" },
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            AUT Library
-          </Typography>
+          <Link className="md:flex hidden mr-5" to="/home">
+            <img className="w-36" src={libraryLogo} alt="logo" />
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
@@ -151,24 +140,9 @@ const Navbar = () => {
                 ))}
             </Menu>
           </Box>
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              mr: 2,
-              display: { xs: "flex", md: "none" },
-              flexGrow: 1,
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            LOGO
-          </Typography>
+          <Link className="md:hidden flex w-full justify-center" to="/home">
+            <img className="w-36" src={libraryLogo} alt="logo" />
+          </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {Boolean(jwt) &&
               pages.map((page) => (
@@ -228,6 +202,23 @@ const Navbar = () => {
                   </Button>
                 </Link>
               ))}
+            <a href="https://www.natlib.uz/" target="_blank">
+              <Button
+                sx={{
+                  my: 2,
+                  mx: 0.5,
+                  display: "block",
+                  backgroundColor: "transparent",
+                  color: "#fff",
+                  "&:hover": {
+                    backgroundColor: "silver",
+                    color: "black",
+                  },
+                }}
+              >
+                Milliy Kutubxona
+              </Button>
+            </a>
           </Box>
 
           {!Boolean(jwt) ? (

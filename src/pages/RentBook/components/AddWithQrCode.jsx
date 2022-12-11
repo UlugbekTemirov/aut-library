@@ -4,8 +4,11 @@ import React, { useState, useEffect } from "react";
 import { QrReader } from "react-qr-reader";
 import GetStudentsApi from "../../../api/GetStudentApi";
 import AddLeaseApi from "../../../api/AddLeaseApi";
+import LoaderMini from "./LoaderMini";
 
-const AddWithQrCode = () => {
+const AddWithQrCode = (props) => {
+  const { handleClose } = props;
+
   const [data, setData] = useState("");
   const [xerror, setxError] = useState("");
   const [idNumber, setIdNumber] = useState("");
@@ -80,6 +83,7 @@ const AddWithQrCode = () => {
   // submit button
   const [yloading, setyLoading] = useState(false);
   const [yresponse, setyResponse] = useState({});
+  const [shake, setShake] = useState(false);
   const addLeaserHandler = () => {
     let major = "";
     if (user?.faculty == "Electrical and Computer Engineering") {
@@ -90,6 +94,9 @@ const AddWithQrCode = () => {
       major = "Architecture";
     }
 
+    // const nameArr = user?.full_name.split(" ");
+    // console.log(nameArr);
+    // console.log(name);
     const student = {
       studentName: user?.full_name,
       orderedBook: response?.data?.doc?._id,
@@ -100,8 +107,15 @@ const AddWithQrCode = () => {
     };
     AddLeaseApi(setyLoading, setyResponse, student);
   };
-  console.log(yresponse);
-  console.log(user);
+
+  useEffect(() => {
+    if (yresponse?.status !== "success") {
+      setShake((prev) => !prev);
+    }
+    if (yresponse?.status === "success") {
+      handleClose();
+    }
+  }, [yresponse]);
 
   return (
     <React.Fragment>
@@ -131,6 +145,18 @@ const AddWithQrCode = () => {
           </div>
         ) : (
           <div>
+            {yloading && (
+              <div className="absolute top-0 left-0 bg-black opacity-30 w-full h-full flex items-center justify-center rounded-2xl">
+                <LoaderMini />
+              </div>
+            )}
+            <h2
+              className={`text-center text-red-600 font-bold text-lg ${
+                shake && "animate-tilt-shaking"
+              }`}
+            >
+              {yresponse?.message}
+            </h2>
             <div className="flex items-center justify-center">
               <input
                 type="number"
@@ -152,8 +178,8 @@ const AddWithQrCode = () => {
               </button>
             </div>
             <div className="flex justify-between">
-              <div className="border-2 border-blue-800 rounded-l-xl p-2 px-4 mt-2 w-full">
-                <h2 className="text-center text-red-800 text-xl">
+              <div className="border border-blue-800 rounded-l-xl p-2 px-4 mt-2 w-full">
+                <h2 className="text-center text-green-800 text-xl">
                   Kitob ma'lumotlari
                 </h2>
                 <h2 className="text-lg my-1">
@@ -172,9 +198,15 @@ const AddWithQrCode = () => {
                   <span className="text-blue-900">Bet:</span>{" "}
                   {response?.data?.doc.pages} bet
                 </h2>
-                <h2 className="text-lg my-1">
+                <h2 className="text-lg my-1 flex">
                   <span className="text-blue-900">Seria:</span>{" "}
-                  <span className="text-red-800">{xcode}</span>
+                  <h2
+                    className={`text-red-800 ml-1 ${
+                      shake && "animate-tilt-shaking"
+                    }`}
+                  >
+                    {xcode}
+                  </h2>
                 </h2>
                 <div className="max-h-24 grid grid-cols-3 overflow-auto">
                   {response?.data?.doc.codes.map((code, index) => (
@@ -192,8 +224,8 @@ const AddWithQrCode = () => {
                   ))}
                 </div>
               </div>
-              <div className="border-2 border-l-0 border-blue-800 rounded-r-xl p-2 px-4 mt-2 w-full">
-                <h2 className="text-center text-red-800 text-xl">Talaba</h2>
+              <div className="border border-l-0 border-blue-800 rounded-r-xl p-2 px-4 mt-2 w-full">
+                <h2 className="text-center text-green-800 text-xl">Talaba</h2>
                 {xloading ? (
                   "loading..."
                 ) : Boolean(user) ? (

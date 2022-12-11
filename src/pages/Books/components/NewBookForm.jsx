@@ -19,14 +19,28 @@ const NewBookForm = (props) => {
   const [ebook, setEbook] = useState("");
   const [ebookName, setEbookName] = useState("");
 
+  // warning
+  const [warning, setWarning] = useState("");
+
   const [booksResponse, setBooksResponse] = useState("");
-  const [booksLoading, setBooksLoading] = useState(true);
-  GetAllBooksApi(setBooksLoading, setBooksResponse, null, null, true);
+  const [booksLoading, setBooksLoading] = useState(false);
+  GetAllBooksApi(setBooksLoading, setBooksResponse, null, null, false);
   const allBooks = booksResponse?.data?.doc;
 
   const bookNameHandler = (e) => {
-    setName(e.target.value);
-    // if (!books)
+    const tempVal = e.target.value;
+    setName(tempVal);
+    if (tempVal.trim() === "" || tempVal.trim().split("").length < 4)
+      setWarning("");
+    else {
+      let count = 0;
+      allBooks.forEach((book) => {
+        book.name.toLowerCase().trim().includes(tempVal.toLowerCase().trim())
+          ? setWarning("Bu kitob kutubxonada mavjud")
+          : ++count;
+      });
+      if (count === allBooks.length) setWarning("");
+    }
   };
 
   // error handler
@@ -39,7 +53,7 @@ const NewBookForm = (props) => {
     setPages("");
     setCode("");
     setCodes([]);
-    setEbook({});
+    setEbook("");
     setEbookName("");
   };
 
@@ -69,7 +83,6 @@ const NewBookForm = (props) => {
   };
 
   const EnterHandler = (e) => {
-    // console.log(e.keyCode === 13);
     if (e.keyCode === 13) addCodesHandler();
   };
 
@@ -81,19 +94,28 @@ const NewBookForm = (props) => {
     codes.length > 0;
 
   const submitHandler = () => {
-    const book = {
-      name,
-      author,
-      year,
-      pages,
-      codes,
-    };
+    console.log(codes);
+    const data = new FormData();
+    data.append("name", name);
+    data.append("author", author);
+    data.append("file", ebook);
+    data.append("year", year);
+    data.append("pages", pages);
+    data.append("codes", codes);
+
+    console.log(data);
+    // const book = {
+    //   name,
+    //   author,
+    //   year,
+    //   pages,
+    //   codes,
+    // };
     setInitialHandler();
-    if (validate) AddNewBookApi(setLoading, setResponse, book);
+    if (validate) AddNewBookApi(setLoading, setResponse, data);
   };
 
   const eBookHandler = (e) => {
-    console.log(e.target.files[0]);
     setEbook(e.target.files[0]);
     setEbookName(e.target.files[0].name);
   };
@@ -115,6 +137,7 @@ const NewBookForm = (props) => {
           value={name}
           onChange={(e) => bookNameHandler(e)}
         />
+        <h2 className="text-orange-500 text-sm">{warning}</h2>
       </div>
       <div className="books-input mt-2 w-full">
         <label className="block">Elekton shakli</label>
@@ -122,6 +145,7 @@ const NewBookForm = (props) => {
           className="hidden"
           id="pdfversion"
           type="file"
+          accept=".pdf"
           onChange={(e) => eBookHandler(e)}
         />
         <label

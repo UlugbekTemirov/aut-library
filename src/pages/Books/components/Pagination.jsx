@@ -3,10 +3,11 @@ import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 
 const BasicPagination = (props) => {
-  const { setPage, page, pageLimit } = props;
+  const { setPage, page, pageLimit, setSearch } = props;
 
   const PaginationHandler = (e, page) => {
     setPage(page);
+    setSearch("");
   };
 
   return (

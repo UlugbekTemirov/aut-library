@@ -7,12 +7,27 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
+// cookies
+import Cookies from "universal-cookie";
+
 // components
 import RowBooks from "./RowBooks";
-import Loader from "../../../components/Loader/Loader";
+import Loader from "../../../components/Loader";
+
+// api
+import GetAllBooksApi from "../../../api/GetAllBooksApi";
 
 const TableBooks = (props) => {
   const { search, books, loading, qrcode } = props;
+
+  const cookie = new Cookies();
+  const jwt = cookie.get("jwt", { path: "/" });
+
+  const [allBooks, setAllBooks] = useState({});
+  const [booksloading, setBooksLoading] = useState(false);
+  GetAllBooksApi(setBooksLoading, setAllBooks, null, null, true, true);
+
+  const allbooks = allBooks?.data?.doc;
 
   return (
     <TableContainer sx={{ borderRadius: "14px" }} component={Paper}>
@@ -73,35 +88,45 @@ const TableBooks = (props) => {
             >
               Yuklash
             </TableCell>
+            {Boolean(jwt) && (
+              <TableCell
+                sx={{ fontSize: "20px", fontWeight: "bold" }}
+                align="center"
+              >
+                Joylash
+              </TableCell>
+            )}
           </TableRow>
         </TableHead>
         <TableBody>
-          {books.map((book, index) => {
-            if (search === "")
-              return (
-                <RowBooks
-                  qrcode={qrcode}
-                  key={book._id}
-                  index={index}
-                  book={book}
-                />
-              );
-            if (search !== "") {
-              if (
-                book.name.toLowerCase().includes(search.toLowerCase()) ||
-                book.author.toLowerCase().includes(search.toLowerCase())
-              ) {
+          {search === ""
+            ? books.map((book, index) => {
                 return (
                   <RowBooks
                     qrcode={qrcode}
-                    key={book.name}
+                    key={book._id}
                     index={index}
                     book={book}
                   />
                 );
-              }
-            }
-          })}
+              })
+            : allbooks.map((book, index) => {
+                if (!booksloading) {
+                  if (
+                    book.name.toLowerCase().includes(search.toLowerCase()) ||
+                    book.author.toLowerCase().includes(search.toLowerCase())
+                  ) {
+                    return (
+                      <RowBooks
+                        qrcode={qrcode}
+                        key={book._id}
+                        index={index}
+                        book={book}
+                      />
+                    );
+                  }
+                }
+              })}
         </TableBody>
       </Table>
     </TableContainer>

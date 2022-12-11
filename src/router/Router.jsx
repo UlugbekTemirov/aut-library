@@ -21,7 +21,7 @@ const Router = () => {
     <Routes>
       <Route path="/" element={<Home setJwt={setJwt} />} />
       <Route path="/kitoblar" element={<Books />} />
-      {!Boolean(newJwt ?? jwt) && <Route path="/login" element={<Login />} />}
+      {!Boolean(jwt) && <Route path="/login" element={<Login />} />}
       {Boolean(newJwt ?? jwt) && <Route path="/ijara" element={<RentBook />} />}
       {Boolean(newJwt ?? jwt) && <Route path="/tarix" element={<History />} />}
       {/* <Route

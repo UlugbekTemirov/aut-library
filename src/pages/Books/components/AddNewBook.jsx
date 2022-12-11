@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from "react";
+
+// mui
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
+
+// components
 import NewBookForm from "./NewBookForm";
 import QrCode from "./QrCode";
+
+// icons
+import addBook from "../../../images/book.png";
 
 const style = {
   position: "absolute",
@@ -29,20 +36,27 @@ const AddNewBook = (props) => {
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({});
 
-  useEffect(() => {
-    if (response.status === "success") setUpdate((prev) => !prev);
-  }, [response]);
+  // useEffect(() => {
+  //   if (response.status === "success") setUpdate((prev) => !prev);
+  // }, [response]);
 
   const status = response?.status === "success";
 
   return (
     <div className="my-3 md:m-0">
       <Button
-        sx={{ borderRadius: "12px", width: "100%" }}
+        sx={{
+          borderRadius: "12px",
+          width: "100%",
+          bgcolor: "rgb(0,0,128)",
+          "&:hover": {
+            bgcolor: "rgb(0,0,128, 0.8)",
+          },
+        }}
         variant="contained"
         onClick={handleOpen}
       >
-        Kitob qo'shish
+        Kitob qo'shish <img className="w-5 ml-3" src={addBook} alt="bookadd" />
       </Button>
       <Modal
         open={open}

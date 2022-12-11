@@ -112,8 +112,6 @@ const LeaseForm = (props) => {
     handleClose();
     setUpdate((prev) => !prev);
   }
-  console.log(loading);
-
   return (
     <form>
       {loading && (

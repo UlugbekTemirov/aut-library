@@ -13,10 +13,11 @@ const QrCode = (props) => {
           <h2>Kitob: {book?.name}</h2>
           <h2>Muallif: {book?.name}</h2>
           <h2>Yil: {book?.name}</h2>
+          <h2>Seria:</h2>
           <div className="overflow-auto grid grid-cols-3">
             {book.codes.map((code) => (
-              <h2 className="bg-gray-300 py-1 rounded-xl px-2 mt-1">
-                Seria: {code}
+              <h2 key={code} className="bg-gray-300 py-1 rounded-xl px-2 mt-1">
+                {code}
               </h2>
             ))}
           </div>

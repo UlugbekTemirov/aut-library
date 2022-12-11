@@ -13,7 +13,7 @@ const Loader = () => {
           <figure className="page"></figure>
         </div>
 
-        <h1>Loading</h1>
+        <h1 className="text-navy">Loading</h1>
       </div>
     </div>
   );

@@ -11,9 +11,16 @@ import qrCodeIcon from "../../../images/qr-code.png";
 import accept from "../../../images/accept.png";
 import minus from "../../../images/minus.png";
 import downloadIcon from "../../../images/download.png";
+import upload from "../../../images/cloud-computing.png";
 
 // globals
 import { URL } from "../../../global";
+
+// cookies
+import Cookies from "universal-cookie";
+import UploadBookApi from "../../../api/UploadBookApi";
+
+const cookie = new Cookies();
 
 const style = {
   position: "absolute",
@@ -30,11 +37,17 @@ const style = {
 };
 
 const RowBooks = (props) => {
+  const jwt = cookie.get("jwt", { path: "/" });
   const { book, index, qrcode } = props;
 
   const [open, setOpen] = React.useState(false);
+  const [openUpload, setOpenUpload] = useState(false);
+
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpenUpload(false);
+    setOpen(false);
+  };
 
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState({});
@@ -58,8 +71,25 @@ const RowBooks = (props) => {
   // book amount
   const a = book.amount === 0;
 
-  // eversion
-  const eversion = true;
+  const openUploadModal = () => {
+    setOpenUpload(true);
+  };
+
+  const [uresponse, setuResponse] = useState({});
+  const [uloading, setuLoading] = useState(false);
+  const [file, setFile] = useState(null);
+  const [id, setId] = useState("");
+
+  const uploadFile = (e, id) => {
+    setFile(e.target.files[0]);
+    setId(id);
+  };
+
+  const uploadFileHandler = () => {
+    const data = new FormData();
+    data.append("file", file);
+    UploadBookApi(setuResponse, setuLoading, id, data);
+  };
 
   return (
     <TableRow
@@ -100,7 +130,7 @@ const RowBooks = (props) => {
           position: "relative",
         }}
       >
-        {eversion ? (
+        {Boolean(book.file) ? (
           <img
             className="w-7 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
             src={accept}
@@ -125,17 +155,36 @@ const RowBooks = (props) => {
         </div>
       </TableCell>
       <TableCell sx={{ width: "40px" }}>
-        <a
-          href="https://res.cloudinary.com/dy1qz7xrs/image/upload/v1670436178/Xudoyberdi_To_xtaboyev_-_Mungli_ko_zlar_p9lmr6.pdf"
-          download={"mungli ko'zlar"}
-        >
+        {Boolean(book.file) ? (
+          <a
+            href={`${URL}/api/v1/books/download/${book.id}`}
+            download
+            target="_blank"
+          >
+            <img
+              className="w-10 hover:bg-gray-300 rounded-full p-1 mx-auto transition-all"
+              src={downloadIcon}
+              alt="download"
+            />
+          </a>
+        ) : (
           <img
-            className="w-10 hover:bg-gray-300 rounded-full p-1 mx-auto transition-all"
+            className="w-10 cursor-not-allowed rounded-full p-1 mx-auto transition-all opacity-40"
             src={downloadIcon}
             alt="download"
           />
-        </a>
+        )}
       </TableCell>
+      {Boolean(jwt) && (
+        <TableCell sx={{ width: "40px" }}>
+          <img
+            onClick={openUploadModal}
+            className="w-10 hover:bg-gray-300 rounded-full p-1 mx-auto transition-all"
+            src={upload}
+            alt="upload"
+          />
+        </TableCell>
+      )}
       <Modal
         open={open}
         onClose={handleClose}
@@ -165,6 +214,19 @@ const RowBooks = (props) => {
                 </div>
               </div>
             )}
+          </div>
+        </Box>
+      </Modal>
+      <Modal
+        open={openUpload}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div>
+            <input type="file" onChange={(e) => uploadFile(e, book.id)} />
+            <button onClick={uploadFileHandler}>submit</button>
           </div>
         </Box>
       </Modal>

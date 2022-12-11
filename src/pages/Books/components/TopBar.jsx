@@ -46,20 +46,16 @@ const TopBar = (props) => {
             sx={{
               borderRadius: "12px",
               ml: 3,
-              backgroundColor: "seagreen",
+              backgroundColor: "green",
               "&:hover": {
-                backgroundColor: "green",
+                backgroundColor: "seagreen",
               },
             }}
             onClick={downloadExcelHandler}
             variant="contained"
           >
             Excelda Yuklash
-            <img
-              className="w-5 ml-2 shadow-xl shadow-green-500"
-              src={excelIcon}
-              alt="excel"
-            />
+            <img className="w-5 ml-2" src={excelIcon} alt="excel" />
           </Button>
         )}
       </div>
