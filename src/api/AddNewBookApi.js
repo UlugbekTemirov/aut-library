@@ -18,11 +18,9 @@ const AddNewBookApi = (setLoading, setResponse, book) => {
     body: book,
   })
     .then((promise) => {
-      console.log(promise);
       return promise.json();
     })
     .then((response) => {
-      console.log(response);
       setLoading(false);
       setResponse(response);
     });

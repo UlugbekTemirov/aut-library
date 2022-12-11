@@ -27,8 +27,6 @@ const LeaseForm = (props) => {
 
   const [error, setError] = useState("");
 
-  if (!loading && response.status !== "success") console.log(response.message);
-
   const setInitialHandler = () => {
     setStudentName("");
     setOrderedBook("");
@@ -41,7 +39,6 @@ const LeaseForm = (props) => {
     setSerialNumber("");
   };
 
-  // const [targetBook, setTargetBook] = useState([]);
   const orderedBookHandler = (e) => {
     if (e.target.value !== "") {
       setTargetBook(

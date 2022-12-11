@@ -6,6 +6,9 @@ import Pagination from "./components/Pagination";
 import TopBar from "./components/TopBar";
 import Loader from "../../components/Loader/Loader";
 
+// mui
+import Skeleton from "@mui/material/Skeleton";
+
 // api
 import GetAllBooksApi from "../../api/GetAllBooksApi";
 
@@ -26,11 +29,12 @@ const Books = () => {
   const [limit, setLimit] = useState(10);
   const [update, setUpdate] = useState(false);
 
+  console.log(category);
   // api
-  GetAllBooksApi(setLoading, setResponse, page, limit, update, false);
+  GetAllBooksApi(setLoading, setResponse, page, limit, update, false, category);
 
-  if (loading) return <Loader />;
-  if (response.status !== "success") return <h1>{response.message}</h1>;
+  // if (loading) return <Loader />;
+  if (response?.status !== "success") return <h1>{response?.message}</h1>;
   if (response === undefined) return <h1>No data</h1>;
 
   return (
@@ -41,12 +45,21 @@ const Books = () => {
         search={search}
         searchHandler={searchHandler}
       />
-      <TableBooks
-        loading={loading}
-        books={response?.data?.doc}
-        qrcode={response?.qrcode}
-        search={search}
-      />
+      {!loading ? (
+        <TableBooks
+          loading={loading}
+          books={response?.data?.doc}
+          qrcode={response?.qrcode}
+          search={search}
+        />
+      ) : (
+        <Skeleton
+          sx={{ borderRadius: "12px", bgcolor: "#454545" }}
+          variant="rounded"
+          width="100%"
+          height={780}
+        />
+      )}
       <Pagination
         pageLimit={response?.maxPage}
         page={page}

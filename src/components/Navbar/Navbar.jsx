@@ -14,6 +14,9 @@ import Button from "@mui/material/Button";
 // logo
 import libraryLogo from "../../images/aut-library-new.png";
 
+// icons
+import loginIcon from "../../images/login.svg";
+
 // globals
 import { APPBARLGLIGHT, pages, LOGINLGLIGHT, userPages } from "../../global";
 
@@ -141,7 +144,7 @@ const Navbar = () => {
             </Menu>
           </Box>
           <Link className="md:hidden flex w-full justify-center" to="/home">
-            <img className="w-36" src={libraryLogo} alt="logo" />
+            <img className="w-36 mb-1" src={libraryLogo} alt="logo" />
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {Boolean(jwt) &&
@@ -202,23 +205,6 @@ const Navbar = () => {
                   </Button>
                 </Link>
               ))}
-            <a href="https://www.natlib.uz/" target="_blank">
-              <Button
-                sx={{
-                  my: 2,
-                  mx: 0.5,
-                  display: "block",
-                  backgroundColor: "transparent",
-                  color: "#fff",
-                  "&:hover": {
-                    backgroundColor: "silver",
-                    color: "black",
-                  },
-                }}
-              >
-                Milliy Kutubxona
-              </Button>
-            </a>
           </Box>
 
           {!Boolean(jwt) ? (
@@ -235,7 +221,7 @@ const Navbar = () => {
                   }}
                   variant="contained"
                 >
-                  Login
+                  <img src={loginIcon} alt="login" />
                 </Button>
               </Link>
             </Box>

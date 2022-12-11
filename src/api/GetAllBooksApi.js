@@ -3,7 +3,15 @@ import React, { useEffect } from "react";
 // global
 import { URL } from "../global";
 
-const GetAllBooksApi = (setLoading, setResponse, page, limit, update, all) => {
+const GetAllBooksApi = (
+  setLoading,
+  setResponse,
+  page,
+  limit,
+  update,
+  all,
+  category
+) => {
   useEffect(() => {
     setLoading(true);
     const CUSTOM_URL = `${URL}/api/v1/books?page=${page}&limit=${limit}`;
@@ -21,7 +29,7 @@ const GetAllBooksApi = (setLoading, setResponse, page, limit, update, all) => {
         setLoading(false);
         setResponse(response);
       });
-  }, [page, limit, update]);
+  }, [page, limit, update, category]);
 };
 
 export default GetAllBooksApi;

@@ -45,8 +45,8 @@ const TopBar = (props) => {
           <Button
             sx={{
               borderRadius: "12px",
-              ml: 3,
               backgroundColor: "green",
+              ml: 3,
               "&:hover": {
                 backgroundColor: "seagreen",
               },

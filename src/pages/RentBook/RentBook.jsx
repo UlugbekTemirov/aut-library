@@ -37,7 +37,7 @@ const RentBook = () => {
   if (response.status !== "success") return <h1>{response.message}</h1>;
   return (
     <React.Fragment>
-      <div className="flex justify-between">
+      <div className="flex justify-between items-center">
         <AddLease setUpdate={setUpdate} />
         <Button
           sx={{

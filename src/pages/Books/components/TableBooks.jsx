@@ -48,13 +48,13 @@ const TableBooks = (props) => {
             </TableCell>
             <TableCell
               sx={{ fontSize: "20px", fontWeight: "bold" }}
-              align="left"
+              align="center"
             >
               Muallif
             </TableCell>
             <TableCell
               sx={{ fontSize: "20px", fontWeight: "bold" }}
-              align="left"
+              align="center"
             >
               Janri
             </TableCell>
@@ -75,6 +75,18 @@ const TableBooks = (props) => {
               align="center"
             >
               Pdf
+            </TableCell>
+            <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              align="center"
+            >
+              CD
+            </TableCell>
+            <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              align="center"
+            >
+              From
             </TableCell>
             <TableCell
               sx={{ fontSize: "20px", fontWeight: "bold" }}

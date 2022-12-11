@@ -6,8 +6,8 @@ const APPBARLGLIGHT = "rgb(0,0,128)";
 // rgb(28,28,240)
 // rgb(132, 88, 179, 0.9)
 const LOGINLGLIGHT = "lightgray";
-const pages = ["Home", "Kitoblar", "Ijara", "Tarix"];
-const userPages = ["Home", "Kitoblar"];
+const userPages = ["Home", "Kitoblar", "Kutubxonalar"];
+const pages = [...userPages, "Ijara", "Tarix"];
 const URL = "http://127.0.0.1:3000";
 const books = [
   {

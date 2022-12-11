@@ -94,7 +94,6 @@ const NewBookForm = (props) => {
     codes.length > 0;
 
   const submitHandler = () => {
-    console.log(codes);
     const data = new FormData();
     data.append("name", name);
     data.append("author", author);
@@ -103,14 +102,6 @@ const NewBookForm = (props) => {
     data.append("pages", pages);
     data.append("codes", JSON.stringify(codes));
 
-    console.log(data);
-    // const book = {
-    //   name,
-    //   author,
-    //   year,
-    //   pages,
-    //   codes,
-    // };
     setInitialHandler();
     if (validate) AddNewBookApi(setLoading, setResponse, data);
   };

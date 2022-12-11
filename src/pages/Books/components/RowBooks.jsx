@@ -5,13 +5,15 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
 
-// images
+// icons
 import qrCodeIcon from "../../../images/qr-code.png";
 import accept from "../../../images/accept.png";
 import minus from "../../../images/minus.png";
 import downloadIcon from "../../../images/download.png";
 import upload from "../../../images/cloud-computing.png";
+import cddisk from "../../../images/disk.png";
 
 // globals
 import { URL } from "../../../global";
@@ -113,14 +115,14 @@ const RowBooks = (props) => {
       <TableCell sx={{ fontSize: 20 }} align="left">
         {book.name}
       </TableCell>
-      <TableCell sx={{ fontSize: 20 }} align="left">
+      <TableCell sx={{ fontSize: 20 }} align="center">
         {book.author}
       </TableCell>
-      <TableCell sx={{ fontSize: 20 }} align="left">
-        Badiiy
+      <TableCell sx={{ fontSize: 20 }} align="center">
+        {book.category}
       </TableCell>
       <TableCell sx={{ fontSize: 20 }} align="center">
-        {book.year} yil
+        {book.year}-yil
       </TableCell>
       <TableCell sx={{ fontSize: 20 }} align="center">
         {book.amount} ta
@@ -143,6 +145,25 @@ const RowBooks = (props) => {
             alt="yo'q"
           />
         )}
+      </TableCell>
+      <TableCell
+        align="center"
+        sx={{
+          position: "relative",
+        }}
+      >
+        {Boolean(book.cd_disk) ? (
+          <img
+            className="w-7 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            src={cddisk}
+            alt="cd disk"
+          />
+        ) : (
+          <h2 className="text-xl">no cd</h2>
+        )}
+      </TableCell>
+      <TableCell sx={{ fontSize: 20 }} align="center">
+        {book.get_options}
       </TableCell>
       <TableCell sx={{ width: "70px" }}>
         <div className="flex justify-center">
@@ -197,12 +218,21 @@ const RowBooks = (props) => {
               <h2>Loading...</h2>
             ) : (
               <div>
-                <h2 className="text-lg font-bold">{book?.name}</h2>
-                <img
-                  className="w-full"
-                  src={response?.data?.qrCode}
-                  alt={book.name}
-                />
+                <h2 className="text-lg font-bold text-center">{book?.name}</h2>
+                {Boolean(response?.data?.qrCode) ? (
+                  <img
+                    className="w-full"
+                    src={response?.data?.qrCode}
+                    alt={book.name}
+                  />
+                ) : (
+                  <Skeleton
+                    variant="rounded"
+                    width="100%"
+                    height={150}
+                    sx={{ my: 1 }}
+                  />
+                )}
                 <div className="flex justify-center">
                   <a
                     className="bg-blue-700 py-1 px-4 rounded-xl text-white text-xl hover:bg-blue-800 transition-all"

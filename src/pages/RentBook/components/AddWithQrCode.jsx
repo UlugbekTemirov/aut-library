@@ -7,7 +7,7 @@ import AddLeaseApi from "../../../api/AddLeaseApi";
 import LoaderMini from "./LoaderMini";
 
 const AddWithQrCode = (props) => {
-  const { handleClose } = props;
+  const { handleClose, setUpdate } = props;
 
   const [data, setData] = useState("");
   const [xerror, setxError] = useState("");
@@ -94,9 +94,6 @@ const AddWithQrCode = (props) => {
       major = "Architecture";
     }
 
-    // const nameArr = user?.full_name.split(" ");
-    // console.log(nameArr);
-    // console.log(name);
     const student = {
       studentName: user?.full_name,
       orderedBook: response?.data?.doc?._id,
@@ -114,6 +111,7 @@ const AddWithQrCode = (props) => {
     }
     if (yresponse?.status === "success") {
       handleClose();
+      setUpdate((prev) => !prev);
     }
   }, [yresponse]);
 

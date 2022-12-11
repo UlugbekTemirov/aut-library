@@ -50,7 +50,6 @@ const History = () => {
     deleteYearlyHistory();
     handleClose();
   };
-  console.log(delResponse);
 
   const style = {
     position: "absolute",

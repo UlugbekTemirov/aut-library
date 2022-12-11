@@ -103,7 +103,7 @@ const AddLease = (props) => {
       >
         <Box sx={{ ...style, width: "700px" }}>
           <h2 className="text-gray-700 text-3xl text-center mb-3">QR Ijara</h2>
-          <AddWithQrCode handleClose={handleClose} />
+          <AddWithQrCode setUpdate={setUpdate} handleClose={handleClose} />
         </Box>
       </Modal>
     </div>
