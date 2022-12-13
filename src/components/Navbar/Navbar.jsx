@@ -43,7 +43,8 @@ const Navbar = () => {
 
   const location = useLocation();
   const indSlash = location.pathname.indexOf("/");
-  const a = location.pathname.slice(indSlash + 1, location.pathname.length);
+  const nextIndSlash = location.pathname.lastIndexOf("/");
+  const a = location.pathname.slice(indSlash + 1, nextIndSlash);
 
   useEffect(() => {
     setCurrentPage("home");

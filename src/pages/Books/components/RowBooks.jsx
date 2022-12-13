@@ -95,8 +95,6 @@ const RowBooks = (props) => {
     UploadBookApi(setuResponse, setuLoading, id, data);
   };
 
-  console.log(book);
-
   return (
     <TableRow
       key={book.name}

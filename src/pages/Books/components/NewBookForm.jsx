@@ -364,7 +364,7 @@ const NewBookForm = (props) => {
           </div>
           <div className="books-input mt-2">
             <label htmlFor="bookcode" className="block">
-              Kitob kodi
+              ISBN
             </label>
             <div className="flex">
               <input
