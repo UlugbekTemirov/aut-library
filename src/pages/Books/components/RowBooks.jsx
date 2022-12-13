@@ -14,6 +14,7 @@ import minus from "../../../images/minus.png";
 import downloadIcon from "../../../images/download.png";
 import upload from "../../../images/cloud-computing.png";
 import cddisk from "../../../images/disk.png";
+import moreIcon from "../../../images/export.png";
 
 // globals
 import { URL } from "../../../global";
@@ -21,6 +22,7 @@ import { URL } from "../../../global";
 // cookies
 import Cookies from "universal-cookie";
 import UploadBookApi from "../../../api/UploadBookApi";
+import { Link } from "react-router-dom";
 
 const cookie = new Cookies();
 
@@ -93,6 +95,8 @@ const RowBooks = (props) => {
     UploadBookApi(setuResponse, setuLoading, id, data);
   };
 
+  console.log(book);
+
   return (
     <TableRow
       key={book.name}
@@ -147,6 +151,16 @@ const RowBooks = (props) => {
         )}
       </TableCell>
       <TableCell
+        sx={{ fontSize: 20, display: "flex", justifyContent: "center" }}
+        align="center"
+      >
+        <Link to={book.slug}>
+          <button className="rounded-full hover:bg-gray-300 p-2">
+            <img className="w-7" src={moreIcon} alt="more" />
+          </button>
+        </Link>
+      </TableCell>
+      {/* <TableCell
         align="center"
         sx={{
           position: "relative",
@@ -205,7 +219,7 @@ const RowBooks = (props) => {
             alt="upload"
           />
         </TableCell>
-      )}
+      )} */}
       <Modal
         open={open}
         onClose={handleClose}

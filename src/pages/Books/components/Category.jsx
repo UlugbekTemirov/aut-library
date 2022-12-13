@@ -8,16 +8,16 @@ const Category = (props) => {
       onChange={categoryHandler}
       className="px-4 py-2 md:ml-8 ml-0 bg-white md:w-auto w-full rounded-xl outline-none md:mt-0 mt-2"
     >
-      <option value="barchasi" key="barchasi">
+      <option value="Barchasi" key="Barchasi">
         Barchasi
       </option>
-      <option value="badiiy" key="badiiy">
+      <option value="Badiiy" key="Badiiy">
         Badiiy
       </option>
-      <option value="ilmiy" key="ilmiy">
+      <option value="Ilmiy" key="Ilmiy">
         Ilmiy
       </option>
-      <option value="ingliz" key="ingliz">
+      <option value="Ingliz" key="Ingliz">
         Ingliz
       </option>
     </select>

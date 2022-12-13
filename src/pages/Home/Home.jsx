@@ -10,7 +10,7 @@ const Home = (props) => {
   useEffect(() => {
     setJwt(jwt);
   }, []);
-  return <h1>Home</h1>;
+  return <h2 className="text-2xl text-center">Home Page</h2>;
 };
 
 export default Home;

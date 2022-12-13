@@ -64,7 +64,7 @@ const AddNewBook = (props) => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={{ ...style, width: { sm: "90%", md: "50%" } }}>
           {status ? (
             <QrCode response={response} />
           ) : (

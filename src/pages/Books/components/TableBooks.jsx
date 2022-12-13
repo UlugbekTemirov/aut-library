@@ -18,7 +18,7 @@ import Loader from "../../../components/Loader";
 import GetAllBooksApi from "../../../api/GetAllBooksApi";
 
 const TableBooks = (props) => {
-  const { search, books, loading, qrcode } = props;
+  const { search, books, loading, qrcode, searchRes } = props;
 
   const cookie = new Cookies();
   const jwt = cookie.get("jwt", { path: "/" });
@@ -71,12 +71,18 @@ const TableBooks = (props) => {
               Miqdor
             </TableCell>
             <TableCell
-              sx={{ fontSize: "20px", fontWeight: "bold" }}
+              sx={{ fontSize: "20px", fontWeight: "bold", px: 0 }}
               align="center"
             >
               Pdf
             </TableCell>
             <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold", px: 0 }}
+              align="center"
+            >
+              Batafsil
+            </TableCell>
+            {/* <TableCell
               sx={{ fontSize: "20px", fontWeight: "bold" }}
               align="center"
             >
@@ -107,7 +113,7 @@ const TableBooks = (props) => {
               >
                 Joylash
               </TableCell>
-            )}
+            )} */}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -122,7 +128,7 @@ const TableBooks = (props) => {
                   />
                 );
               })
-            : allbooks.map((book, index) => {
+            : searchRes?.data?.map((book, index) => {
                 if (!booksloading) {
                   if (
                     book.name.toLowerCase().includes(search.toLowerCase()) ||

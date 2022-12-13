@@ -11,6 +11,7 @@ import Skeleton from "@mui/material/Skeleton";
 
 // api
 import GetAllBooksApi from "../../api/GetAllBooksApi";
+import BooksSearchApi from "../../api/BooksSearchApi";
 
 const Books = () => {
   const [search, setSearch] = useState("");
@@ -18,24 +19,23 @@ const Books = () => {
     setSearch(e.target.value);
   };
 
+  const [searchRes, setSearchRes] = useState({});
+  const [searchLoading, setSearchLoading] = useState(false);
+
   const [category, setCategory] = useState("");
   const categoryHandler = (e) => {
     setCategory(e.target.value);
   };
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({});
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(10);
   const [update, setUpdate] = useState(false);
 
-  console.log(category);
   // api
+  BooksSearchApi(setSearchLoading, setSearchRes, search);
   GetAllBooksApi(setLoading, setResponse, page, limit, update, false, category);
-
-  // if (loading) return <Loader />;
-  if (response?.status !== "success") return <h1>{response?.message}</h1>;
-  if (response === undefined) return <h1>No data</h1>;
 
   return (
     <div>
@@ -51,6 +51,7 @@ const Books = () => {
           books={response?.data?.doc}
           qrcode={response?.qrcode}
           search={search}
+          searchRes={searchRes}
         />
       ) : (
         <Skeleton

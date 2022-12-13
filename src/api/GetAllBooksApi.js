@@ -14,7 +14,10 @@ const GetAllBooksApi = (
 ) => {
   useEffect(() => {
     setLoading(true);
-    const CUSTOM_URL = `${URL}/api/v1/books?page=${page}&limit=${limit}`;
+    const CUSTOM_URL =
+      Boolean(category) && category !== "Barchasi"
+        ? `${URL}/api/v1/books?page=${page}&limit=${limit}&category=${category}`
+        : `${URL}/api/v1/books?page=${page}&limit=${limit}`;
     const MAIN_URL = `${URL}/api/v1/books?fields=name,codes`;
     const ALL = `${URL}/api/v1/books`;
     const SELECT_URL = page === null || limit === null ? MAIN_URL : CUSTOM_URL;

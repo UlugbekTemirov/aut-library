@@ -6,6 +6,7 @@ import GetAllBooksApi from "../../../api/GetAllBooksApi";
 
 // icons
 import remove from "../../../images/remove.png";
+import barcode from "../../../images/barcode-scanner.png";
 
 const NewBookForm = (props) => {
   const { setLoading, setResponse, response } = props;
@@ -18,6 +19,12 @@ const NewBookForm = (props) => {
   const [codes, setCodes] = useState([]);
   const [ebook, setEbook] = useState("");
   const [ebookName, setEbookName] = useState("");
+  const [category, setCategory] = useState("");
+  const [cd, setCD] = useState("");
+  const [fromWhere, setFromWhere] = useState("");
+  const [price, setPrice] = useState("");
+  const [uniqueId, setUniqueId] = useState("");
+  const [bookCode, setBookCode] = useState("");
 
   // warning
   const [warning, setWarning] = useState("");
@@ -35,7 +42,7 @@ const NewBookForm = (props) => {
     else {
       let count = 0;
       allBooks.forEach((book) => {
-        book.name.toLowerCase().trim().includes(tempVal.toLowerCase().trim())
+        book.name.toLowerCase().trim().startsWith(tempVal.toLowerCase().trim())
           ? setWarning("Bu kitob kutubxonada mavjud")
           : ++count;
       });
@@ -55,10 +62,11 @@ const NewBookForm = (props) => {
     setCodes([]);
     setEbook("");
     setEbookName("");
-  };
-
-  const codesHandler = (e) => {
-    setCode(e.target.value.toUpperCase());
+    setCategory("");
+    setCD("");
+    setFromWhere("");
+    setPrice("");
+    setUniqueId("");
   };
 
   const [shake, setShaking] = useState(false);
@@ -86,6 +94,10 @@ const NewBookForm = (props) => {
     if (e.keyCode === 13) addCodesHandler();
   };
 
+  const bookCodeScanHandler = () => {
+    console.log("Product scanner");
+  };
+
   let validate =
     Boolean(name.trim()) &&
     Boolean(author.trim()) &&
@@ -101,6 +113,12 @@ const NewBookForm = (props) => {
     data.append("year", year);
     data.append("pages", pages);
     data.append("codes", JSON.stringify(codes));
+    data.append("category", category);
+    data.append("cd", cd);
+    data.append("cd_disk", cd === "cdExist");
+    data.append("get_options", fromWhere);
+    data.append("price", price);
+    data.append("uniqueId", uniqueId);
 
     setInitialHandler();
     if (validate) AddNewBookApi(setLoading, setResponse, data);
@@ -115,133 +133,303 @@ const NewBookForm = (props) => {
     <form>
       <h2 className="text-red-700 text-center">{response.message}</h2>
 
-      <div className="books-input">
-        <label htmlFor="name" className="block">
-          Kitob nomi
-        </label>
-        <input
-          required
-          className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
-          id="name"
-          type="text"
-          placeholder="Harry Potter"
-          value={name}
-          onChange={(e) => bookNameHandler(e)}
-        />
-        <h2 className="text-orange-500 text-sm">{warning}</h2>
-      </div>
-      <div className="books-input mt-2 w-full">
-        <label className="block">Elekton shakli</label>
-        <input
-          className="hidden"
-          id="pdfversion"
-          type="file"
-          accept=".pdf"
-          onChange={(e) => eBookHandler(e)}
-        />
-        <label
-          className={`p-2 outline-none rounded-lg border w-full block transition-all ${
-            Boolean(ebook)
-              ? "opacity-100 border-blue-800 text-blue-800"
-              : "opacity-50"
-          }  cursor-pointer`}
-          htmlFor="pdfversion"
-        >
-          {Boolean(ebook) ? ebookName : "Elekton kitobni tanlang"}
-        </label>
-      </div>
-      <div className="books-input mt-3">
-        <label htmlFor="author" className="block">
-          Muallif
-        </label>
-        <input
-          className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
-          id="author"
-          type="text"
-          placeholder="J. K. Rowlings"
-          value={author}
-          onChange={(e) => {
-            setAuthor(e.target.value);
-          }}
-        />
-      </div>
-      <div className="books-input mt-2">
-        <label htmlFor="year" className="block">
-          Yili
-        </label>
-        <input
-          className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
-          id="year"
-          type="text"
-          placeholder="2017"
-          value={year}
-          onChange={(e) => {
-            setYear(e.target.value);
-          }}
-        />
-      </div>
-      <div className="books-input mt-2">
-        <label htmlFor="pages" className="block">
-          Sahifasi
-        </label>
-        <input
-          className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
-          id="pages"
-          type="number"
-          placeholder="416"
-          value={pages}
-          onChange={(e) => {
-            setPages(e.target.value);
-          }}
-        />
-      </div>
-      <div className="books-input mt-2">
-        <label htmlFor="code" className="block">
-          Seriya raqami
-        </label>
-        <div className="flex">
-          <input
-            className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
-            id="code"
-            type="text"
-            placeholder="B-00013"
-            value={code}
-            onChange={(e) => codesHandler(e)}
-            onKeyDown={(e) => EnterHandler(e)}
-          />
-          <button
-            type="button"
-            onClick={(e) => addCodesHandler(e)}
-            className="py-1 px-2 border border-gray-500 text-gray-500 rounded-md ml-3 hover:border-black hover:text-black transition-all"
-          >
-            Qo'sh
-          </button>
-        </div>
-
-        {codes.length > 0 && (
-          <div className="grid grid-cols-4 items-center mt-1 max-h-20 overflow-auto">
-            {codes.map((code) => (
-              <div
-                onClick={() => removeCodeHandler(code)}
-                key={code}
-                className="bg-gray-300 rounded-md  mr-1 flex items-center py-1 px-2 cursor-pointer opacity-70 hover:opacity-100 transition-all mt-1 relative overflow-hidden"
-              >
-                <h2 className="text-xs hover:animate-marquee">{code}</h2>{" "}
-                <img
-                  className="w-4 h-4 ml-1 absolute right-1 top-1/2 -translate-y-1/2 shadow-myshadow rounded-full"
-                  src={remove}
-                  alt="code"
-                />
-              </div>
-            ))}
+      <div className="grid grid-cols-2 w-full">
+        <div className="w-full px-2">
+          <div className="books-input">
+            <label htmlFor="name" className="block">
+              Kitob nomi
+            </label>
+            <input
+              required
+              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+              id="name"
+              type="text"
+              placeholder="Harry Potter"
+              value={name}
+              onChange={(e) => bookNameHandler(e)}
+            />
+            <h2 className="text-orange-500 text-sm">{warning}</h2>
           </div>
-        )}
+          <div className="books-input mt-2 w-full">
+            <label className="block">Elekton shakli</label>
+            <input
+              className="hidden"
+              id="pdfversion"
+              type="file"
+              accept=".pdf"
+              onChange={(e) => eBookHandler(e)}
+            />
+            <label
+              className={`p-2 outline-none rounded-lg border w-full block transition-all overflow-auto ${
+                Boolean(ebook)
+                  ? "opacity-100 border-blue-800 text-blue-800"
+                  : "opacity-50"
+              }  cursor-pointer`}
+              htmlFor="pdfversion"
+            >
+              {Boolean(ebook) ? ebookName : "Elekton kitobni tanlang"}
+            </label>
+          </div>
+          <div className="books-input mt-2">
+            <label htmlFor="author" className="block">
+              Muallif
+            </label>
+            <input
+              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+              id="author"
+              type="text"
+              placeholder="J. K. Rowlings"
+              value={author}
+              onChange={(e) => {
+                setAuthor(e.target.value);
+              }}
+            />
+          </div>
+          <div className="books-input mt-2">
+            <label htmlFor="year" className="block">
+              Yili
+            </label>
+            <input
+              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+              id="year"
+              type="text"
+              placeholder="2017"
+              value={year}
+              onChange={(e) => {
+                setYear(e.target.value);
+              }}
+            />
+          </div>
+          <div className="books-input mt-2">
+            <label htmlFor="pages" className="block">
+              Sahifasi
+            </label>
+            <input
+              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+              id="pages"
+              type="number"
+              placeholder="416"
+              value={pages}
+              onChange={(e) => {
+                setPages(e.target.value);
+              }}
+            />
+          </div>
+          <div className="books-input mt-2">
+            <label htmlFor="code" className="block">
+              Seriya raqami
+            </label>
+            <div className="flex">
+              <input
+                className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+                id="code"
+                type="text"
+                placeholder="B-00013"
+                value={code}
+                onChange={(e) => setCode(e.target.value.toUpperCase())}
+                onKeyDown={(e) => EnterHandler(e)}
+              />
+              <button
+                type="button"
+                onClick={(e) => addCodesHandler(e)}
+                className="py-1 px-2 border border-gray-500 text-gray-500 rounded-md ml-3 hover:border-black hover:text-black transition-all"
+              >
+                Qo'sh
+              </button>
+            </div>
+
+            {codes.length > 0 && (
+              <div className="grid grid-cols-4 items-center mt-1 max-h-20 overflow-auto">
+                {codes.map((code) => (
+                  <div
+                    onClick={() => removeCodeHandler(code)}
+                    key={code}
+                    className="bg-gray-300 rounded-md  mr-1 flex items-center py-1 px-2 cursor-pointer opacity-70 hover:opacity-100 transition-all mt-1 relative overflow-hidden"
+                  >
+                    <h2 className="text-xs hover:animate-marquee">{code}</h2>{" "}
+                    <img
+                      className="w-4 h-4 ml-1 absolute right-1 top-1/2 -translate-y-1/2 shadow-myshadow rounded-full"
+                      src={remove}
+                      alt="code"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <h2
+            className={`text-red-700 text-xs ${
+              shake && "animate-tilt-shaking"
+            } `}
+          >
+            {error}
+          </h2>
+        </div>
+        <div className="w-full px-2">
+          <div className="books-input">
+            <label htmlFor="category" className="block">
+              Kategoriya
+            </label>
+            <input
+              required
+              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+              id="category"
+              type="text"
+              placeholder="Badiiy"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            />
+          </div>
+          <div className="books-input mt-2 w-full">
+            <label htmlFor="cd" className="block mb-2">
+              CD
+            </label>
+            <div className="box-border mb-4">
+              <label
+                className={`p-2 outline-none rounded-lg border cursor-pointer mr-4 w-full ${
+                  cd == "cdExist" && "border-blue-800  font-bold text-blue-900"
+                } transition-all`}
+                htmlFor="cdExist"
+              >
+                Mavjud
+              </label>
+              <input
+                className="hidden"
+                id="cdExist"
+                type="radio"
+                name="cd"
+                onChange={(e) => setCD(e.target.id)}
+              />
+              <label
+                className={`p-2 outline-none rounded-lg border cursor-pointer mr-4 w-full ${
+                  cd == "cdNot" && "border-blue-800 font-bold text-blue-900"
+                } transition-all`}
+                htmlFor="cdNot"
+              >
+                Mavjud emas
+              </label>
+              <input
+                className="hidden"
+                id="cdNot"
+                type="radio"
+                name="cd"
+                onChange={(e) => setCD(e.target.id)}
+              />
+            </div>
+          </div>
+          <div className="books-input mt-2">
+            <label htmlFor="fromwhere" className="block">
+              Qayerdan
+            </label>
+            <input
+              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+              id="fromwhere"
+              type="text"
+              placeholder="Korea"
+              value={fromWhere}
+              onChange={(e) => {
+                setFromWhere(e.target.value);
+              }}
+            />
+          </div>
+          <div className="books-input mt-2">
+            <label htmlFor="price" className="block">
+              Narxi
+            </label>
+            <input
+              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+              id="price"
+              type="number"
+              placeholder="10000 so'm"
+              value={price}
+              onChange={(e) => {
+                setPrice(e.target.value);
+              }}
+            />
+          </div>
+          <div className="books-input mt-2">
+            <label htmlFor="uniqueId" className="block">
+              Yagona ID
+            </label>
+            <input
+              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+              id="uniqueId"
+              type="number"
+              placeholder="a10b20c12"
+              value={uniqueId}
+              onChange={(e) => {
+                setUniqueId(e.target.value);
+              }}
+            />
+          </div>
+          <div className="books-input mt-2">
+            <label htmlFor="bookcode" className="block">
+              Kitob kodi
+            </label>
+            <div className="flex">
+              <input
+                className="p-2 outline-none rounded-lg border  rounded-r-none w-full focus:border-blue-800 transition-all"
+                id="bookcode"
+                type="number"
+                placeholder="scan or type"
+                value={bookCode}
+                onChange={(e) => {
+                  setBookCode(e.target.value);
+                }}
+              />
+              <button
+                type="button"
+                className="py-1 px-2 border hover:bg-blue-300 border-l-0 rounded-r-xl"
+                onClick={bookCodeScanHandler}
+              >
+                <img className="w-10" src={barcode} alt="barcode" />
+              </button>
+            </div>
+          </div>
+          {/* <div className="books-input mt-2">
+            <label htmlFor="code" className="block">
+              Seriya raqami
+            </label>
+            <div className="flex">
+              <input
+                className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+                id="code"
+                type="text"
+                placeholder="B-00013"
+                value={code}
+                onChange={(e) => codesHandler(e)}
+                onKeyDown={(e) => EnterHandler(e)}
+              />
+              <button
+                type="button"
+                onClick={(e) => addCodesHandler(e)}
+                className="py-1 px-2 border border-gray-500 text-gray-500 rounded-md ml-3 hover:border-black hover:text-black transition-all"
+              >
+                Qo'sh
+              </button>
+            </div>
+
+            {codes.length > 0 && (
+              <div className="grid grid-cols-4 items-center mt-1 max-h-20 overflow-auto">
+                {codes.map((code) => (
+                  <div
+                    onClick={() => removeCodeHandler(code)}
+                    key={code}
+                    className="bg-gray-300 rounded-md  mr-1 flex items-center py-1 px-2 cursor-pointer opacity-70 hover:opacity-100 transition-all mt-1 relative overflow-hidden"
+                  >
+                    <h2 className="text-xs hover:animate-marquee">{code}</h2>{" "}
+                    <img
+                      className="w-4 h-4 ml-1 absolute right-1 top-1/2 -translate-y-1/2 shadow-myshadow rounded-full"
+                      src={remove}
+                      alt="code"
+                    />
+                  </div>
+                ))}
+              </div>
+            )}
+          </div> */}
+        </div>
       </div>
-      <h2
-        className={`text-red-700 text-xs ${shake && "animate-tilt-shaking"} `}
-      >
-        {error}
-      </h2>
       <button
         type="button"
         onClick={submitHandler}

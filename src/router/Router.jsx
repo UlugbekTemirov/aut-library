@@ -10,7 +10,14 @@ import Login from "../components/Login";
 import Cookies from "universal-cookie";
 
 // pages
-import { Books, Home, RentBook, History, Libraries } from "../pages";
+import {
+  Books,
+  Home,
+  RentBook,
+  History,
+  Libraries,
+  Information,
+} from "../pages";
 
 const Router = () => {
   const cookie = new Cookies();
@@ -22,6 +29,7 @@ const Router = () => {
       <Route path="/" element={<Home setJwt={setJwt} />} />
       <Route path="/kitoblar" element={<Books />} />
       <Route path="/kutubxonalar" element={<Libraries />} />
+      <Route path="/kitoblar/:bookslug" element={<Information />} />
       {!Boolean(jwt) && <Route path="/login" element={<Login />} />}
       {Boolean(newJwt ?? jwt) && <Route path="/ijara" element={<RentBook />} />}
       {Boolean(newJwt ?? jwt) && <Route path="/tarix" element={<History />} />}
