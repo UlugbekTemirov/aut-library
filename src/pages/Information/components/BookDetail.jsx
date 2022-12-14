@@ -13,6 +13,10 @@ import createdic from "../../../images/createdAt.png";
 import categoryic from "../../../images/category.png";
 import idic from "../../../images/id.png";
 import barcodeic from "../../../images/barcode.png";
+import reserveic from "../../../images/reservebook.png";
+import downloadic from "../../../images/download.png";
+import uploadic from "../../../images/upload.png";
+import addic from "../../../images/add.png";
 
 // components
 import BookBox from "./BookBox";
@@ -23,8 +27,14 @@ import Button from "./BookButton";
 import DownloadBookApi from "../../../api/DownloadBookApi";
 import { URL } from "../../../global";
 
+// cookies
+import Cookies from "universal-cookie";
+
 const BookDetail = (props) => {
   const { book } = props;
+
+  const cookie = new Cookies();
+  const jwt = cookie.get("jwt", { path: "/" });
 
   const working1handler = () => {
     console.log("working 1");
@@ -76,14 +86,19 @@ const BookDetail = (props) => {
         <BookRating />
       </section>
       <footer className="flex">
-        <Button onClick={working1handler}>Band qilish</Button>
-        <Button onClick={working2handler}>Wishlist'ga qo'shish</Button>
+        <Button onClick={working1handler} img={reserveic}>
+          Band qilish
+        </Button>
+        <Button onClick={working2handler} img={addic}>
+          Wishlist'ga qo'shish
+        </Button>
         <a
           className="rounded-xl"
           href={`${URL}/api/v1/books/download/${book.id}`}
         >
-          <Button>Yuklab olish</Button>
+          <Button img={downloadic}>Yuklab olish</Button>
         </a>
+        {Boolean(jwt) ? <Button img={uploadic}>Joylash</Button> : null}
       </footer>
     </main>
   );

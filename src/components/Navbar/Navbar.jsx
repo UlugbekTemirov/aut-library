@@ -16,6 +16,7 @@ import libraryLogo from "../../images/aut-library-new.png";
 
 // icons
 import loginIcon from "../../images/login.svg";
+import wishlistic from "../../images/wishlist.png";
 
 // globals
 import { APPBARLGLIGHT, pages, LOGINLGLIGHT, userPages } from "../../global";
@@ -25,6 +26,8 @@ import { useLocation, useNavigate, Link } from "react-router-dom";
 
 // cookies
 import Cookies from "universal-cookie";
+import Wishlist from "../Wishlist/Wishlist";
+import Backdrop from "../Backdrop/Backdrop";
 
 const Navbar = () => {
   const cookie = new Cookies();
@@ -60,6 +63,12 @@ const Navbar = () => {
   const LogoutHandler = () => {
     cookie.remove("jwt", { path: "/" });
     navigate("/home");
+  };
+
+  const [open, setOpen] = useState(false);
+  const handlerClose = () => setOpen(false);
+  const wishlistHandler = () => {
+    setOpen(true);
   };
 
   return (
@@ -230,22 +239,34 @@ const Navbar = () => {
               </Link>
             </Box>
           ) : (
-            <Button
-              onClick={LogoutHandler}
-              sx={{
-                background: LOGINLGLIGHT,
-                color: "#8B0000",
-                "&:hover": {
-                  backgroundColor: "lightgray",
-                },
-              }}
-              variant="contained"
-            >
-              Logout
-            </Button>
+            <div className="flex items-center">
+              <div className="relative">
+                <img
+                  onClick={wishlistHandler}
+                  className="w-9 mr-2 bg-gray-300 hover:bg-gray-400 cursor-pointer rounded-md p-1"
+                  src={wishlistic}
+                  alt="wishlist"
+                />
+                {open ? <Wishlist /> : null}
+              </div>
+              <Button
+                onClick={LogoutHandler}
+                sx={{
+                  background: LOGINLGLIGHT,
+                  color: "#8B0000",
+                  "&:hover": {
+                    backgroundColor: "lightgray",
+                  },
+                }}
+                variant="contained"
+              >
+                Logout
+              </Button>
+            </div>
           )}
         </Toolbar>
       </Container>
+      {open ? <Backdrop onClick={handlerClose} /> : null}
     </AppBar>
   );
 };

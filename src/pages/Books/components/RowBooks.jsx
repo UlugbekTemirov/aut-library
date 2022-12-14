@@ -12,7 +12,7 @@ import qrCodeIcon from "../../../images/qr-code.png";
 import accept from "../../../images/accept.png";
 import minus from "../../../images/minus.png";
 import downloadIcon from "../../../images/download.png";
-import upload from "../../../images/cloud-computing.png";
+import upload from "../../../images/upload.png";
 import cddisk from "../../../images/disk.png";
 import moreIcon from "../../../images/export.png";
 
