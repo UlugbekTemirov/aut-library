@@ -76,7 +76,7 @@ const NewBookForm = (props) => {
     codes.forEach((xcode) => xcode === code && (a = true));
     const validate = code.trim() !== "" && !a;
     if (validate) {
-      setCodes((prev) => [...prev, code]);
+      setCodes((prev) => [code, ...prev]);
       setError("");
       setCode("");
     } else {

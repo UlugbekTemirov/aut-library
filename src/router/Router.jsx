@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 
 // components
-import Login from "../components/Login";
+import { Login } from "../components";
 
 // cookies
 import Cookies from "universal-cookie";

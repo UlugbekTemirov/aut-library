@@ -7,7 +7,7 @@ import { useParams } from "react-router-dom";
 import GetBookApi from "../../api/GetBookApi";
 
 // components
-import Loader from "../../components/Loader";
+import { Loader } from "../../components";
 import BookInfo from "./components/BookInfo";
 
 const Information = (props) => {

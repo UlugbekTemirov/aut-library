@@ -44,7 +44,10 @@ const Navbar = () => {
   const location = useLocation();
   const indSlash = location.pathname.indexOf("/");
   const nextIndSlash = location.pathname.lastIndexOf("/");
-  const a = location.pathname.slice(indSlash + 1, nextIndSlash);
+  const a = location.pathname.slice(
+    indSlash + 1,
+    indSlash !== nextIndSlash ? nextIndSlash : location.pathname.length
+  );
 
   useEffect(() => {
     setCurrentPage("home");

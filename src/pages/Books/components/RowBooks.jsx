@@ -148,6 +148,16 @@ const RowBooks = (props) => {
           />
         )}
       </TableCell>
+      <TableCell sx={{ width: "70px", pr: 0 }}>
+        <div className="flex justify-center">
+          <img
+            onClick={() => getBookQrHandler(book.id)}
+            className="w-8 h-8 hover:bg-gray-300 p-1 rounded cursor-pointer"
+            src={qrCodeIcon}
+            alt="qrcode"
+          />
+        </div>
+      </TableCell>
       <TableCell
         sx={{ fontSize: 20, display: "flex", justifyContent: "center" }}
         align="center"
@@ -158,6 +168,7 @@ const RowBooks = (props) => {
           </button>
         </Link>
       </TableCell>
+
       {/* <TableCell
         align="center"
         sx={{

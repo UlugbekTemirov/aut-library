@@ -12,8 +12,7 @@ import Router from "../router/Router";
 import Cookies from "universal-cookie";
 
 // components
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer/Footer";
+import { Navbar, Footer } from "../components";
 
 const theme = createTheme({
   palette: {

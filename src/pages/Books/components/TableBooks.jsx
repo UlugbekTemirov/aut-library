@@ -12,7 +12,7 @@ import Cookies from "universal-cookie";
 
 // components
 import RowBooks from "./RowBooks";
-import Loader from "../../../components/Loader";
+import { Loader } from "../../../components";
 
 // api
 import GetAllBooksApi from "../../../api/GetAllBooksApi";
@@ -77,11 +77,18 @@ const TableBooks = (props) => {
               Pdf
             </TableCell>
             <TableCell
+              sx={{ fontSize: "20px", fontWeight: "bold", pr: 0 }}
+              align="center"
+            >
+              QR
+            </TableCell>
+            <TableCell
               sx={{ fontSize: "20px", fontWeight: "bold", px: 0 }}
               align="center"
             >
               Batafsil
             </TableCell>
+
             {/* <TableCell
               sx={{ fontSize: "20px", fontWeight: "bold" }}
               align="center"
@@ -94,12 +101,7 @@ const TableBooks = (props) => {
             >
               From
             </TableCell>
-            <TableCell
-              sx={{ fontSize: "20px", fontWeight: "bold" }}
-              align="center"
-            >
-              QR
-            </TableCell>
+            
             <TableCell
               sx={{ fontSize: "20px", fontWeight: "bold" }}
               align="center"
