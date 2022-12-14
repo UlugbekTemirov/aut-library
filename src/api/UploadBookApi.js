@@ -1,14 +1,19 @@
 import React, { useEffect } from "react";
 
 // global
-import { URL, JWT } from "../global";
+import { URL } from "../global";
+
+import Cookies from "universal-cookie";
 
 const UploadBookApi = (setResponse, setLoading, id, file) => {
+  const cookie = new Cookies();
+  const jwt = cookie.get("jwt", { path: "/" });
   setLoading(true);
+  console.log(file);
   fetch(`${URL}/api/v1/books/upload/${id}`, {
     method: "POST",
     headers: {
-      authorization: `Bearer ${JWT}`,
+      authorization: `Bearer ${jwt}`,
     },
     body: file,
   })

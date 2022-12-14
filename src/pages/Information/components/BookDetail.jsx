@@ -1,5 +1,10 @@
 import React, { useState } from "react";
 
+// mui
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
+
 // icons
 import bookic from "../../../images/open-book.png";
 import authoric from "../../../images/user-avatar.png";
@@ -25,6 +30,9 @@ import Button from "./BookButton";
 
 // api
 import DownloadBookApi from "../../../api/DownloadBookApi";
+import UploadBookApi from "../../../api/UploadBookApi";
+
+// global
 import { URL } from "../../../global";
 
 // cookies
@@ -50,9 +58,37 @@ const BookDetail = (props) => {
     DownloadBookApi(setLoading, setResponse, id);
   };
 
+  const [open, setOpen] = useState(false);
+  const handleClose = () => setOpen(false);
+  const uploadHandler = () => {
+    setOpen(true);
+  };
+
+  const [file, setFile] = useState(null);
+  const fileHandler = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  console.log(file);
+  const submitHandler = (id) => {
+    const data = new FormData();
+    data.append("file", file);
+    UploadBookApi(setLoading, setResponse, id, data);
+  };
+
   console.log(response);
 
-  console.log(book);
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 400,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+    borderRadius: "12px",
+  };
 
   const date = new Date(book.addedAt);
   const a = date.getUTCDate();
@@ -98,8 +134,30 @@ const BookDetail = (props) => {
         >
           <Button img={downloadic}>Yuklab olish</Button>
         </a>
-        {Boolean(jwt) ? <Button img={uploadic}>Joylash</Button> : null}
+        {Boolean(jwt) ? (
+          <Button onClick={uploadHandler} img={uploadic}>
+            Joylash
+          </Button>
+        ) : null}
       </footer>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Kitobni tanlang
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <input type="file" onChange={fileHandler} />
+            <button type="button" onClick={() => submitHandler(book.id)}>
+              submit
+            </button>
+          </Typography>
+        </Box>
+      </Modal>
     </main>
   );
 };

@@ -17,6 +17,7 @@ const LoginApi = (user, setLoading, setResponse, setError) => {
     if (response.status === "success") {
       cookie.set("jwt", response.token, {
         expires: expire,
+        path: "/",
       });
     }
     if (response.status !== "success") {
