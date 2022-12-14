@@ -121,7 +121,7 @@ const BookDetail = (props) => {
         </div>
         <BookRating />
       </section>
-      <footer className="flex">
+      <footer className="flex flex-wrap">
         <Button onClick={working1handler} img={reserveic}>
           Band qilish
         </Button>
