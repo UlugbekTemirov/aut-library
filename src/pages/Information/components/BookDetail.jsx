@@ -1,10 +1,5 @@
 import React, { useState } from "react";
 
-// mui
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-
 // icons
 import bookic from "../../../images/open-book.png";
 import authoric from "../../../images/user-avatar.png";
@@ -37,20 +32,13 @@ import { URL } from "../../../global";
 
 // cookies
 import Cookies from "universal-cookie";
+import Dropbox from "./Dropbox";
 
 const BookDetail = (props) => {
-  const { book } = props;
+  const { book, coomingSoon } = props;
 
   const cookie = new Cookies();
   const jwt = cookie.get("jwt", { path: "/" });
-
-  const working1handler = () => {
-    console.log("working 1");
-  };
-
-  const working2handler = () => {
-    console.log("working 2");
-  };
 
   const [response, setResponse] = useState({});
   const [loading, setLoading] = useState(false);
@@ -66,29 +54,22 @@ const BookDetail = (props) => {
 
   const [file, setFile] = useState(null);
   const fileHandler = (e) => {
-    setFile(e.target.files[0]);
+    // setFile(e.target.files[0]);
   };
 
-  console.log(file);
+  const fileWithDropHandler = (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setFile(e.dataTransfer.files[0]);
+  };
+
   const submitHandler = (id) => {
     const data = new FormData();
     data.append("file", file);
     UploadBookApi(setLoading, setResponse, id, data);
   };
 
-  console.log(response);
-
-  const style = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    width: 400,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 4,
-    borderRadius: "12px",
-  };
+  console.log(book);
 
   const date = new Date(book.addedAt);
   const a = date.getUTCDate();
@@ -99,11 +80,8 @@ const BookDetail = (props) => {
     <main className="flex flex-col justify-between h-full">
       <section className="grid grid-cols-2 md:gap-4">
         <div className="md:col-span-1 col-span-2">
-          <h2 className="md:text-5xl text-3xl mb-4 md:text-left text-center">
-            {book.name}
-          </h2>
           <BookBox icon={authoric}>{book.author}</BookBox>
-          <BookBox icon={categoryic}>Category</BookBox>
+          <BookBox icon={categoryic}>{book.category}</BookBox>
           <BookBox icon={calendaric}>{book.year}-yil</BookBox>
           <BookBox icon={curriculumic}>{book.amount} ta</BookBox>
           <BookBox icon={bookic}>{book.pages} bet</BookBox>
@@ -122,10 +100,10 @@ const BookDetail = (props) => {
         <BookRating />
       </section>
       <footer className="flex flex-wrap">
-        <Button onClick={working1handler} img={reserveic}>
+        <Button onClick={coomingSoon} img={reserveic}>
           Band qilish
         </Button>
-        <Button onClick={working2handler} img={addic}>
+        <Button onClick={coomingSoon} img={addic}>
           Wishlist'ga qo'shish
         </Button>
         <a
@@ -140,24 +118,15 @@ const BookDetail = (props) => {
           </Button>
         ) : null}
       </footer>
-      <Modal
+      <Dropbox
         open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Kitobni tanlang
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            <input type="file" onChange={fileHandler} />
-            <button type="button" onClick={() => submitHandler(book.id)}>
-              submit
-            </button>
-          </Typography>
-        </Box>
-      </Modal>
+        handleClose={handleClose}
+        submitHandler={submitHandler}
+        id={book.id}
+        fileHandler={fileHandler}
+        fileWithDropHandler={fileWithDropHandler}
+        file={file}
+      />
     </main>
   );
 };

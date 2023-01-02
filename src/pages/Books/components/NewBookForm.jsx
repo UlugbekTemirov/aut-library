@@ -67,6 +67,7 @@ const NewBookForm = (props) => {
     setFromWhere("");
     setPrice("");
     setUniqueId("");
+    setBookCode("");
   };
 
   const [shake, setShaking] = useState(false);
@@ -354,7 +355,7 @@ const NewBookForm = (props) => {
             <input
               className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
               id="uniqueId"
-              type="number"
+              type="text"
               placeholder="a10b20c12"
               value={uniqueId}
               onChange={(e) => {

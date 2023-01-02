@@ -4,4 +4,6 @@ import RentBook from "./RentBook/RentBook";
 import History from "./History/History";
 import Libraries from "./Libraries/Libraries";
 import Information from "./Information/Information";
-export { Home, Books, RentBook, History, Libraries, Information };
+import Rating from "./Rating/Rating";
+
+export { Home, Books, RentBook, History, Libraries, Information, Rating };

@@ -4,6 +4,7 @@ import axios from "axios";
 
 const DownloadBookApi = async (setLoading, setResponse, id) => {
   const NEWURL = `${xURL}/api/v1/books/download/${id}`;
+  console.log(xURL, id);
 
   const headers = { "Content-Type": "blob" };
   const config = {

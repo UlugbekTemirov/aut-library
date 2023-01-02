@@ -17,6 +17,7 @@ import {
   History,
   Libraries,
   Information,
+  Rating,
 } from "../pages";
 
 const Router = () => {
@@ -30,6 +31,7 @@ const Router = () => {
       <Route path="/kitoblar" element={<Books />} />
       <Route path="/kutubxonalar" element={<Libraries />} />
       <Route path="/kitoblar/:bookslug" element={<Information />} />
+      <Route path="/rating" element={<Rating />} />
       {!Boolean(jwt) && <Route path="/login" element={<Login />} />}
       {Boolean(newJwt ?? jwt) && <Route path="/ijara" element={<RentBook />} />}
       {Boolean(newJwt ?? jwt) && <Route path="/tarix" element={<History />} />}
