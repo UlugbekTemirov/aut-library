@@ -10,7 +10,7 @@ import LoginApi from "../../api/LoginApi";
 import Loader from "../Loader/Loader";
 
 // react-router-dom
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -46,7 +46,7 @@ const Login = () => {
   if (loading) return <Loader />;
 
   if (response.status === "success") {
-    navigate("/home");
+    return <Navigate to="/home" replace />;
   }
 
   return (
@@ -56,6 +56,9 @@ const Login = () => {
         <div className="width">
           <h2 className="login-text">Login</h2>
         </div>
+        <p className="text-red-800 text-xl border-2 rounded border-red-900 text-center py-1 bg-red-300">
+          This form is only for librarian!
+        </p>
         <div className="input-handler">
           <label className="input-label" htmlFor="email">
             Email

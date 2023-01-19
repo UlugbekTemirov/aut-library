@@ -36,10 +36,6 @@ const AddNewBook = (props) => {
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({});
 
-  // useEffect(() => {
-  //   if (response.status === "success") setUpdate((prev) => !prev);
-  // }, [response]);
-
   const status = response?.status === "success";
 
   return (

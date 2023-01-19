@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 
 // api
 import AddNewBookApi from "../../../api/AddNewBookApi";
-import GetAllBooksApi from "../../../api/GetAllBooksApi";
+// import GetAllBooksApi from "../../../api/GetAllBooksApi";
 
 // icons
 import remove from "../../../images/remove.png";
@@ -29,25 +29,25 @@ const NewBookForm = (props) => {
   // warning
   const [warning, setWarning] = useState("");
 
-  const [booksResponse, setBooksResponse] = useState("");
-  const [booksLoading, setBooksLoading] = useState(false);
-  GetAllBooksApi(setBooksLoading, setBooksResponse, null, null, false);
-  const allBooks = booksResponse?.data?.doc;
+  // const [booksResponse, setBooksResponse] = useState("");
+  // const [booksLoading, setBooksLoading] = useState(false);
+  // GetAllBooksApi(setBooksLoading, setBooksResponse, null, null, false);
+  // const allBooks = booksResponse?.data?.doc;
 
   const bookNameHandler = (e) => {
     const tempVal = e.target.value;
     setName(tempVal);
-    if (tempVal.trim() === "" || tempVal.trim().split("").length < 4)
-      setWarning("");
-    else {
-      let count = 0;
-      allBooks.forEach((book) => {
-        book.name.toLowerCase().trim().startsWith(tempVal.toLowerCase().trim())
-          ? setWarning("Bu kitob kutubxonada mavjud")
-          : ++count;
-      });
-      if (count === allBooks.length) setWarning("");
-    }
+    // if (tempVal.trim() === "" || tempVal.trim().split("").length < 4)
+    //   setWarning("");
+    // else {
+    //   let count = 0;
+    //   allBooks.forEach((book) => {
+    //     book.name.toLowerCase().trim().startsWith(tempVal.toLowerCase().trim())
+    //       ? setWarning("Bu kitob kutubxonada mavjud")
+    //       : ++count;
+    //   });
+    //   if (count === allBooks.length) setWarning("");
+    // }
   };
 
   // error handler

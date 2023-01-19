@@ -16,7 +16,7 @@ import libraryLogo from "../../images/aut-library-new.png";
 
 // icons
 import loginIcon from "../../images/login.svg";
-import wishlistic from "../../images/wishlist.png";
+import wishlistic from "../../images/star.png";
 
 // globals
 import { APPBARLGLIGHT, pages, LOGINLGLIGHT, userPages } from "../../global";
@@ -240,15 +240,18 @@ const Navbar = () => {
             </Box>
           ) : (
             <div className="flex items-center">
-              <div className="relative">
-                <img
-                  onClick={wishlistHandler}
-                  className="w-9 mr-2 bg-gray-300 hover:bg-gray-400 cursor-pointer rounded-md p-1"
-                  src={wishlistic}
-                  alt="wishlist"
-                />
-                {open ? <Wishlist /> : null}
-              </div>
+              {!Boolean(jwt) && (
+                <div className="relative">
+                  <img
+                    onClick={wishlistHandler}
+                    className="w-9 mr-2 bg-gray-300 hover:bg-gray-400 cursor-pointer rounded-md p-1"
+                    src={wishlistic}
+                    alt="wishlist"
+                  />
+                  {open ? <Wishlist /> : null}
+                </div>
+              )}
+
               <Button
                 onClick={LogoutHandler}
                 sx={{

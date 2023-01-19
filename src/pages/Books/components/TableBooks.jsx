@@ -23,11 +23,11 @@ const TableBooks = (props) => {
   const cookie = new Cookies();
   const jwt = cookie.get("jwt", { path: "/" });
 
-  const [allBooks, setAllBooks] = useState({});
-  const [booksloading, setBooksLoading] = useState(false);
-  GetAllBooksApi(setBooksLoading, setAllBooks, null, null, true, true);
+  // const [allBooks, setAllBooks] = useState({});
+  // const [booksloading, setBooksLoading] = useState(false);
+  // GetAllBooksApi(setBooksLoading, setAllBooks, null, null, true, true);
 
-  const allbooks = allBooks?.data?.doc;
+  // const allbooks = allBooks?.data?.doc;
 
   return (
     <TableContainer sx={{ borderRadius: "14px" }} component={Paper}>
@@ -131,20 +131,18 @@ const TableBooks = (props) => {
                 );
               })
             : searchRes?.data?.map((book, index) => {
-                if (!booksloading) {
-                  if (
-                    book.name.toLowerCase().includes(search.toLowerCase()) ||
-                    book.author.toLowerCase().includes(search.toLowerCase())
-                  ) {
-                    return (
-                      <RowBooks
-                        qrcode={qrcode}
-                        key={book._id}
-                        index={index}
-                        book={book}
-                      />
-                    );
-                  }
+                if (
+                  book.name.toLowerCase().includes(search.toLowerCase()) ||
+                  book.author.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return (
+                    <RowBooks
+                      qrcode={qrcode}
+                      key={book._id}
+                      index={index}
+                      book={book}
+                    />
+                  );
                 }
               })}
         </TableBody>

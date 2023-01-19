@@ -9,6 +9,8 @@ import LoaderMini from "./LoaderMini";
 const AddWithQrCode = (props) => {
   const { handleClose, setUpdate } = props;
 
+  const [seriaSearch, setSeriaSearch] = useState("");
+
   const [data, setData] = useState("");
   const [xerror, setxError] = useState("");
   const [idNumber, setIdNumber] = useState("");
@@ -196,8 +198,17 @@ const AddWithQrCode = (props) => {
                   <span className="text-blue-900">Bet:</span>{" "}
                   {response?.data?.doc.pages} bet
                 </h2>
-                <h2 className="text-lg my-1 flex">
-                  <span className="text-blue-900">Seria:</span>{" "}
+                <div className="text-lg my-1 flex flex-col">
+                  <div>
+                    <span className="text-blue-900">Seria:</span>{" "}
+                    <input
+                      onChange={(e) => setSeriaSearch(e.target.value)}
+                      type="text"
+                      className="outline-none border-b-2 w-1/2 px-2 text-lg"
+                      placeholder="search..."
+                      value={seriaSearch}
+                    />
+                  </div>
                   <h2
                     className={`text-red-800 ml-1 ${
                       shake && "animate-tilt-shaking"
@@ -205,21 +216,26 @@ const AddWithQrCode = (props) => {
                   >
                     {xcode}
                   </h2>
-                </h2>
+                </div>
                 <div className="max-h-24 grid grid-cols-3 overflow-auto">
-                  {response?.data?.doc.codes.map((code, index) => (
-                    <h2
-                      key={index}
-                      onClick={() => getCodeHandler(code)}
-                      className={`text-sm text-center bg-gray-300 mr-1 rounded-xl py-1 px-2 focus:bg-blue-800 cursor-pointer active:bg-gray-300 mt-1 ${
-                        code === xcode
-                          ? "bg-blue-700 text-white"
-                          : "bg-gray-300 hover:bg-gray-400"
-                      }`}
-                    >
-                      {code}
-                    </h2>
-                  ))}
+                  {response?.data?.doc.codes.map(
+                    (code, index) =>
+                      code
+                        .toLowerCase()
+                        .includes(seriaSearch.toLowerCase()) && (
+                        <h2
+                          key={index}
+                          onClick={() => getCodeHandler(code)}
+                          className={`text-sm text-center bg-gray-300 mr-1 rounded-xl py-1 px-2 focus:bg-blue-800 cursor-pointer active:bg-gray-300 mt-1 ${
+                            code === xcode
+                              ? "bg-blue-700 text-white"
+                              : "bg-gray-300 hover:bg-gray-400"
+                          }`}
+                        >
+                          {code}
+                        </h2>
+                      )
+                  )}
                 </div>
               </div>
               <div className="border border-l-0 border-blue-800 rounded-r-xl p-2 px-4 mt-2 w-full">
