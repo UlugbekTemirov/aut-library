@@ -27,8 +27,6 @@ const Books = () => {
     setCategory(e.target.value);
   };
 
-  console.log(category);
-
   const [loading, setLoading] = useState(true);
   const [response, setResponse] = useState({});
   const [page, setPage] = useState(1);
