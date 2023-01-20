@@ -14,7 +14,6 @@ const BookPreview = ({ book }) => {
   const [response, setResponse] = useState(null);
 
   BookPreviewApi(setLoading, setResponse, book?.id);
-  console.log(response);
 
   return (
     <div className="w-full">
@@ -28,8 +27,10 @@ const BookPreview = ({ book }) => {
       ) : (
         <iframe
           className="rounded-2xl"
-          src={response}
-          // src="https://res.cloudinary.com/dy1qz7xrs/image/upload/v1670436178/Xudoyberdi_To_xtaboyev_-_Mungli_ko_zlar_p9lmr6.pdf"
+          src={
+            response ??
+            "https://res.cloudinary.com/dy1qz7xrs/image/upload/v1670436178/Xudoyberdi_To_xtaboyev_-_Mungli_ko_zlar_p9lmr6.pdf"
+          }
           width="100%"
           height="600px"
         />

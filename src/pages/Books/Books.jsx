@@ -36,7 +36,6 @@ const Books = () => {
   // api
   BooksSearchApi(setSearchLoading, setSearchRes, search);
   GetAllBooksApi(setLoading, setResponse, page, limit, update, false, category);
-  console.log(searchRes);
 
   return (
     <div>

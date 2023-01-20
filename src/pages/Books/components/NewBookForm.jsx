@@ -7,6 +7,8 @@ import AddNewBookApi from "../../../api/AddNewBookApi";
 // icons
 import remove from "../../../images/remove.png";
 import barcode from "../../../images/barcode-scanner.png";
+import GetAllCategoryApi from "../../../api/GetAllCategoryApi";
+import AddCategoryApi from "../../../api/AddCategoryApi";
 
 const NewBookForm = (props) => {
   const { setLoading, setResponse, response } = props;
@@ -29,25 +31,9 @@ const NewBookForm = (props) => {
   // warning
   const [warning, setWarning] = useState("");
 
-  // const [booksResponse, setBooksResponse] = useState("");
-  // const [booksLoading, setBooksLoading] = useState(false);
-  // GetAllBooksApi(setBooksLoading, setBooksResponse, null, null, false);
-  // const allBooks = booksResponse?.data?.doc;
-
   const bookNameHandler = (e) => {
     const tempVal = e.target.value;
     setName(tempVal);
-    // if (tempVal.trim() === "" || tempVal.trim().split("").length < 4)
-    //   setWarning("");
-    // else {
-    //   let count = 0;
-    //   allBooks.forEach((book) => {
-    //     book.name.toLowerCase().trim().startsWith(tempVal.toLowerCase().trim())
-    //       ? setWarning("Bu kitob kutubxonada mavjud")
-    //       : ++count;
-    //   });
-    //   if (count === allBooks.length) setWarning("");
-    // }
   };
 
   // error handler
@@ -130,10 +116,70 @@ const NewBookForm = (props) => {
     setEbookName(e.target.files[0].name);
   };
 
+  const [catRes, setCatRes] = useState([]);
+  const [catLoading, setCatLoading] = useState(false);
+  const [update, setUpdate] = useState(false);
+  GetAllCategoryApi(setCatRes, setCatLoading, update);
+  const categories = catRes?.data?.doc;
+
+  const [catAddModal, setAddCatModal] = useState(false);
+  const [newCat, setNewCat] = useState("");
+
+  const [addCatRes, setAddCatRes] = useState("");
+  const [addCatLoad, setAddCatLoad] = useState(false);
+
+  const checkAndAddCatHandler = () => {
+    AddCategoryApi(setAddCatRes, setAddCatLoad, newCat);
+  };
+
+  useEffect(() => {
+    if (addCatRes?.ok) {
+      setUpdate((prev) => !prev);
+      setAddCatModal(false);
+    }
+  }, [addCatRes]);
+
   return (
     <form>
       <h2 className="text-red-700 text-center">{response.message}</h2>
-
+      {catAddModal && (
+        <>
+          <div
+            onClick={() => setAddCatModal(false)}
+            className="absolute top-0 left-0 bg-black/[0.7] z-10 w-full h-full"
+          ></div>
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] border bg-white z-10 rounded-md py-5 px-8 shadow-2xl">
+            <h2 className="text-2xl text-center text-green-900 font-bold uppercase">
+              Yangi Kategoriya qo'shish
+            </h2>
+            <div className="flex flex-col mt-5">
+              <label className="text-xl" htmlFor="cat">
+                Kategoriya nomini kiriting:
+              </label>
+              <input
+                id="cat"
+                className="border-2 bg-gray-50 mt-2 rounded-md text-xl py-2 px-2 outline-none"
+                placeholder="Badiiy"
+                type="text"
+                required
+                onChange={(e) => setNewCat(e.target.value)}
+                value={newCat}
+              />
+              <p className="text-lg text-orange-500 mt-2">
+                Kategoriy nomini kiritishda e'tiborli bo'ling! Kategoriya nomi
+                bosh harf bilan boshlanishi va to'g'ri yozilishi kerak!
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={checkAndAddCatHandler}
+              className="bg-green-700 w-full text-center py-3 rounded-xl mt-5 text-xl text-white uppercase hover:bg-green-600"
+            >
+              {addCatLoad ? "Loading..." : "Yangi kategoriyani qo'shish"}
+            </button>
+          </div>
+        </>
+      )}
       <div className="grid grid-cols-2 w-full">
         <div className="w-full px-2">
           <div className="books-input">
@@ -271,15 +317,27 @@ const NewBookForm = (props) => {
             <label htmlFor="category" className="block">
               Kategoriya
             </label>
-            <input
-              required
-              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
-              id="category"
-              type="text"
-              placeholder="Badiiy"
-              value={category}
-              onChange={(e) => setCategory(e.target.value)}
-            />
+            <div className="flex">
+              <select
+                onChange={(e) => setCategory(e.target.value)}
+                className="p-2 outline-none rounded-lg border w-full bg-white focus:border-blue-800 transition-all"
+              >
+                {catLoading ? (
+                  <option value={undefined}>Loading...</option>
+                ) : (
+                  categories?.map((cat) => (
+                    <option value={cat?.category}>{cat?.category}</option>
+                  ))
+                )}
+              </select>
+              <button
+                onClick={() => setAddCatModal(true)}
+                type="button"
+                className="px-2 text-2xl border ml-2 rounded-md hover:bg-gray-50"
+              >
+                <i class="fa-solid fa-plus text-3xl"></i>
+              </button>
+            </div>
           </div>
           <div className="books-input mt-2 w-full">
             <label htmlFor="cd" className="block mb-2">
@@ -387,48 +445,6 @@ const NewBookForm = (props) => {
               </button>
             </div>
           </div>
-          {/* <div className="books-input mt-2">
-            <label htmlFor="code" className="block">
-              Seriya raqami
-            </label>
-            <div className="flex">
-              <input
-                className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
-                id="code"
-                type="text"
-                placeholder="B-00013"
-                value={code}
-                onChange={(e) => codesHandler(e)}
-                onKeyDown={(e) => EnterHandler(e)}
-              />
-              <button
-                type="button"
-                onClick={(e) => addCodesHandler(e)}
-                className="py-1 px-2 border border-gray-500 text-gray-500 rounded-md ml-3 hover:border-black hover:text-black transition-all"
-              >
-                Qo'sh
-              </button>
-            </div>
-
-            {codes.length > 0 && (
-              <div className="grid grid-cols-4 items-center mt-1 max-h-20 overflow-auto">
-                {codes.map((code) => (
-                  <div
-                    onClick={() => removeCodeHandler(code)}
-                    key={code}
-                    className="bg-gray-300 rounded-md  mr-1 flex items-center py-1 px-2 cursor-pointer opacity-70 hover:opacity-100 transition-all mt-1 relative overflow-hidden"
-                  >
-                    <h2 className="text-xs hover:animate-marquee">{code}</h2>{" "}
-                    <img
-                      className="w-4 h-4 ml-1 absolute right-1 top-1/2 -translate-y-1/2 shadow-myshadow rounded-full"
-                      src={remove}
-                      alt="code"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
-          </div> */}
         </div>
       </div>
       <button
