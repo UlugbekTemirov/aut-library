@@ -71,3 +71,40 @@ input[type="number"] {
     rgba(0, 212, 255, 0) 100%
   );
 }
+
+.my-swiper .swiper-button-prev {
+  /* background: rgb(2, 0, 36);
+  background: linear-gradient(
+    90deg,
+    rgba(2, 0, 36, 0.8) 0%,
+    rgba(255, 255, 255, 0) 100%
+  ); */
+  color: white;
+  height: 100%;
+  top: 0;
+  left: 0;
+  width: 0;
+  overflow: hidden;
+  transition: all 300ms;
+}
+
+.my-swiper .swiper-button-next {
+  /* background: rgb(2, 0, 36);
+  background: linear-gradient(
+    -90deg,
+    rgba(2, 0, 36, 0.8) 0%,
+    rgba(255, 255, 255, 0) 100%
+  ); */
+  height: 100%;
+  color: white;
+  top: 0;
+  right: 0;
+  width: 0;
+  overflow: hidden;
+  transition: all 300ms;
+}
+
+.my-swiper:hover .swiper-button-next,
+.my-swiper:hover .swiper-button-prev {
+  width: 100px;
+}

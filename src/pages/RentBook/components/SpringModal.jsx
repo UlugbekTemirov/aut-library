@@ -66,10 +66,6 @@ const SpringModal = (props) => {
     ReturnBookApi(setLoading, setResponse, leaser.id);
   };
 
-  // if (!loading && typeof loading === "boolean") {
-  //   setUpdate((prev) => !prev);
-  // }
-  console.log(response);
   if (response?.status === "success") setUpdate((prev) => !prev);
 
   const handleClose = () => setOpen(false);

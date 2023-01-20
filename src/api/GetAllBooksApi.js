@@ -13,7 +13,6 @@ const GetAllBooksApi = (
   category
 ) => {
   useEffect(() => {
-    console.log("I worked");
     setLoading(true);
     const CUSTOM_URL =
       Boolean(category) && category !== "Barchasi"

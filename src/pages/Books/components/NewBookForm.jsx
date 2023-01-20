@@ -96,7 +96,7 @@ const NewBookForm = (props) => {
   };
 
   const bookCodeScanHandler = () => {
-    console.log("Product scanner");
+    //
   };
 
   let validate =

@@ -8,9 +8,6 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { BrowserRouter } from "react-router-dom";
 import Router from "../router/Router";
 
-// cookie
-import Cookies from "universal-cookie";
-
 // components
 import { Navbar, Footer } from "../components";
 
@@ -23,16 +20,12 @@ const theme = createTheme({
 });
 
 const App = () => {
-  // cookie
-  const cookie = new Cookies();
-  const jwt = cookie.get("jwt");
-
   return (
     <ThemeProvider theme={theme}>
       <BrowserRouter>
-        <Navbar jwt={jwt} />
+        <Navbar />
         <Container maxWidth="xl">
-          <Router jwt={jwt} />
+          <Router />
         </Container>
         <Footer />
       </BrowserRouter>

@@ -4,7 +4,6 @@ import axios from "axios";
 
 const DownloadBookApi = async (setLoading, setResponse, id) => {
   const NEWURL = `${xURL}/api/v1/books/download/${id}`;
-  console.log(xURL, id);
 
   const headers = { "Content-Type": "blob" };
   const config = {
@@ -17,9 +16,6 @@ const DownloadBookApi = async (setLoading, setResponse, id) => {
   try {
     const response = await axios(config);
 
-    const outputFilename = `${Date.now()}.pdf`;
-
-    console.log(response);
     const url = URL.createObjectURL(new Blob([response.data]));
 
     const link = document.createElement("a");

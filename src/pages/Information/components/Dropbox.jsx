@@ -24,7 +24,6 @@ const Dropbox = ({
   fileWithDropHandler,
   file,
 }) => {
-  console.log(file?.name);
   return (
     <Modal
       open={open}

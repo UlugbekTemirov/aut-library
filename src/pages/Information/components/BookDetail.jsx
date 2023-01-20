@@ -69,8 +69,6 @@ const BookDetail = (props) => {
     UploadBookApi(setLoading, setResponse, id, data);
   };
 
-  console.log(book);
-
   const date = new Date(book.addedAt);
   const a = date.getUTCDate();
   const b = date.getMonth() + 1;

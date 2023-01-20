@@ -9,7 +9,6 @@ const UploadBookApi = (setResponse, setLoading, id, file) => {
   const cookie = new Cookies();
   const jwt = cookie.get("jwt", { path: "/" });
   setLoading(true);
-  console.log(file);
   fetch(`${URL}/api/v1/books/upload/${id}`, {
     method: "POST",
     headers: {

@@ -54,7 +54,7 @@ const Login = () => {
       <div className="login-page"></div>
       <form className="login-form" onKeyDown={enterHandler}>
         <div className="width">
-          <h2 className="login-text">Login</h2>
+          <h2 className="login-text md:mb-[100px] mb-[50px]">Login</h2>
         </div>
         <p className="text-red-800 text-xl border-2 rounded border-red-900 text-center py-1 bg-red-300">
           This form is only for librarian!

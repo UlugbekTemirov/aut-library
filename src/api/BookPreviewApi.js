@@ -14,8 +14,7 @@ const BookPreviewApi = (setLoading, setResponse, id) => {
         );
         setResponse(url);
         setLoading(false);
-      })
-      .catch((err) => console.log(err));
+      });
   }, [id]);
 };
 

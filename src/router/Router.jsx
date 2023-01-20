@@ -35,10 +35,6 @@ const Router = () => {
       {!Boolean(jwt) && <Route path="/login" element={<Login />} />}
       {Boolean(newJwt ?? jwt) && <Route path="/ijara" element={<RentBook />} />}
       {Boolean(newJwt ?? jwt) && <Route path="/tarix" element={<History />} />}
-      {/* <Route
-        path="/libraries"
-        element={<a href="https://unilibrary.uz/"></a>}
-      /> */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
