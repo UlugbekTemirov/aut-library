@@ -19,7 +19,7 @@ const Category = (props) => {
         <option value="loading">Loading...</option>
       ) : (
         <>
-          <option value="barchasi">Barchasi</option>
+          <option value="Barchasi">Barchasi</option>
           {cats?.map((item, index) => (
             <option key={index} value={item?.category}>
               {item?.category}
