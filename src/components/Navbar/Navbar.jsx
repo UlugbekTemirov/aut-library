@@ -226,15 +226,15 @@ const Navbar = () => {
                 <Button
                   sx={{
                     background: LOGINLGLIGHT,
-                    color: "#8458B3",
+                    color: "black",
+                    fontWeight: 700,
                     "&:hover": {
                       backgroundColor: "white",
-                      color: "#8458B3",
                     },
                   }}
                   variant="contained"
                 >
-                  <img src={loginIcon} alt="login" />
+                  Login
                 </Button>
               </Link>
             </Box>

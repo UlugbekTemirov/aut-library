@@ -97,7 +97,7 @@ const BookDetail = (props) => {
         </div>
         <BookRating />
       </section>
-      <footer className="flex flex-wrap">
+      <footer className="flex flex-wrap mt-10">
         <Button onClick={coomingSoon} img={reserveic}>
           Band qilish
         </Button>

@@ -33,6 +33,7 @@ const RentBook = () => {
     DownloadExcelApi("leases");
   };
 
+  console.log(response);
   if (loading) return <Loader />;
   if (response.status !== "success") return <h1>{response.message}</h1>;
   return (
