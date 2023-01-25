@@ -22,9 +22,7 @@ import { URL } from "../../../global";
 // cookies
 import Cookies from "universal-cookie";
 import UploadBookApi from "../../../api/UploadBookApi";
-import { Link } from "react-router-dom";
-
-const cookie = new Cookies();
+import { useNavigate } from "react-router-dom";
 
 const style = {
   position: "absolute",
@@ -41,10 +39,9 @@ const style = {
 };
 
 const RowBooks = (props) => {
-  const jwt = cookie.get("jwt", { path: "/" });
-  const { book, index, qrcode } = props;
+  const { book, index } = props;
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const [openUpload, setOpenUpload] = useState(false);
 
   const handleOpen = () => setOpen(true);
@@ -72,13 +69,6 @@ const RowBooks = (props) => {
       });
   };
 
-  // book amount
-  const a = book.amount === 0;
-
-  const openUploadModal = () => {
-    setOpenUpload(true);
-  };
-
   const [uresponse, setuResponse] = useState({});
   const [uloading, setuLoading] = useState(false);
   const [file, setFile] = useState(null);
@@ -95,10 +85,14 @@ const RowBooks = (props) => {
     UploadBookApi(setuResponse, setuLoading, id, data);
   };
 
+  const navigate = useNavigate();
+
   return (
     <TableRow
+      onClick={() => navigate(book.slug)}
       key={book.name}
       sx={{
+        cursor: "pointer",
         position: "relative",
         "&:last-child td, &:last-child th": { border: 0 },
         "&:hover": {
@@ -149,86 +143,13 @@ const RowBooks = (props) => {
         )}
       </TableCell>
       <TableCell sx={{ width: "70px", pr: 0 }}>
-        <div className="flex justify-center">
-          <img
-            onClick={() => getBookQrHandler(book.id)}
-            className="w-8 h-8 hover:bg-gray-300 p-1 rounded cursor-pointer"
-            src={qrCodeIcon}
-            alt="qrcode"
-          />
-        </div>
+        <img
+          onClick={() => getBookQrHandler(book.id)}
+          className="w-8 h-8 hover:bg-gray-300 p-1 rounded cursor-pointer"
+          src={qrCodeIcon}
+          alt="qrcode"
+        />
       </TableCell>
-      <TableCell
-        sx={{ fontSize: 20, display: "flex", justifyContent: "center" }}
-        align="center"
-      >
-        <Link to={book.slug}>
-          <button className="rounded-full hover:bg-gray-300 p-2">
-            <img className="w-7" src={moreIcon} alt="more" />
-          </button>
-        </Link>
-      </TableCell>
-
-      {/* <TableCell
-        align="center"
-        sx={{
-          position: "relative",
-        }}
-      >
-        {Boolean(book.cd_disk) ? (
-          <img
-            className="w-7 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
-            src={cddisk}
-            alt="cd disk"
-          />
-        ) : (
-          <h2 className="text-xl">no cd</h2>
-        )}
-      </TableCell>
-      <TableCell sx={{ fontSize: 20 }} align="center">
-        {book.get_options}
-      </TableCell>
-      <TableCell sx={{ width: "70px" }}>
-        <div className="flex justify-center">
-          <img
-            onClick={() => getBookQrHandler(book.id)}
-            className="w-8 h-8 hover:bg-gray-300 p-1 rounded cursor-pointer"
-            src={qrCodeIcon}
-            alt="qrcode"
-          />
-        </div>
-      </TableCell>
-      <TableCell sx={{ width: "40px" }}>
-        {Boolean(book.file) ? (
-          <a
-            href={`${URL}/api/v1/books/download/${book.id}`}
-            download
-            target="_blank"
-          >
-            <img
-              className="w-10 hover:bg-gray-300 rounded-full p-1 mx-auto transition-all"
-              src={downloadIcon}
-              alt="download"
-            />
-          </a>
-        ) : (
-          <img
-            className="w-10 cursor-not-allowed rounded-full p-1 mx-auto transition-all opacity-40"
-            src={downloadIcon}
-            alt="download"
-          />
-        )}
-      </TableCell>
-      {Boolean(jwt) && (
-        <TableCell sx={{ width: "40px" }}>
-          <img
-            onClick={openUploadModal}
-            className="w-10 hover:bg-gray-300 rounded-full p-1 mx-auto transition-all"
-            src={upload}
-            alt="upload"
-          />
-        </TableCell>
-      )} */}
       <Modal
         open={open}
         onClose={handleClose}

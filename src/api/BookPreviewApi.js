@@ -7,7 +7,7 @@ const BookPreviewApi = (setLoading, setResponse, id, setStatus) => {
     fetch(`${xURL}/api/v1/books/preview/${id}`)
       .then((res) => {
         setStatus(res.ok);
-        res.arrayBuffer();
+        return res.arrayBuffer();
       })
       .then((res) => {
         console.log(res);
@@ -16,6 +16,7 @@ const BookPreviewApi = (setLoading, setResponse, id, setStatus) => {
             type: "application/pdf",
           })
         );
+        console.log();
         setResponse(url);
         setLoading(false);
       });

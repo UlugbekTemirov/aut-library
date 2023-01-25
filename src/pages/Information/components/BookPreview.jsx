@@ -3,19 +3,14 @@ import React, { useState } from "react";
 // mui
 import { Skeleton } from "@mui/material";
 
-// global
-import { URL } from "../../../global";
-
 // api
 import BookPreviewApi from "../../../api/BookPreviewApi";
 
-const BookPreview = ({ book }) => {
+const BookPreview = ({ book, status, setStatus }) => {
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
-  const [status, setStatus] = useState(false);
 
   BookPreviewApi(setLoading, setResponse, book?.id, setStatus);
-  console.log(status);
 
   return (
     <div className="w-full">

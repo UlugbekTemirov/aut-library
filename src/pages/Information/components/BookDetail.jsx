@@ -22,9 +22,9 @@ import addic from "../../../images/add.png";
 import BookBox from "./BookBox";
 import BookRating from "./BookRating";
 import Button from "./BookButton";
+import Dropbox from "./Dropbox";
 
 // api
-import DownloadBookApi from "../../../api/DownloadBookApi";
 import UploadBookApi from "../../../api/UploadBookApi";
 
 // global
@@ -32,19 +32,13 @@ import { URL } from "../../../global";
 
 // cookies
 import Cookies from "universal-cookie";
-import Dropbox from "./Dropbox";
 
 const BookDetail = (props) => {
-  const { book, coomingSoon } = props;
+  const { book, coomingSoon, status } = props;
+  console.log(status);
 
   const cookie = new Cookies();
   const jwt = cookie.get("jwt", { path: "/" });
-
-  const [response, setResponse] = useState({});
-  const [loading, setLoading] = useState(false);
-  const downloadBookHandler = (id) => {
-    DownloadBookApi(setLoading, setResponse, id);
-  };
 
   const [open, setOpen] = useState(false);
   const handleClose = () => setOpen(false);
@@ -74,6 +68,8 @@ const BookDetail = (props) => {
   const b = date.getMonth() + 1;
   const c = date.getFullYear();
 
+  console.log(book);
+
   return (
     <main className="flex flex-col justify-between h-full">
       <section className="grid grid-cols-2 md:gap-4">
@@ -91,7 +87,7 @@ const BookDetail = (props) => {
           <BookBox icon={priceic}>{book.price} so'm</BookBox>
           <BookBox icon={languageic}>{book.lang}</BookBox>
           <BookBox icon={createdic}>{`${a}.${b}.${c}`}</BookBox>
-          <BookBox icon={idic}>Yagona ID</BookBox>
+          <BookBox icon={idic}>{book.uniqueId ?? "Yagona ID"}</BookBox>
           <BookBox icon={departmentic}>{book.get_options}</BookBox>
           <BookBox icon={barcodeic}>ISBN</BookBox>
         </div>
@@ -104,12 +100,14 @@ const BookDetail = (props) => {
         <Button onClick={coomingSoon} img={addic}>
           Wishlist'ga qo'shish
         </Button>
-        <a
-          className="rounded-xl"
-          href={`${URL}/api/v1/books/download/${book.id}`}
-        >
-          <Button img={downloadic}>Yuklab olish</Button>
-        </a>
+        {status && (
+          <a
+            className="rounded-xl"
+            href={`${URL}/api/v1/books/download/${book.id}`}
+          >
+            <Button img={downloadic}>Yuklab olish</Button>
+          </a>
+        )}
         {Boolean(jwt) ? (
           <Button onClick={uploadHandler} img={uploadic}>
             Joylash

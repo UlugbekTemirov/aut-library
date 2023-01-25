@@ -5,6 +5,7 @@ import { QrReader } from "react-qr-reader";
 import GetStudentsApi from "../../../api/GetStudentApi";
 import AddLeaseApi from "../../../api/AddLeaseApi";
 import LoaderMini from "./LoaderMini";
+import { URL } from "../../../global";
 
 const AddWithQrCode = (props) => {
   const { handleClose, setUpdate } = props;
@@ -34,7 +35,7 @@ const AddWithQrCode = (props) => {
   useEffect(() => {
     if (data !== "") {
       setLoading(true);
-      fetch(`http://localhost:3000/api/v1/books/${data}`, {
+      fetch(`${URL}/api/v1/books/${data}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

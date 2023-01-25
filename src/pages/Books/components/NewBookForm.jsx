@@ -16,6 +16,7 @@ const NewBookForm = (props) => {
   const [name, setName] = useState("");
   const [author, setAuthor] = useState("");
   const [year, setYear] = useState("");
+  const [language, setLanguage] = useState("");
   const [pages, setPages] = useState("");
   const [code, setCode] = useState("");
   const [codes, setCodes] = useState([]);
@@ -43,6 +44,7 @@ const NewBookForm = (props) => {
     setName("");
     setAuthor("");
     setYear("");
+    setLanguage("");
     setPages("");
     setCode("");
     setCodes([]);
@@ -98,6 +100,7 @@ const NewBookForm = (props) => {
     data.append("author", author);
     data.append("file", ebook);
     data.append("year", year);
+    data.append("lang", language);
     data.append("pages", pages);
     data.append("codes", JSON.stringify(codes));
     data.append("category", category);
@@ -232,20 +235,37 @@ const NewBookForm = (props) => {
               }}
             />
           </div>
-          <div className="books-input mt-2">
-            <label htmlFor="year" className="block">
-              Yili
-            </label>
-            <input
-              className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
-              id="year"
-              type="text"
-              placeholder="2017"
-              value={year}
-              onChange={(e) => {
-                setYear(e.target.value);
-              }}
-            />
+          <div className="books-input mt-2 flex">
+            <div className="mr-5">
+              <label htmlFor="year" className="block">
+                Yili
+              </label>
+              <input
+                className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+                id="year"
+                type="text"
+                placeholder="2017"
+                value={year}
+                onChange={(e) => {
+                  setYear(e.target.value);
+                }}
+              />
+            </div>
+            <div>
+              <label htmlFor="language" className="block">
+                Tili
+              </label>
+              <input
+                className="p-2 outline-none rounded-lg border w-full focus:border-blue-800 transition-all"
+                id="language"
+                type="text"
+                placeholder="uzbek"
+                value={language}
+                onChange={(e) => {
+                  setLanguage(e.target.value);
+                }}
+              />
+            </div>
           </div>
           <div className="books-input mt-2">
             <label htmlFor="pages" className="block">
@@ -319,15 +339,24 @@ const NewBookForm = (props) => {
             </label>
             <div className="flex">
               <select
+                required
+                defaultValue=""
                 onChange={(e) => setCategory(e.target.value)}
-                className="p-2 outline-none rounded-lg border w-full bg-white focus:border-blue-800 transition-all"
+                className="p-2 outline-none cursor-pointer rounded-lg border w-full bg-white focus:border-blue-800 transition-all"
               >
                 {catLoading ? (
                   <option value={undefined}>Loading...</option>
                 ) : (
-                  categories?.map((cat) => (
-                    <option value={cat?.category}>{cat?.category}</option>
-                  ))
+                  <>
+                    <option value="" disabled>
+                      -- Janrni tanlang --
+                    </option>
+                    {categories?.map((cat, index) => (
+                      <option key={index} value={cat?.category}>
+                        {cat?.category}
+                      </option>
+                    ))}
+                  </>
                 )}
               </select>
               <button
@@ -335,7 +364,7 @@ const NewBookForm = (props) => {
                 type="button"
                 className="px-2 text-2xl border ml-2 rounded-md hover:bg-gray-50"
               >
-                <i class="fa-solid fa-plus text-3xl"></i>
+                <i className="fa-solid fa-plus text-3xl"></i>
               </button>
             </div>
           </div>

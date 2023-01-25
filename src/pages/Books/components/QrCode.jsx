@@ -27,7 +27,7 @@ const QrCode = (props) => {
           <h2 className="text-lg flex mt-2">
             <img className="w-5 mr-1" src={year} alt="calendar" /> {book?.year}
           </h2>
-          <div className="overflow-auto grid grid-cols-2 max-h-20 text-center">
+          <div className="overflow-auto grid grid-cols-4 max-h-20 text-center">
             {book.codes.map((code) => (
               <h2
                 key={code}

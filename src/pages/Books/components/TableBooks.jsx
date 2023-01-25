@@ -1,4 +1,3 @@
-import React, { useState, useEffect } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,27 +6,12 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-// cookies
-import Cookies from "universal-cookie";
-
 // components
 import RowBooks from "./RowBooks";
-import { Loader } from "../../../components";
-
-// api
-import GetAllBooksApi from "../../../api/GetAllBooksApi";
+import { Link } from "react-router-dom";
 
 const TableBooks = (props) => {
   const { search, books, loading, qrcode, searchRes } = props;
-
-  const cookie = new Cookies();
-  const jwt = cookie.get("jwt", { path: "/" });
-
-  // const [allBooks, setAllBooks] = useState({});
-  // const [booksloading, setBooksLoading] = useState(false);
-  // GetAllBooksApi(setBooksLoading, setAllBooks, null, null, true, true);
-
-  // const allbooks = allBooks?.data?.doc;
 
   return (
     <TableContainer sx={{ borderRadius: "14px" }} component={Paper}>
@@ -77,45 +61,11 @@ const TableBooks = (props) => {
               Pdf
             </TableCell>
             <TableCell
-              sx={{ fontSize: "20px", fontWeight: "bold", pr: 0 }}
+              sx={{ fontSize: "20px", fontWeight: "bold" }}
               align="center"
             >
               QR
             </TableCell>
-            <TableCell
-              sx={{ fontSize: "20px", fontWeight: "bold", px: 0 }}
-              align="center"
-            >
-              Batafsil
-            </TableCell>
-
-            {/* <TableCell
-              sx={{ fontSize: "20px", fontWeight: "bold" }}
-              align="center"
-            >
-              CD
-            </TableCell>
-            <TableCell
-              sx={{ fontSize: "20px", fontWeight: "bold" }}
-              align="center"
-            >
-              From
-            </TableCell>
-            
-            <TableCell
-              sx={{ fontSize: "20px", fontWeight: "bold" }}
-              align="center"
-            >
-              Yuklash
-            </TableCell>
-            {Boolean(jwt) && (
-              <TableCell
-                sx={{ fontSize: "20px", fontWeight: "bold" }}
-                align="center"
-              >
-                Joylash
-              </TableCell>
-            )} */}
           </TableRow>
         </TableHead>
         <TableBody>
