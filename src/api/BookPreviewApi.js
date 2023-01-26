@@ -10,13 +10,11 @@ const BookPreviewApi = (setLoading, setResponse, id, setStatus) => {
         return res.arrayBuffer();
       })
       .then((res) => {
-        console.log(res);
         const url = URL.createObjectURL(
           new Blob([res], {
             type: "application/pdf",
           })
         );
-        console.log();
         setResponse(url);
         setLoading(false);
       });

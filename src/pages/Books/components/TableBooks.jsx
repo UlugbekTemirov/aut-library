@@ -55,16 +55,10 @@ const TableBooks = (props) => {
               Miqdor
             </TableCell>
             <TableCell
-              sx={{ fontSize: "20px", fontWeight: "bold", px: 0 }}
-              align="center"
-            >
-              Pdf
-            </TableCell>
-            <TableCell
               sx={{ fontSize: "20px", fontWeight: "bold" }}
               align="center"
             >
-              QR
+              Pdf
             </TableCell>
           </TableRow>
         </TableHead>

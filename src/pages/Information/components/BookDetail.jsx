@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import Modal from "@mui/material/Modal";
+import Box from "@mui/material/Box";
 
 // icons
 import bookic from "../../../images/open-book.png";
@@ -17,6 +19,7 @@ import reserveic from "../../../images/reservebook.png";
 import downloadic from "../../../images/download.png";
 import uploadic from "../../../images/upload.png";
 import addic from "../../../images/add.png";
+import qrCodeIcon from "../../../images/qr-code.png";
 
 // components
 import BookBox from "./BookBox";
@@ -32,16 +35,16 @@ import { URL } from "../../../global";
 
 // cookies
 import Cookies from "universal-cookie";
+import { Skeleton } from "@mui/material";
 
 const BookDetail = (props) => {
   const { book, coomingSoon, status } = props;
-  console.log(status);
 
   const cookie = new Cookies();
   const jwt = cookie.get("jwt", { path: "/" });
 
   const [open, setOpen] = useState(false);
-  const handleClose = () => setOpen(false);
+
   const uploadHandler = () => {
     setOpen(true);
   };
@@ -68,7 +71,44 @@ const BookDetail = (props) => {
   const b = date.getMonth() + 1;
   const c = date.getFullYear();
 
-  console.log(book);
+  const [loading, setLoading] = useState(false);
+  const [response, setResponse] = useState({});
+  const getBookQrHandler = (id) => {
+    handleOpen();
+    setLoading(true);
+    fetch(`${URL}/api/v1/books/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((promise) => promise.json())
+      .then((response) => {
+        setLoading(false);
+        setResponse(response);
+      });
+  };
+
+  const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    // width: 600,
+    bgcolor: "background.paper",
+    border: "2px solid #000",
+    boxShadow: 24,
+    p: 4,
+    border: "none",
+    borderRadius: 3,
+  };
+
+  const [openQrModal, setQrModal] = useState(false);
+  const handleOpen = () => setQrModal(true);
+  const handleClose = () => {
+    setQrModal(false);
+    setOpen(false);
+  };
 
   return (
     <main className="flex flex-col justify-between h-full">
@@ -93,7 +133,7 @@ const BookDetail = (props) => {
         </div>
         <BookRating />
       </section>
-      <footer className="flex flex-wrap mt-10">
+      <footer className="flex flex-wrap mt-10 items-center">
         <Button onClick={coomingSoon} img={reserveic}>
           Band qilish
         </Button>
@@ -113,6 +153,12 @@ const BookDetail = (props) => {
             Joylash
           </Button>
         ) : null}
+        <img
+          onClick={() => getBookQrHandler(book.id)}
+          className="w-12 h-12 hover:bg-gray-300 p-1 rounded cursor-pointer"
+          src={qrCodeIcon}
+          alt="qrcode"
+        />
       </footer>
       <Dropbox
         open={open}
@@ -123,6 +169,47 @@ const BookDetail = (props) => {
         fileWithDropHandler={fileWithDropHandler}
         file={file}
       />
+      <Modal
+        open={openQrModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <div>
+            {loading ? (
+              <h2>Loading...</h2>
+            ) : (
+              <div>
+                <h2 className="text-lg font-bold text-center">{book?.name}</h2>
+                {Boolean(response?.data?.qrCode) ? (
+                  <img
+                    className="w-full"
+                    src={response?.data?.qrCode}
+                    alt={book.name}
+                  />
+                ) : (
+                  <Skeleton
+                    variant="rounded"
+                    width="100%"
+                    height={150}
+                    sx={{ my: 1 }}
+                  />
+                )}
+                <div className="flex justify-center">
+                  <a
+                    className="bg-blue-700 py-1 px-4 rounded-xl text-white text-xl hover:bg-blue-800 transition-all"
+                    href={response?.data?.qrCode}
+                    download={book?.name}
+                  >
+                    yuklash
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
+        </Box>
+      </Modal>
     </main>
   );
 };

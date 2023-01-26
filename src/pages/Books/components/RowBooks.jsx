@@ -5,22 +5,13 @@ import TableRow from "@mui/material/TableRow";
 import TableCell from "@mui/material/TableCell";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
-import Skeleton from "@mui/material/Skeleton";
 
 // icons
-import qrCodeIcon from "../../../images/qr-code.png";
+
 import accept from "../../../images/accept.png";
 import minus from "../../../images/minus.png";
-import downloadIcon from "../../../images/download.png";
-import upload from "../../../images/upload.png";
-import cddisk from "../../../images/disk.png";
-import moreIcon from "../../../images/export.png";
-
-// globals
-import { URL } from "../../../global";
 
 // cookies
-import Cookies from "universal-cookie";
 import UploadBookApi from "../../../api/UploadBookApi";
 import { useNavigate } from "react-router-dom";
 
@@ -41,32 +32,10 @@ const style = {
 const RowBooks = (props) => {
   const { book, index } = props;
 
-  const [open, setOpen] = useState(false);
   const [openUpload, setOpenUpload] = useState(false);
 
-  const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpenUpload(false);
-    setOpen(false);
-  };
-
-  const [loading, setLoading] = useState(false);
-  const [response, setResponse] = useState({});
-
-  const getBookQrHandler = (id) => {
-    handleOpen();
-    setLoading(true);
-    fetch(`${URL}/api/v1/books/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((promise) => promise.json())
-      .then((response) => {
-        setLoading(false);
-        setResponse(response);
-      });
   };
 
   const [uresponse, setuResponse] = useState({});
@@ -142,55 +111,6 @@ const RowBooks = (props) => {
           />
         )}
       </TableCell>
-      <TableCell sx={{ width: "70px", pr: 0 }}>
-        <img
-          onClick={() => getBookQrHandler(book.id)}
-          className="w-8 h-8 hover:bg-gray-300 p-1 rounded cursor-pointer"
-          src={qrCodeIcon}
-          alt="qrcode"
-        />
-      </TableCell>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
-          <div>
-            {loading ? (
-              <h2>Loading...</h2>
-            ) : (
-              <div>
-                <h2 className="text-lg font-bold text-center">{book?.name}</h2>
-                {Boolean(response?.data?.qrCode) ? (
-                  <img
-                    className="w-full"
-                    src={response?.data?.qrCode}
-                    alt={book.name}
-                  />
-                ) : (
-                  <Skeleton
-                    variant="rounded"
-                    width="100%"
-                    height={150}
-                    sx={{ my: 1 }}
-                  />
-                )}
-                <div className="flex justify-center">
-                  <a
-                    className="bg-blue-700 py-1 px-4 rounded-xl text-white text-xl hover:bg-blue-800 transition-all"
-                    href={response?.data?.qrCode}
-                    download={book?.name}
-                  >
-                    yuklash
-                  </a>
-                </div>
-              </div>
-            )}
-          </div>
-        </Box>
-      </Modal>
       <Modal
         open={openUpload}
         onClose={handleClose}
