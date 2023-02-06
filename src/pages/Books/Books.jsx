@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 // components
 import TableBooks from "./components/TableBooks";
 import Pagination from "./components/Pagination";
 import TopBar from "./components/TopBar";
-import Loader from "../../components/Loader/Loader";
 
 // mui
 import Skeleton from "@mui/material/Skeleton";
