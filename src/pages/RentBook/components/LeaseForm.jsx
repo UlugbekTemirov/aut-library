@@ -165,7 +165,7 @@ const LeaseForm = (props) => {
               type="button"
               className="bg-blue-50 hover:bg-blue-100 rounded-md ml-2 px-3"
             >
-              Qidir!
+              {idLoad ? "loading..." : "Qidir!"}
             </button>
           </div>
           <h2 className="text-red-800">{idRes?.message}</h2>

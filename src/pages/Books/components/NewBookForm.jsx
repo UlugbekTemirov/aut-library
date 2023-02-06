@@ -110,7 +110,6 @@ const NewBookForm = (props) => {
     data.append("price", price);
     data.append("uniqueId", uniqueId);
 
-    setInitialHandler();
     if (validate) AddNewBookApi(setLoading, setResponse, data);
   };
 
@@ -139,6 +138,7 @@ const NewBookForm = (props) => {
     if (addCatRes?.ok) {
       setUpdate((prev) => !prev);
       setAddCatModal(false);
+      setInitialHandler();
     }
   }, [addCatRes]);
 
