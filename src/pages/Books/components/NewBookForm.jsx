@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 
 // api
 import AddNewBookApi from "../../../api/AddNewBookApi";
-// import GetAllBooksApi from "../../../api/GetAllBooksApi";
 
 // icons
 import remove from "../../../images/remove.png";
