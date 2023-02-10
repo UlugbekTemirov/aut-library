@@ -92,15 +92,12 @@ const LeaseForm = (props) => {
     setError("");
   };
 
-  const getMajorHandler = (e) => {
-    setMajor(e.target.id);
-  };
-
   const [idLoad, setIdLoad] = useState(false);
   const [idRes, setIdRes] = useState("");
   const studentIdHandler = () => {
     studentId.trim() !== "" && GetStudentsApi(setIdLoad, setIdRes, studentId);
   };
+
   const student = idRes?.data?.tempUser;
 
   const correctMajor = (major) => {
@@ -126,7 +123,12 @@ const LeaseForm = (props) => {
       studentPhoneNumber: student?.phone_number,
     };
     setInitialHandler();
-    AddLeaseApi(setLoading, setResponse, studentData);
+    if (idRes.status === "success") {
+      AddLeaseApi(setLoading, setResponse, studentData);
+    } else {
+      alert("Bunday o'quvchi topilmadi!");
+      setIdRes("");
+    }
   };
 
   if (response?.status === "success") {
